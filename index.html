@@ -1,52 +1,242 @@
-# Patch index.html
-
-## 1. Font (taruh di `<head>`, sebelum `<style>`)
-```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MCS Studio – Latihan Soal & Studi Kasus</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-```
-
-## 2. Palet ungu — ganti 3 baris variabel warna (`:root{...}`, blok `@media dark`, dan `:root[data-theme="dark"]`)
-Ganti hanya nilai warna, biarkan `padding-top/bottom` safe-area tetap.
-```css
-/* light */
---bg:#f7f5fd;--card:#fff;--ink:#1e1633;--mut:#6f6789;--line:#e6e0f5;--ac:#6d28d9;--acs:#efe7ff;
-/* dark (dua tempat) */
---bg:#130f1f;--card:#1c1630;--ink:#f1ecfb;--mut:#a79fc0;--line:#2f2748;--ac:#a78bfa;--acs:#2a2050;
-```
-(`--ok/--warn/--bad` dibiarkan agar skor tetap terbaca hijau/oranye/merah.)
-
-Ganti aturan `body{...}` dan `button.p{...}`:
-```css
-body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 "Plus Jakarta Sans",system-ui,sans-serif}
-button{font-family:inherit}
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f7f5fd;--card:#fff;--ink:#1e1633;--mut:#6f6789;--line:#e6e0f5;--ac:#6d28d9;--acs:#efe7ff;--ok:#2b8a3e;--oks:#eaf7ec;--warn:#e67700;--warns:#fff3e0;--bad:#c92a2a;--bads:#fdecec}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#130f1f;--card:#1c1630;--ink:#f1ecfb;--mut:#a79fc0;--line:#2f2748;--ac:#a78bfa;--acs:#2a2050;--ok:#69db7c;--oks:#173822;--warn:#ffa94d;--warns:#3a2a12;--bad:#ff8787;--bads:#3a1c1c}}
+:root[data-theme="dark"]{--bg:#130f1f;--card:#1c1630;--ink:#f1ecfb;--mut:#a79fc0;--line:#2f2748;--ac:#a78bfa;--acs:#2a2050;--ok:#69db7c;--oks:#173822;--warn:#ffa94d;--warns:#3a2a12;--bad:#ff8787;--bads:#3a1c1c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:820px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:26px;margin:0;font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,#7c3aed,#4c1d95);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);margin:2px 0 18px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 1px 2px rgba(60,20,120,.05)}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin-bottom:8px;font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+button{font:inherit;font-family:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px}
+button:hover{border-color:var(--ac)}button.on{background:var(--acs);border-color:var(--ac);color:var(--ac);font-weight:600}
 button.p{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;border:0;font-weight:700;border-radius:12px;box-shadow:0 4px 14px rgba(109,40,217,.28)}
-h1{font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,#7c3aed,#4c1d95);-webkit-background-clip:text;background-clip:text;color:transparent}
-.card{border-radius:18px;box-shadow:0 1px 2px rgba(60,20,120,.05)}
-```
+button.ghost{background:transparent}
+button.danger{color:var(--bad);border-color:var(--bad)}
+button:disabled{opacity:.5;cursor:default}
+.tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:99px;background:var(--acs);color:var(--ac);margin-right:6px;font-weight:600}
+.tag.w{background:var(--warns);color:var(--warn)}
+.q{font-size:17px;margin:8px 0 0;white-space:pre-wrap}
+textarea{width:100%;min-height:150px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+textarea:focus,input:focus{outline:2px solid var(--ac);outline-offset:1px}
+.res{display:none}.res.s{display:block}
+.sc{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ring{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--line) 0);flex:none}
+.ring span{width:76px;height:76px;border-radius:50%;background:var(--card);display:grid;place-items:center}
+.ring.sm{width:56px;height:56px;font-size:16px}.ring.sm span{width:44px;height:44px}
+ul{margin:6px 0;padding-left:20px}li.g::marker{color:var(--ok)}li.m::marker{color:var(--bad)}
+ol.rec{margin:6px 0;padding-left:20px}ol.rec li{margin-bottom:4px}
+.mut{color:var(--mut);font-size:14px}.stat{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--mut)}.stat b{color:var(--ink)}
+details{margin-top:10px}summary{cursor:pointer;color:var(--ac);font-weight:600}
+input[type=number]{width:84px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.bar{height:5px;background:var(--line);border-radius:9px;margin:10px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,#8b5cf6,#6d28d9);border-radius:9px;transition:width .25s}
+.dot{width:38px;height:38px;padding:0;border-radius:10px;border-width:2px}.dot.on{background:var(--acs);color:var(--ac);font-weight:700}
+.nav{justify-content:space-between;margin-top:10px}
+@keyframes inR{from{transform:translateX(36px);opacity:.2}to{transform:none;opacity:1}}@keyframes inL{from{transform:translateX(-36px);opacity:.2}to{transform:none;opacity:1}}
+#qc.inR{animation:inR .22s}#qc.inL{animation:inL .22s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;margin-right:6px;vertical-align:-2px;opacity:.8}
+.banner{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--acs);border:1px solid var(--ac);border-radius:14px;padding:12px 14px;margin-bottom:14px}
+.banner p{margin:0;font-size:14px}
+.hist-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;gap:10px}
+.hist-row:last-child{border-bottom:none}
+.hist-row .sc-pill{font-weight:700;padding:2px 9px;border-radius:99px;font-size:13px}
+.review-item{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.review-item:first-child{border-top:none;margin-top:0;padding-top:0}
+.review-a{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:14px;white-space:pre-wrap}
+.topicbar{display:flex;align-items:center;gap:8px;font-size:13px;margin:5px 0}
+.topicbar .tlab{width:130px;flex:none;color:var(--mut)}
+.topicbar .tb{flex:1;height:8px;background:var(--line);border-radius:5px;overflow:hidden}
+.topicbar .tb i{display:block;height:100%;border-radius:5px}
+.topicbar .tn{width:34px;text-align:right;font-weight:600}
+.crit{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+.crit:last-child{border-bottom:none}.crit small{display:block;color:var(--mut)}.crit b{white-space:nowrap}
+@media print{
+  body{background:#fff}
+  .no-print,button,input,#tp,#df,.card:has(#tp){display:none!important}
+  .w{max-width:100%;padding:0}
+  .card{border:none;border-bottom:1px solid #ccc;border-radius:0;break-inside:avoid;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="w">
+  <h1>MCS Studio</h1>
+  <p class="sub">Latihan soal & studi kasus Management Control Systems · dinilai secara semantik, bukan template</p>
 
-## 3. Logika AI (JS)
+  <div id="resumeBanner" class="banner no-print" style="display:none">
+    <p>Ada sesi latihan yang belum selesai dari kunjungan sebelumnya. Lanjutkan?</p>
+    <div class="row"><button class="p" id="bResume">Lanjutkan</button><button id="bDiscard">Mulai baru</button></div>
+  </div>
 
-**Hapus:** `aiChunkOnce`, `aiChunk`, `aiStart` lama, `gradeAi` lama, dan baris terakhir `S.sample={json:...}`.
-**Ganti dengan:**
-```js
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  <div class="card no-print" id="histCard" style="display:none">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div class="lbl" style="margin:0">Riwayat latihan</div>
+      <button class="ghost" id="bHistToggle" style="padding:4px 10px;font-size:13px">Tampilkan ▾</button>
+    </div>
+    <div id="histBody" style="display:none;margin-top:8px"></div>
+  </div>
 
+  <div class="card no-print">
+    <div class="lbl">Materi</div><div class="row" id="tp"></div>
+    <div class="lbl" style="margin-top:14px">Tingkat kesulitan</div><div class="row" id="df"></div>
+    <div class="lbl" style="margin-top:14px">Jumlah soal (1–30)</div>
+    <div class="row"><input type="number" id="cnt" min="1" max="30" value="10"><button class="p" id="bAi">✨ Buat set soal (AI · HOTS)</button><button id="bRnd">🎲 Acak dari bank</button></div>
+    <div class="mut" id="aiNote" style="margin-top:8px"></div>
+  </div>
+
+  <div id="quiz" style="display:none">
+    <div class="card" id="qc">
+      <div class="row" style="justify-content:space-between;align-items:center"><div id="qm"></div><span class="mut" id="pos"></span></div>
+      <div class="bar"><i id="barf"></i></div>
+      <p class="q" id="qt"></p>
+      <textarea id="ans" placeholder="Tulis jawabanmu dengan bahasamu sendiri (Indonesia/Inggris). Jelaskan konsep, alasan, dan contohnya…"></textarea>
+      <div class="row nav no-print"><button id="bPrev">← Sebelumnya</button><button class="p" id="bGrade">Nilai jawaban</button><button id="bNext">Berikutnya →</button></div>
+      <div class="mut no-print" style="margin-top:8px;font-size:13px">Tip: geser layar ke kiri/kanan atau pakai tombol panah keyboard untuk pindah soal.</div>
+    </div>
+    <div class="card res" id="res">
+      <div class="sc"><div class="ring" id="ring"><span id="scn">0</span></div>
+        <div><div style="font-weight:700;font-size:18px" id="verd"></div><div class="mut" id="mode"></div></div></div>
+      <div id="critWrap" style="display:none"><div class="lbl" style="margin-top:14px">Skor per kriteria</div><div id="crit"></div></div>
+      <div class="lbl" style="margin-top:14px">Konsep yang tercakup</div><ul id="got"></ul>
+      <div class="lbl" style="margin-top:10px">Yang masih kurang / keliru</div><ul id="mis"></ul>
+      <div class="lbl" style="margin-top:10px">Umpan balik</div><div id="fb"></div>
+      <div class="lbl" style="margin-top:10px">Rekomendasi untuk memperbaiki jawaban</div><ol class="rec" id="rec"></ol>
+      <details><summary>Lihat contoh jawaban ideal</summary><div id="mdl" style="margin-top:8px"></div></details>
+    </div>
+    <div class="card no-print"><div class="lbl">Navigasi soal & ringkasan (hijau ≥75, oranye ≥50, merah &lt;50, putus-putus = terjawab belum dinilai)</div><div class="row" id="dots"></div><div class="stat" id="st" style="margin-top:12px"></div>
+      <div class="row" style="margin-top:12px"><button id="bSummary">📊 Ringkasan sesi</button><button id="bReview">🔎 Tinjau semua jawaban</button></div>
+    </div>
+
+    <div class="card" id="sumCard" style="display:none">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <div class="lbl" style="margin:0">Ringkasan sesi</div>
+        <div class="row no-print"><button class="ghost" id="bPrint" style="font-size:13px">🖨️ Ekspor / cetak</button></div>
+      </div>
+      <div class="sc" style="margin-top:6px"><div class="ring" id="sRing"><span id="sScn">0</span></div>
+        <div><div style="font-weight:700;font-size:18px" id="sVerd"></div><div class="mut" id="sStat"></div></div></div>
+      <div class="lbl" style="margin-top:14px">Per materi</div>
+      <div id="sTopics"></div>
+      <div class="lbl" style="margin-top:14px">Konsep yang paling sering terlewat</div>
+      <ul id="sWeak"></ul>
+      <div class="row no-print" style="margin-top:12px">
+        <button class="p" id="bRetryWeak">🔁 Latihan ulang soal &lt; 75</button>
+        <button id="bSaveHist">💾 Simpan ke riwayat</button>
+      </div>
+    </div>
+
+    <div class="card" id="revCard" style="display:none">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <div class="lbl" style="margin:0">Tinjauan lengkap</div>
+        <button class="ghost no-print" id="bPrint2" style="font-size:13px">🖨️ Ekspor / cetak</button>
+      </div>
+      <div id="revBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const TOPICS={all:"Semua materi",a:"Myopia & Controllability",b:"Governance, Board & Auditor",c:"Etika Pengendalian",d:"Not-for-Profit"};
+const DIFF={0:"Campur",1:"Mudah",2:"Sedang",3:"Sulit"};
+const CTX={
+a:"Remedi myopia: kurangi tekanan laba jangka pendek, review investasi, perpanjang horizon, ukur shareholder value, perbaiki ukuran akuntansi, ukur pemicu kinerja masa depan; clawback, deferred shares. Balanced Scorecard (finansial, pelanggan, proses internal, learning & growth; hasil vs driver; compass vs roadmap; trade-off). Controllability principle (pengaruh signifikan, force majeure, pasar, interdependensi), empat pilihan penyesuaian (tujuan, faktor, pemutus, metode), bias hindsight, three-gate test (sepenuhnya tak terkendali, tak ada respons manajerial, efek bisa dihitung objektif).",
+b:"Corporate governance vs management control; dewan direksi (fiduciary: care, loyalty, good faith, no waste; komite audit & kompensasi); Enron/WorldCom, Sarbanes-Oxley 404; CFO (tegangan management service vs fiduciary oversight), controller vs treasurer; controller terdesentralisasi vs tersentralisasi (involvement vs independence, safeguards); audit keuangan/kepatuhan/kinerja sebagai safety net; sektor publik (APIP, BPK).",
+c:"Etika dalam MCS: proses 6 langkah keputusan etis; 4 lensa (utilitarianisme, keadilan, hak & kewajiban, virtue); fraud triangle (pressure, opportunity, rationalization); dilema budgetary slack, earnings management, control indicators, surveillance berlebihan; kebijakan, program, tone at the top; kasus sektor publik (mark-up harga, piutang tak diakui, klaim kinerja manipulatif, sewa aset di bawah pasar).",
+d:"Pengendalian di organisasi nirlaba: surplus untuk misi, pemangku kepentingan bersaing (donor, penerima manfaat, profesional), rantai resources-activities-outputs-outcomes, bauran kontrol (results, action, personnel, cultural), insentif finansial terbatas, akuntabilitas dana (funding-allocation-delivery-reporting), biaya kontrol vs risiko, spending tidak sama dengan impact."};
+
+const BANK=[
+{t:"a",d:1,q:"Mengapa penilaian manajer semata-mata dengan laba tahunan dapat memicu myopia? Berikan satu contoh tindakan manajer dan sebutkan dua cara mengurangi masalah ini.",
+c:[["Laba tahunan mendorong fokus jangka pendek",["jangka pendek","short-term","short term","tahun ini","saat ini"]],["Contoh: memangkas R&D/pelatihan/pemeliharaan demi laba",["r&d","riset","pelatihan","training","pemeliharaan","iklan","maintenance","potong biaya","memangkas"]],["Nilai jangka panjang melemah",["jangka panjang","long-term","long term","nilai masa depan","merusak nilai","melemahkan"]],["Remedi: perpanjang horizon / ukur driver / review investasi / clawback / deferred",["horizon","driver","review investasi","clawback","deferred","tunda","balanced","shareholder value","saham"]]],
+m:"Laba tahunan membuat manajer mengejar hasil yang terlihat baik sekarang, misalnya memotong R&D atau pelatihan, padahal melemahkan nilai jangka panjang. Remedinya: memperpanjang horizon pengukuran (bonus ditangguhkan/deferred shares) dan mengukur pemicu kinerja masa depan seperti kepuasan pelanggan."},
+{t:"a",d:2,q:"Pabrik anda mengalami penurunan laba akibat lonjakan harga bahan baku global yang tidak bisa dikendalikan manajer pabrik. Apakah bonus manajer perlu disesuaikan? Gunakan konsep controllability principle.",
+c:[["Prinsip: akuntabilitas sesuai pengaruh signifikan",["pengaruh","influence","controllab","dikendalikan"]],["Faktor eksternal/pasar menimbulkan noise",["noise","pasar","eksternal","market","harga bahan"]],["Uji: apakah respons manajer diharapkan?",["respons","respon","bereaksi","menyesuaikan harga","hedging","alternatif pemasok"]],["Efek dapat dihitung objektif (variance / flexible budget)",["objektif","hitung","variance","selisih","flexible","anggaran fleksibel","terukur"]],["Manfaat: keadilan & motivasi; risiko: bias/excuse",["adil","fair","motivasi","bias","excuse","dalih","alasan"]]],
+m:"Sesuaikan hanya jika faktor benar-benar di luar kendali, tidak ada respons manajerial yang diharapkan, dan dampaknya bisa dihitung objektif (misalnya flexible budget/variance analysis). Jika manajer masih bisa merespons (ganti pemasok, lindung nilai, naikkan harga), penyesuaian hanya sebagian atau tidak dilakukan."},
+{t:"a",d:3,q:"Perusahaan ritel menerapkan Balanced Scorecard, namun insentif kepala cabang tetap 90% berdasar laba. Dalam 2 tahun, skor kepuasan pelanggan turun sementara laba naik. Analisis penyebabnya, jelaskan trade-off lintas perspektif, dan rancang perbaikan sistem insentifnya.",
+c:[["Insentif laba mendominasi sehingga perspektif lain diabaikan",["90%","dominan","laba saja","bobot","weight","diabaikan","tidak terhubung"]],["Driver vs result: pelanggan/proses/learning adalah driver",["driver","pemicu","hasil","result","leading","lagging"]],["Trade-off: potong biaya/layanan naikkan laba, kepuasan turun",["trade-off","tradeoff","potong","kurangi staf","biaya layanan","kepuasan turun"]],["Perbaikan: bobot lintas perspektif, target, formula atau judgment",["bobot","formula","judgment","kombinasi","seimbang","target","cascade"]],["Risiko myopia & dampak jangka panjang (retensi, pendapatan)",["myopia","jangka panjang","retensi","loyal","pendapatan masa depan","long-term"]]],
+m:"Skor tidak memengaruhi bayaran, sehingga kepala cabang memaksimalkan laba jangka pendek (mengurangi staf/layanan) sementara kepuasan pelanggan (driver pendapatan masa depan) turun. Perbaikan: beri bobot eksplisit pada tiap perspektif, antisipasi trade-off, tautkan bonus lewat formula atau judgment, dan perbarui ukuran secara berkala."},
+{t:"b",d:1,q:"Sebutkan empat kewajiban fiduciary dewan direksi dan jelaskan peran komite audit.",
+c:[["Care (kehati-hatian, keputusan terinformasi)",["care","hati-hati","terinformasi","informed"]],["Loyalty (mengutamakan perusahaan)",["loyal","kesetiaan","mengutamakan perusahaan"]],["Good faith (itikad baik)",["good faith","itikad"]],["No waste (tidak menyia-nyiakan aset)",["waste","pemborosan","menyia"]],["Komite audit: integritas laporan, pengendalian, auditor, independen",["komite audit","audit committee","laporan keuangan","auditor","independen","pengendalian internal"]]],
+m:"Kewajiban: care, loyalty, good faith, dan no waste (tidak menyia-nyiakan aset). Komite audit terdiri dari direktur independen yang melek keuangan, mengawasi integritas pelaporan, pengendalian internal, dan hubungan dengan auditor."},
+{t:"b",d:2,q:"Bandingkan controller unit bisnis yang melapor (solid line) ke kepala unit dengan yang melapor ke controller korporat. Apa kelebihan, kelemahan, dan safeguard-nya?",
+c:[["Desentralisasi: keterlibatan tinggi, business ally",["desentral","kepala unit","business ally","mitra","keterlibatan","involvement"]],["Sentralisasi: independensi & konsistensi",["sentral","korporat","independen","konsisten","standar"]],["Kelemahan: kehilangan independensi vs dianggap polisi/mata-mata",["polisi","spy","mata-mata","tekanan","kompromi","kurang independen"]],["Safeguard: sistem seragam, audit, pelatihan/budaya, insentif tidak terkait laba unit",["seragam","audit","pelatihan","budaya","insentif","tidak terkait","safeguard"]]],
+m:"Solid line ke unit meningkatkan keterlibatan dan dukungan keputusan tetapi berisiko tekanan memanipulasi angka; solid line ke korporat menaikkan independensi dan standardisasi tetapi controller bisa dianggap 'polisi'. Safeguard: sistem seragam, audit, pelatihan/budaya, dan insentif yang tidak tergantung laba unit."},
+{t:"b",d:3,q:"CFO sebuah perusahaan ditekan CEO untuk 'menunda pengakuan biaya' agar target laba kuartal tercapai. Analisis tegangan peran CFO, kontrol yang seharusnya mencegahnya (SOX 404, komite audit, auditor), dan langkah CFO.",
+c:[["Tegangan management service vs fiduciary oversight",["service","layanan","fiduciary","oversight","pengawasan","tegangan"]],["Kewajiban CFO: sertifikasi laporan akurat, menantang perilaku tidak etis",["sertifikasi","certify","akurat","menantang","challenge","tidak etis"]],["SOX 404: evaluasi kontrol internal oleh manajemen & atestasi auditor",["sox","404","sarbanes","atestasi","evaluasi kontrol"]],["Komite audit / dewan / speak-up sebagai jalur eskalasi",["komite audit","dewan","board","whistle","speak-up","eskalasi","lapor"]],["Auditor independen sebagai safety net (terbatas periodik)",["auditor","safety net","independen","eksternal"]]],
+m:"CFO harus dekat cukup untuk membantu tetapi independen untuk menolak. Menunda biaya melanggar tugas fiduciary. Kontrol: SOX 404 (evaluasi manajemen + atestasi auditor), komite audit independen, jalur speak-up, dan audit independen. CFO menolak, mendokumentasikan, dan mengeskalasi ke komite audit."},
+{t:"c",d:1,q:"Jelaskan tiga elemen fraud triangle dan beri satu contoh untuk masing-masing.",
+c:[["Pressure (tekanan) + contoh: target, utang",["pressure","tekanan","target","utang","keserakahan"]],["Opportunity (kesempatan) + contoh: pengawasan lemah",["opportunity","kesempatan","pengawasan","segregation","pemisahan tugas","monitoring"]],["Rationalization (rasionalisasi) + contoh",["rasionalisasi","rationalization","semua orang","perusahaan berutang","hanya pinjam","everyone"]]],
+m:"Pressure: target yang tidak realistis atau utang pribadi. Opportunity: pengawasan lemah/tidak ada pemisahan tugas. Rationalization: 'semua orang melakukannya' atau 'aku hanya meminjam'. Ketiganya berinteraksi memicu pelanggaran."},
+{t:"c",d:2,q:"Seorang manajer menaikkan anggaran biaya (budgetary slack) 15% sebagai penyangga ketidakpastian. Menurut anda, apakah ini etis? Gunakan minimal dua lensa etika dan sebutkan faktor yang menentukan.",
+c:[["Lensa utilitarianisme (konsekuensi)",["utilitarian","konsekuensi","manfaat terbesar","consequence"]],["Lensa keadilan/fairness atau hak-kewajiban atau virtue",["keadilan","fairness","justice","hak","kewajiban","virtue","integritas","objektivitas"]],["Slack sebagai penyangga vs distorsi keputusan",["penyangga","buffer","distorsi","ketidakpastian","mendistorsi"]],["Faktor penentu: niat, kesadaran atasan, materialitas, rigiditas target",["niat","intent","kesadaran","materialitas","material","rigid","transparan"]]],
+m:"Secara utilitarian, slack bisa bermanfaat (buffer) tetapi mendistorsi alokasi sumber daya. Menurut keadilan/virtue, menyembunyikan informasi dari atasan melanggar integritas. Jawabannya bergantung pada niat, kesadaran atasan, materialitas, dan seberapa kaku target."},
+{t:"c",d:3,q:"Sebuah pemda mencatat mark-up harga pengadaan, tidak mengakui piutang retribusi, dan menyewakan aset di bawah harga pasar. Diagnosa dengan fraud triangle dan enam langkah analisis etis, lalu rekomendasikan tindakan.",
+c:[["Diagnosa pressure/opportunity/rationalization pada kasus",["pressure","tekanan","opportunity","kesempatan","rasionalisasi","rationalization"]],["Fakta, isu, opsi, nilai, dampak, keputusan (proses enam langkah)",["fakta","isu","opsi","alternatif","nilai","dampak","keputusan","langkah"]],["Pemangku kepentingan terdampak: warga, negara, pemasok",["warga","masyarakat","publik","stakeholder","pemangku","negara"]],["Lensa etika (konsekuensi, keadilan, hak, virtue)",["utilitarian","keadilan","hak","virtue","lensa","konsekuensi"]],["Tindakan: dokumentasi, koreksi keputusan & celah kontrol, monitoring, APIP/BPK",["dokumentasi","koreksi","monitor","apip","bpk","audit","tone at the top","kebijakan"]]],
+m:"Tekanan target/pribadi, kesempatan (pengawasan lemah), rasionalisasi ('sudah lazim'). Terapkan enam langkah: fakta→isu→opsi→nilai→dampak→keputusan, uji dengan empat lensa, lalu dokumentasikan, koreksi transaksi dan celah kontrol, libatkan APIP/BPK, dan pantau."},
+{t:"d",d:1,q:"Apa perbedaan mendasar organisasi nirlaba dan for-profit terkait surplus? Sebutkan tiga pihak dengan ekspektasi yang bersaing.",
+c:[["For-profit: pemilik memegang klaim residual/dividen",["pemilik","owner","residual","dividen","pemegang saham"]],["Nirlaba: surplus untuk misi/tujuan organisasi",["misi","mission","tujuan","tidak dibagikan","purpose"]],["Pihak: donor/pendana, penerima manfaat, profesional",["donor","pendana","funder","penerima manfaat","beneficiar","profesional"]]],
+m:"Pada for-profit surplus bisa dibagikan kepada pemilik; pada nirlaba surplus harus melayani misi. Pihak yang bersaing: pendana, penerima manfaat, dan profesional."},
+{t:"d",d:2,q:"Sebuah program layanan menghabiskan anggaran sesuai rencana dan menyelesaikan seluruh aktivitas. Apakah program itu sukses? Jelaskan mengapa data pengeluaran tidak cukup dan apa bukti tambahannya.",
+c:[["Tidak cukup: input/aktivitas ≠ outcome",["input","aktivitas","output","outcome","tidak cukup","belum tentu"]],["Butuh bukti perubahan pada penerima manfaat",["penerima manfaat","perubahan","dampak","impact","manfaat"]],["Faktor eksternal lain dapat menjelaskan hasil",["eksternal","faktor lain","atribusi","penjelasan lain","kausal"]],["Kombinasikan ukuran finansial dengan kualitas layanan/outcome",["kualitas","kombinasi","survei","indikator","biaya"]]],
+m:"Pengeluaran sesuai anggaran hanya menunjukkan efisiensi sumber daya dan aktivitas. Sukses misi memerlukan bukti outcome (apa yang berubah bagi penerima manfaat), mempertimbangkan faktor eksternal, dan menggabungkannya dengan biaya serta kualitas."},
+{t:"d",d:3,q:"Yayasan pendidikan dengan donor yang membatasi penggunaan dana ingin merancang bauran pengendalian. Rancang kontrol hasil, tindakan, personel, dan budaya; sertakan risiko dan biaya kontrol pada akuntabilitas dana serta keterbatasan insentif finansial.",
+c:[["Kontrol hasil: outcome + biaya dan kualitas",["hasil","outcome","kualitas","biaya"]],["Kontrol tindakan karena batasan hukum/donor",["tindakan","action","batasan","hukum","restriksi","prosedur","persetujuan"]],["Personel: seleksi, pelatihan, dukungan",["personel","seleksi","pelatihan","dukungan","kapabilitas"]],["Budaya: nilai bersama, etika, komitmen",["budaya","cultural","nilai","etika","komitmen"]],["Rantai dana: funding-allocation-delivery-reporting; risiko dana melenceng vs biaya pelaporan",["funding","alokasi","allocation","delivery","pelaporan","reporting","melenceng","tepat sasaran"]],["Insentif finansial terbatas / kurang kompetitif",["insentif","gaji","kompetitif","terbatas","non-finansial"]]],
+m:"Kontrol hasil: ukur outcome berpasangan dengan biaya/kualitas. Kontrol tindakan: prosedur & persetujuan untuk proses kritis dan batasan donor. Personel: seleksi dan pelatihan. Budaya: nilai bersama & etika. Lacak dana dari pendanaan→alokasi→penyaluran→pelaporan, seimbangkan risiko dana salah sasaran dengan biaya kontrol, dan sadari insentif finansial terbatas."}
+];
+
+const T4=["a","b","c","d"],LV={1:"Mudah — tetap minta penerapan/alasan singkat, bukan sekadar definisi hafalan.",2:"Sedang — studi kasus singkat (analisis: mengapa/bagaimana) yang menuntut penerapan konsep pada situasi konkret.",3:"Sulit — studi kasus multi-aspek HOTS: menuntut analisis akar masalah, evaluasi trade-off dari beberapa sudut pandang, dan rekomendasi/keputusan yang dijustifikasi (level Bloom: menganalisis–mengevaluasi–mencipta)."};
+const LS_DRAFT="mcs_draft_v1", LS_HIST="mcs_hist_v1";
+let S={topic:"all",diff:0,qs:[],i:0,sample:true,busy:false,msg:"",startedAt:null,lastErr:""};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---------- persistence ---------- */
+function saveDraft(){try{if(!S.qs.length)return;localStorage.setItem(LS_DRAFT,JSON.stringify({topic:S.topic,diff:S.diff,i:S.i,startedAt:S.startedAt,qs:S.qs.map(q=>({t:q.t,d:q.d,q:q.q,m:q.m,c:q.c,concepts:q.concepts,rubric:q.rubric,mistakes:q.mistakes,ai:q.ai,ans:q.ans,res:q.res}))}));}catch(e){}}
+function clearDraft(){try{localStorage.removeItem(LS_DRAFT);}catch(e){}}
+function loadDraft(){try{const raw=localStorage.getItem(LS_DRAFT);if(!raw)return null;const d=JSON.parse(raw);return d&&d.qs&&d.qs.length?d:null;}catch(e){return null;}}
+function loadHist(){try{return JSON.parse(localStorage.getItem(LS_HIST)||"[]");}catch(e){return [];}}
+function saveHistEntry(entry){try{const h=loadHist();h.unshift(entry);localStorage.setItem(LS_HIST,JSON.stringify(h.slice(0,30)));}catch(e){}}
+
+/* ---------- setup UI ---------- */
+const chips=(el,obj,key)=>{el.innerHTML="";Object.entries(obj).forEach(([k,v])=>{const b=document.createElement("button");b.textContent=v;b.className=String(S[key])===String(k)?"on":"";b.onclick=()=>{S[key]=key==="diff"?+k:k;render();};el.appendChild(b);});};
+function render(){chips($("tp"),TOPICS,"topic");chips($("df"),DIFF,"diff");$("bAi").disabled=!S.sample||S.busy;$("bAi").innerHTML=S.busy?'<span class="spin"></span>'+esc(S.msg):"✨ Buat set soal (AI · HOTS)";$("bRnd").disabled=S.busy;
+ $("aiNote").textContent=S.busy?"":(S.msg||(S.sample?"AI aktif: soal baru & HOTS (analisis/evaluasi/rekomendasi), dinilai secara semantik. Level 'Campur' = naik bertahap dari mudah ke sulit.":"Mode offline: soal dari bank & penilaian kata kunci konsep (dipakai jika AI gagal)."));}
+const N=()=>Math.max(1,Math.min(30,parseInt($("cnt").value)||10));
+const spec=(k,n)=>({tp:S.topic==="all"?T4[k%4]:S.topic,d:S.diff||Math.min(3,Math.floor(k*3/n)+1)});
+function bankPick(tp,d,used){let p=BANK.filter(q=>q.t===tp&&q.d===d&&!used.has(q.q));if(!p.length)p=BANK.filter(q=>q.t===tp&&!used.has(q.q));if(!p.length)p=BANK.filter(q=>q.t===tp);if(!p.length)return null;const q=p[Math.floor(Math.random()*p.length)];used.add(q.q);return{...q};}
+
+function start(qs,msg){S.qs=qs.map(q=>({...q,ans:"",res:null}));S.i=0;S.msg=msg||"";S.startedAt=Date.now();$("quiz").style.display="block";$("sumCard").style.display="none";$("revCard").style.display="none";view();render();saveDraft();$("quiz").scrollIntoView({behavior:"smooth",block:"start"});}
+
+function bankStart(){if(S.busy)return;const n=N(),avail=BANK.filter(q=>S.topic==="all"||q.t===S.topic).length,m=Math.min(n,avail),used=new Set(),qs=[];
+ for(let k=0;k<m;k++){const s=spec(k,m),q=bankPick(s.tp,s.d,used);if(q)qs.push(q);}
+ start(qs,n>avail?`Bank soal offline hanya punya ${avail} soal unik untuk pilihan ini (beberapa mungkin terulang). Pakai "Buat set soal (AI)" untuk soal baru dalam jumlah lebih banyak.`:"");}
+
+/* ---------- API client (v2) ---------- */
 async function api(body,retries=2){
  for(let a=0;a<=retries;a++){
-  let r;try{r=await fetch("/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});}catch(e){if(a===retries)throw e;continue;}
+  let r;try{r=await fetch("/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});}catch(e){if(a===retries)throw e;await new Promise(z=>setTimeout(z,1200*(a+1)));continue;}
   if(r.ok)return r.json();
   const e=await r.json().catch(()=>({}));
   if(r.status===429||r.status===400||a===retries)throw new Error(e.error||("api "+r.status));
   await new Promise(z=>setTimeout(z,1200*(a+1)));
  }}
 
+/* ---------- AI question generation (1 soal/request, pool 3 worker) ---------- */
 async function genOne(s,avoid){
  const r=await api({task:"generate",topic:TOPICS[s.tp],ctx:CTX[s.tp],level:LV[s.d],avoid});
  return{t:s.tp,d:s.d,q:r.scenario+"\n\n"+r.question,ai:true,concepts:r.concepts||[],rubric:r.rubric||[],mistakes:r.common_mistakes||[],m:r.model_answer||""};
 }
-
 async function aiStart(){if(S.busy)return;const n=N();S.busy=true;S.lastErr="";
  const sp=[...Array(n)].map((_,k)=>spec(k,n)),out=Array(n).fill(null),avoid=[];let done=0,next=0;S.msg=`0/${n} soal…`;render();
  const worker=async()=>{while(next<n){const k=next++;
@@ -59,13 +249,132 @@ async function aiStart(){if(S.busy)return;const n=N();S.busy=true;S.lastErr="";
  if(!qs.length){S.msg="AI gagal: "+(S.lastErr||"tidak diketahui")+". Coba lagi atau pakai 'Acak dari bank'.";render();return;}
  start(qs,fromBank?`${fromBank}/${qs.length} soal dari bank offline (alasan: ${S.lastErr||"AI gagal"}).`:"");}
 
+/* ---------- grading ---------- */
+const norm=s=>s.toLowerCase().replace(/[^\p{L}\p{N}&%\s-]/gu," ");
+function gradeLocal(q,a){const n=norm(a);let concepts=q.c;
+ if(!concepts){concepts=(q.concepts||[]).map(x=>[x,norm(x).split(/\s+/).filter(w=>w.length>4)]);}
+ const got=[],mis=[];let sc=0;concepts.forEach(([lab,kws])=>{const hits=kws.filter(k=>n.includes(norm(k).trim())).length;const need=q.c?1:Math.max(1,Math.ceil(kws.length/2));
+  if(hits>=need){got.push(lab);sc++;}else if(hits>0){got.push(lab+" (sebagian)");sc+=.5;}else mis.push(lab);});
+ const words=a.trim().split(/\s+/).filter(Boolean).length;let score=concepts.length?Math.round(sc/concepts.length*90):0;
+ if(words<25)score=Math.min(score,Math.round(score*words/25));
+ if(sc>0)score+=Math.min(10,Math.floor(words/20));
+ score=Math.max(0,Math.min(100,score));
+ const rec=mis.length?mis.slice(0,3).map(m=>`Tambahkan penjelasan tentang: ${m.replace(" (sebagian)","")}.`):["Perkuat jawaban dengan contoh konkret atau data pendukung."];
+ return{score,covered:got,missed:mis,feedback:score>=75?"Cakupan konsep sudah baik. Perdalam lagi dengan contoh nyata dan analisis trade-off agar semakin kuat.":"Beberapa konsep kunci belum muncul secara eksplisit. Kaitkan jawaban dengan istilah pada daftar 'kurang' dan jelaskan alasannya, bukan hanya menyebutkannya.",rec,offline:true};}
+
 async function gradeAi(q,a){
  const r=await api({task:"grade",ctx:CTX[q.t],question:q.q,answer:a,concepts:q.c?q.c.map(x=>x[0]):q.concepts||[],rubric:q.rubric||[],mistakes:q.mistakes||[],model:q.m||""});
- return{score:Math.max(0,Math.min(100,Math.round(+r.score||0))),covered:r.covered||[],missed:[...(r.missed||[]),...(r.misconceptions||[]).map(x=>"Keliru: "+x)],feedback:r.feedback||"",rec:r.recommendations||[],verdict:r.verdict,criteria:r.criteria||[]};}
-```
-Di akhir script, ganti baris `S.sample={json:...}` dengan: `S.sample=true;render();`
+ return{score:Math.max(0,Math.min(100,Math.round(+r.score||0))),covered:r.covered||[],missed:[...(r.missed||[]),...(r.misconceptions||[]).map(x=>"Keliru: "+x)],feedback:r.feedback||"",rec:(r.recommendations&&r.recommendations.length)?r.recommendations:["Baca kembali contoh jawaban ideal dan bandingkan struktur penalarannya dengan jawabanmu."],verdict:r.verdict,criteria:r.criteria||[]};}
 
-## 4. Perbaikan kecil
-- `saveDraft`: tambahkan `rubric:q.rubric,mistakes:q.mistakes` pada objek soal agar tetap ada saat sesi dilanjutkan.
-- `buildReview`: bungkus `q.res.feedback` dan `q.res.rec.join(" ")` dengan `esc(...)` (celah XSS dari output AI).
-- (Opsional) tampilkan `r.criteria` di kartu hasil sebagai tabel "kriteria — skor/maks — bukti".
+const li=(ul,arr,c)=>{ul.innerHTML="";(arr.length?arr:["–"]).forEach(t=>{const l=document.createElement("li");l.className=c;l.textContent=t;ul.appendChild(l);});};
+const ol=(o,arr)=>{o.innerHTML="";arr.forEach(t=>{const l=document.createElement("li");l.textContent=t;o.appendChild(l);});};
+function showCrit(cr){const w=$("critWrap"),box=$("crit");box.innerHTML="";
+ if(!cr||!cr.length){w.style.display="none";return;}
+ cr.forEach(x=>{const d=document.createElement("div");d.className="crit";
+  d.innerHTML=`<div>${esc(x.name)}<small>${esc(x.evidence)}</small></div><b>${esc(x.score)}/${esc(x.max)}</b>`;box.appendChild(d);});
+ w.style.display="block";}
+function showRes(r){const s=r.score,col=s>=75?"var(--ok)":s>=50?"var(--warn)":"var(--bad)";
+ $("ring").style.setProperty("--p",s);$("ring").style.setProperty("--c",col);$("scn").textContent=s;
+ $("verd").textContent=r.verdict||(s>=85?"Sangat baik":s>=70?"Baik":s>=50?"Cukup":"Perlu diperdalam");
+ $("mode").textContent=r.ai?"Dinilai AI (semantik, tidak kaku pada kata)":"Dinilai offline (kata kunci konsep — fallback)";
+ showCrit(r.criteria);
+ li($("got"),r.covered,"g");li($("mis"),r.missed,"m");$("fb").textContent=r.feedback;ol($("rec"),r.rec||[]);$("mdl").textContent=S.qs[S.i].m||"–";$("res").classList.add("s");}
+function dots(){const d=$("dots");d.innerHTML="";S.qs.forEach((c,k)=>{const b=document.createElement("button");b.className="dot"+(k===S.i?" on":"");b.textContent=k+1;
+  if(c.res)b.style.borderColor=c.res.score>=75?"var(--ok)":c.res.score>=50?"var(--warn)":"var(--bad)";else if(c.ans.trim())b.style.borderStyle="dashed";
+  b.onclick=()=>go(k);d.appendChild(b);});
+ const g=S.qs.filter(c=>c.res),a=S.qs.filter(c=>c.ans.trim()).length,avg=g.length?Math.round(g.reduce((x,c)=>x+c.res.score,0)/g.length):"–";
+ $("st").innerHTML=`<span>Terjawab: <b>${a}/${S.qs.length}</b></span><span>Dinilai: <b>${g.length}</b></span><span>Rata-rata: <b>${avg}</b></span>`;
+ if($("sumCard").style.display!=="none")buildSummary();
+ if($("revCard").style.display!=="none")buildReview();
+}
+function view(){const c=S.qs[S.i],n=S.qs.length;if(!c)return;$("qm").innerHTML="";
+ [TOPICS[c.t],DIFF[c.d]+(c.ai?" · AI":"")].forEach(x=>{const s=document.createElement("span");s.className="tag";s.textContent=x;$("qm").appendChild(s);});
+ $("pos").textContent=`Soal ${S.i+1} / ${n}`;$("barf").style.width=((S.i+1)/n*100)+"%";$("qt").textContent=c.q;$("ans").value=c.ans;
+ $("bPrev").disabled=S.i===0;$("bNext").disabled=S.i===n-1;$("bGrade").disabled=!!c.busy;$("bGrade").innerHTML=c.busy?'<span class="spin"></span>Menilai…':(c.res?"Nilai ulang":"Nilai jawaban");
+ if(c.res)showRes(c.res);else $("res").classList.remove("s");dots();}
+function go(i){if(i<0||i>=S.qs.length||i===S.i)return;S.qs[S.i].ans=$("ans").value;const dir=i>S.i?"inR":"inL";S.i=i;view();const q=$("qc");q.classList.remove("inR","inL");void q.offsetWidth;q.classList.add(dir);}
+async function grade(){const c=S.qs[S.i];if(!c||c.busy)return;const a=$("ans").value.trim();c.ans=a;if(a.length<5){alert("Tulis jawabanmu dulu ya.");return;}
+ c.busy=true;view();let r,ai=false;
+ if(S.sample){for(let attempt=0;attempt<2&&!r;attempt++){try{r=await gradeAi(c,a);ai=true;}catch(e){}}}
+ if(!r)r=gradeLocal(c,a);r.ai=ai;c.res=r;c.busy=false;if(S.qs[S.i]===c){view();$("res").scrollIntoView({behavior:"smooth",block:"nearest"});}else dots();saveDraft();}
+
+/* ---------- session summary ---------- */
+function buildSummary(){
+ const graded=S.qs.filter(q=>q.res);
+ const avg=graded.length?Math.round(graded.reduce((x,q)=>x+q.res.score,0)/graded.length):0;
+ const col=avg>=75?"var(--ok)":avg>=50?"var(--warn)":"var(--bad)";
+ $("sRing").style.setProperty("--p",avg);$("sRing").style.setProperty("--c",col);$("sScn").textContent=graded.length?avg:"–";
+ $("sVerd").textContent=!graded.length?"Belum ada soal dinilai":avg>=85?"Pemahaman sangat baik":avg>=70?"Pemahaman baik":avg>=50?"Pemahaman cukup, masih ada celah":"Perlu banyak diperdalam lagi";
+ const mins=S.startedAt?Math.max(1,Math.round((Date.now()-S.startedAt)/60000)):0;
+ $("sStat").textContent=`${graded.length}/${S.qs.length} soal dinilai · ±${mins} menit`;
+ const topicsEl=$("sTopics");topicsEl.innerHTML="";
+ T4.filter(t=>S.qs.some(q=>q.t===t)).forEach(t=>{
+   const g=S.qs.filter(q=>q.t===t&&q.res);const av=g.length?Math.round(g.reduce((x,q)=>x+q.res.score,0)/g.length):null;
+   const row=document.createElement("div");row.className="topicbar";
+   row.innerHTML=`<div class="tlab">${TOPICS[t]}</div><div class="tb"><i style="width:${av||0}%;background:${av===null?"var(--line)":av>=75?"var(--ok)":av>=50?"var(--warn)":"var(--bad)"}"></i></div><div class="tn">${av===null?"–":av}</div>`;
+   topicsEl.appendChild(row);
+ });
+ const missCount={};graded.forEach(q=>(q.res.missed||[]).forEach(m=>{const k=m.replace(" (sebagian)","");missCount[k]=(missCount[k]||0)+1;}));
+ const weak=Object.entries(missCount).sort((a,b)=>b[1]-a[1]).slice(0,6);
+ li($("sWeak"),weak.map(([k,c])=>`${k} — terlewat di ${c} soal`),"m");
+ $("bRetryWeak").disabled=!graded.some(q=>q.res.score<75);
+}
+function toggleSummary(){const show=$("sumCard").style.display==="none";$("sumCard").style.display=show?"block":"none";$("revCard").style.display="none";if(show){buildSummary();$("sumCard").scrollIntoView({behavior:"smooth",block:"start"});}}
+function retryWeak(){const weak=S.qs.filter(q=>q.res&&q.res.score<75);if(!weak.length)return;
+ S.qs=weak.map(q=>({...q,ans:"",res:null}));S.i=0;S.startedAt=Date.now();$("sumCard").style.display="none";$("revCard").style.display="none";view();dots();saveDraft();$("quiz").scrollIntoView({behavior:"smooth",block:"start"});}
+function saveToHistory(){const graded=S.qs.filter(q=>q.res);if(!graded.length){alert("Belum ada soal yang dinilai.");return;}
+ const avg=Math.round(graded.reduce((x,q)=>x+q.res.score,0)/graded.length);
+ saveHistEntry({date:Date.now(),topic:S.topic,diff:S.diff,count:S.qs.length,graded:graded.length,avg});
+ renderHistory();alert("Ringkasan sesi disimpan ke riwayat (tersimpan di perangkat ini saja).");}
+
+/* ---------- review ---------- */
+function buildReview(){const body=$("revBody");body.innerHTML="";
+ S.qs.forEach((q,idx)=>{
+   const div=document.createElement("div");div.className="review-item";
+   const scoreTag=q.res?`<span class="tag" style="background:${q.res.score>=75?"var(--oks)":q.res.score>=50?"var(--warns)":"var(--bads)"};color:${q.res.score>=75?"var(--ok)":q.res.score>=50?"var(--warn)":"var(--bad)"}">Skor ${q.res.score}</span>`:'<span class="tag w">Belum dinilai</span>';
+   div.innerHTML=`<div class="row" style="justify-content:space-between;align-items:center"><b>Soal ${idx+1}</b> ${scoreTag}</div>
+     <p class="q" style="font-size:15px">${esc(q.q)}</p>
+     <div class="review-a"><b>Jawabanmu:</b><br>${esc(q.ans||"(kosong)")}</div>
+     ${q.res?`<div class="mut" style="font-size:13px"><b>Feedback:</b> ${esc(q.res.feedback)}</div>`:""}
+     ${q.res&&q.res.rec&&q.res.rec.length?`<div class="mut" style="font-size:13px;margin-top:4px"><b>Rekomendasi:</b> ${esc(q.res.rec.join(" "))}</div>`:""}`;
+   body.appendChild(div);
+ });
+}
+function toggleReview(){const show=$("revCard").style.display==="none";$("revCard").style.display=show?"block":"none";$("sumCard").style.display="none";if(show){buildReview();$("revCard").scrollIntoView({behavior:"smooth",block:"start"});}}
+
+/* ---------- history UI ---------- */
+function scorePillCol(s){return s>=75?["var(--oks)","var(--ok)"]:s>=50?["var(--warns)","var(--warn)"]:["var(--bads)","var(--bad)"];}
+function renderHistory(){const h=loadHist();$("histCard").style.display=h.length?"block":"none";if(!h.length)return;
+ const body=$("histBody");body.innerHTML="";
+ h.forEach(e=>{const[bg,fg]=scorePillCol(e.avg);const d=new Date(e.date);
+  const row=document.createElement("div");row.className="hist-row";
+  row.innerHTML=`<span>${d.toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric"})} · ${TOPICS[e.topic]||"Semua"} · ${DIFF[e.diff]}</span><span class="sc-pill" style="background:${bg};color:${fg}">${e.avg} (${e.graded}/${e.count})</span>`;
+  body.appendChild(row);});
+}
+
+/* ---------- resume banner ---------- */
+function initResume(){const d=loadDraft();if(!d)return;
+ $("resumeBanner").style.display="flex";
+ $("bResume").onclick=()=>{S.topic=d.topic;S.diff=d.diff;S.startedAt=d.startedAt||Date.now();S.qs=d.qs.map(q=>({...q}));S.i=Math.min(d.i||0,S.qs.length-1);
+  $("resumeBanner").style.display="none";$("quiz").style.display="block";render();view();dots();$("quiz").scrollIntoView({behavior:"smooth"});};
+ $("bDiscard").onclick=()=>{clearDraft();$("resumeBanner").style.display="none";};
+}
+
+/* ---------- events ---------- */
+$("bAi").onclick=aiStart;$("bRnd").onclick=bankStart;$("bGrade").onclick=grade;$("bPrev").onclick=()=>go(S.i-1);$("bNext").onclick=()=>go(S.i+1);
+$("bSummary").onclick=toggleSummary;$("bReview").onclick=toggleReview;$("bRetryWeak").onclick=retryWeak;$("bSaveHist").onclick=saveToHistory;
+$("bPrint").onclick=()=>{buildReview();window.print();};$("bPrint2").onclick=()=>window.print();
+$("bHistToggle").onclick=()=>{const s=$("histBody").style.display==="none";$("histBody").style.display=s?"block":"none";$("bHistToggle").textContent=s?"Sembunyikan ▴":"Tampilkan ▾";};
+let saveTimer=null;
+$("ans").oninput=()=>{S.qs[S.i].ans=$("ans").value;clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,600);};
+$("ans").onblur=()=>{dots();saveDraft();};
+let tx=0,ty=0;const QZ=$("quiz");
+QZ.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+QZ.addEventListener("touchend",e=>{if(e.target.tagName==="TEXTAREA")return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(S.i+(dx<0?1:-1));});
+document.addEventListener("keydown",e=>{if(/TEXTAREA|INPUT/.test(document.activeElement.tagName))return;if(e.key==="ArrowRight")go(S.i+1);if(e.key==="ArrowLeft")go(S.i-1);});
+
+render();renderHistory();initResume();
+if(!loadDraft())bankStart();else{$("quiz").style.display="none";}
+</script>
+</body>
+</html>
