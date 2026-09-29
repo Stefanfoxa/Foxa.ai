@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MCS Studio – Latihan Soal & Studi Kasus</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f5f1;--card:#fff;--ink:#1c1b19;--mut:#6b6960;--line:#e3e0d7;--ac:#3b5bdb;--acs:#e7ecff;--ok:#2b8a3e;--warn:#e67700;--bad:#c92a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--card:#1f1f1d;--ink:#eeece6;--mut:#a09d92;--line:#33322e;--ac:#7c93ff;--acs:#262c4a;--ok:#69db7c;--warn:#ffa94d;--bad:#ff8787}}
+:root[data-theme="dark"]{--bg:#151514;--card:#1f1f1d;--ink:#eeece6;--mut:#a09d92;--line:#33322e;--ac:#7c93ff;--acs:#262c4a;--ok:#69db7c;--warn:#ffa94d;--bad:#ff8787}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:820px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:24px;margin:0}.sub{color:var(--mut);margin:2px 0 18px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin-bottom:8px}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px}
+button:hover{border-color:var(--ac)}button.on{background:var(--acs);border-color:var(--ac);color:var(--ac);font-weight:600}
+button.p{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:600;border-radius:10px}
+button:disabled{opacity:.5;cursor:default}
+.tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:99px;background:var(--acs);color:var(--ac);margin-right:6px}
+.q{font-size:17px;margin:8px 0 0;white-space:pre-wrap}
+textarea{width:100%;min-height:150px;margin-top:10px;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+.res{display:none}.res.s{display:block}
+.sc{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ring{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--line) 0)}
+.ring span{width:76px;height:76px;border-radius:50%;background:var(--card);display:grid;place-items:center}
+ul{margin:6px 0;padding-left:20px}li.g::marker{color:var(--ok)}li.m::marker{color:var(--bad)}
+.mut{color:var(--mut);font-size:14px}.stat{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--mut)}.stat b{color:var(--ink)}
+details{margin-top:10px}summary{cursor:pointer;color:var(--ac)}
+</style>
+</head>
+<body>
+<div class="w">
+  <h1>MCS Studio</h1>
+  <p class="sub">Latihan soal & studi kasus Management Control Systems · nilai 0–100 dengan penilaian makna, bukan template</p>
+
+  <div class="card">
+    <div class="lbl">Materi</div>
+    <div class="row" id="tp"></div>
+    <div class="lbl" style="margin-top:14px">Tingkat kesulitan</div>
+    <div class="row" id="df"></div>
+    <div class="row" style="margin-top:14px">
+      <button class="p" id="bAi">✨ Soal baru dari AI</button>
+      <button id="bRnd">🎲 Acak dari bank soal</button>
+      <button id="bUp">⬆ Naikkan level</button>
+      <button id="bDn">⬇ Turunkan level</button>
+    </div>
+    <div class="mut" id="aiNote" style="margin-top:8px"></div>
+  </div>
+
+  <div class="card">
+    <div id="qm"></div>
+    <p class="q" id="qt"></p>
+    <textarea id="ans" placeholder="Tulis jawabanmu dengan bahasamu sendiri (Indonesia/Inggris). Jelaskan konsep, alasan, dan contohnya…"></textarea>
+    <div class="row" style="margin-top:10px"><button class="p" id="bGrade">Nilai jawaban saya</button><button id="bSkip">Lewati</button></div>
+  </div>
+
+  <div class="card res" id="res">
+    <div class="sc"><div class="ring" id="ring"><span id="scn">0</span></div>
+      <div><div style="font-weight:700;font-size:18px" id="verd"></div><div class="mut" id="mode"></div></div></div>
+    <div class="lbl" style="margin-top:14px">Konsep yang tercakup</div><ul id="got"></ul>
+    <div class="lbl" style="margin-top:10px">Yang masih kurang / keliru</div><ul id="mis"></ul>
+    <div class="lbl" style="margin-top:10px">Umpan balik</div><div id="fb"></div>
+    <details><summary>Lihat contoh jawaban ideal</summary><div id="mdl" style="margin-top:8px"></div></details>
+  </div>
+
+  <div class="card"><div class="stat" id="st"></div></div>
+</div>
+
+<script>
+const TOPICS={all:"Semua materi",a:"Myopia & Controllability",b:"Governance, Board & Auditor",c:"Etika Pengendalian",d:"Not-for-Profit"};
+const DIFF={1:"Mudah",2:"Sedang",3:"Sulit"};
+const CTX={
+a:"Remedi myopia: kurangi tekanan laba jangka pendek, review investasi, perpanjang horizon, ukur shareholder value, perbaiki ukuran akuntansi, ukur pemicu kinerja masa depan; clawback, deferred shares. Balanced Scorecard (finansial, pelanggan, proses internal, learning & growth; hasil vs driver; compass vs roadmap; trade-off). Controllability principle (pengaruh signifikan, force majeure, pasar, interdependensi), empat pilihan penyesuaian (tujuan, faktor, pemutus, metode), bias hindsight, three-gate test (sepenuhnya tak terkendali, tak ada respons manajerial, efek bisa dihitung objektif).",
+b:"Corporate governance vs management control; dewan direksi (fiduciary: care, loyalty, good faith, no waste; komite audit & kompensasi); Enron/WorldCom, Sarbanes-Oxley 404; CFO (tegangan management service vs fiduciary oversight), controller vs treasurer; controller terdesentralisasi vs tersentralisasi (involvement vs independence, safeguards); audit keuangan/kepatuhan/kinerja sebagai safety net; sektor publik (APIP, BPK).",
+c:"Etika dalam MCS: proses 6 langkah keputusan etis; 4 lensa (utilitarianisme, keadilan, hak & kewajiban, virtue); fraud triangle (pressure, opportunity, rationalization); dilema budgetary slack, earnings management, control indicators, surveillance berlebihan; kebijakan, program, tone at the top; kasus sektor publik (mark-up harga, piutang tak diakui, klaim kinerja manipulatif, sewa aset di bawah pasar).",
+d:"Pengendalian di organisasi nirlaba: surplus untuk misi, pemangku kepentingan bersaing (donor, penerima manfaat, profesional), rantai resources-activities-outputs-outcomes, bauran kontrol (results, action, personnel, cultural), insentif finansial terbatas, akuntabilitas dana (funding-allocation-delivery-reporting), biaya kontrol vs risiko, spending tidak sama dengan impact."};
+
+const BANK=[
+{t:"a",d:1,q:"Mengapa penilaian manajer semata-mata dengan laba tahunan dapat memicu myopia? Berikan satu contoh tindakan manajer dan sebutkan dua cara mengurangi masalah ini.",
+c:[["Laba tahunan mendorong fokus jangka pendek",["jangka pendek","short-term","short term","tahun ini","saat ini"]],["Contoh: memangkas R&D/pelatihan/pemeliharaan demi laba",["r&d","riset","pelatihan","training","pemeliharaan","iklan","maintenance","potong biaya","memangkas"]],["Nilai jangka panjang melemah",["jangka panjang","long-term","long term","nilai masa depan","merusak nilai","melemahkan"]],["Remedi: perpanjang horizon / ukur driver / review investasi / clawback / deferred",["horizon","driver","review investasi","clawback","deferred","tunda","balanced","shareholder value","saham"]]],
+m:"Laba tahunan membuat manajer mengejar hasil yang terlihat baik sekarang, misalnya memotong R&D atau pelatihan, padahal melemahkan nilai jangka panjang. Remedinya: memperpanjang horizon pengukuran (bonus ditangguhkan/deferred shares) dan mengukur pemicu kinerja masa depan seperti kepuasan pelanggan."},
+{t:"a",d:2,q:"Pabrik anda mengalami penurunan laba akibat lonjakan harga bahan baku global yang tidak bisa dikendalikan manajer pabrik. Apakah bonus manajer perlu disesuaikan? Gunakan konsep controllability principle.",
+c:[["Prinsip: akuntabilitas sesuai pengaruh signifikan",["pengaruh","influence","controllab","dikendalikan"]],["Faktor eksternal/pasar menimbulkan noise",["noise","pasar","eksternal","market","harga bahan"]],["Uji: apakah respons manajer diharapkan?",["respons","respon","bereaksi","menyesuaikan harga","hedging","alternatif pemasok"]],["Efek dapat dihitung objektif (variance / flexible budget)",["objektif","hitung","variance","selisih","flexible","anggaran fleksibel","terukur"]],["Manfaat: keadilan & motivasi; risiko: bias/excuse",["adil","fair","motivasi","bias","excuse","dalih","alasan"]]],
+m:"Sesuaikan hanya jika faktor benar-benar di luar kendali, tidak ada respons manajerial yang diharapkan, dan dampaknya bisa dihitung objektif (misalnya flexible budget/variance analysis). Jika manajer masih bisa merespons (ganti pemasok, lindung nilai, naikkan harga), penyesuaian hanya sebagian atau tidak dilakukan."},
+{t:"a",d:3,q:"Perusahaan ritel menerapkan Balanced Scorecard, namun insentif kepala cabang tetap 90% berdasar laba. Dalam 2 tahun, skor kepuasan pelanggan turun sementara laba naik. Analisis penyebabnya, jelaskan trade-off lintas perspektif, dan rancang perbaikan sistem insentifnya.",
+c:[["Insentif laba mendominasi sehingga perspektif lain diabaikan",["90%","dominan","laba saja","bobot","weight","diabaikan","tidak terhubung"]],["Driver vs result: pelanggan/proses/learning adalah driver",["driver","pemicu","hasil","result","leading","lagging"]],["Trade-off: potong biaya/layanan naikkan laba, kepuasan turun",["trade-off","tradeoff","potong","kurangi staf","biaya layanan","kepuasan turun"]],["Perbaikan: bobot lintas perspektif, target, formula atau judgment",["bobot","formula","judgment","kombinasi","seimbang","target","cascade"]],["Risiko myopia & dampak jangka panjang (retensi, pendapatan)",["myopia","jangka panjang","retensi","loyal","pendapatan masa depan","long-term"]]],
+m:"Skor tidak memengaruhi bayaran, sehingga kepala cabang memaksimalkan laba jangka pendek (mengurangi staf/layanan) sementara kepuasan pelanggan (driver pendapatan masa depan) turun. Perbaikan: beri bobot eksplisit pada tiap perspektif, antisipasi trade-off, tautkan bonus lewat formula atau judgment, dan perbarui ukuran secara berkala."},
+{t:"b",d:1,q:"Sebutkan empat kewajiban fiduciary dewan direksi dan jelaskan peran komite audit.",
+c:[["Care (kehati-hatian, keputusan terinformasi)",["care","hati-hati","terinformasi","informed"]],["Loyalty (mengutamakan perusahaan)",["loyal","kesetiaan","mengutamakan perusahaan"]],["Good faith (itikad baik)",["good faith","itikad"]],["No waste (tidak menyia-nyiakan aset)",["waste","pemborosan","menyia"]],["Komite audit: integritas laporan, pengendalian, auditor, independen",["komite audit","audit committee","laporan keuangan","auditor","independen","pengendalian internal"]]],
+m:"Kewajiban: care, loyalty, good faith, dan no waste (tidak menyia-nyiakan aset). Komite audit terdiri dari direktur independen yang melek keuangan, mengawasi integritas pelaporan, pengendalian internal, dan hubungan dengan auditor."},
+{t:"b",d:2,q:"Bandingkan controller unit bisnis yang melapor (solid line) ke kepala unit dengan yang melapor ke controller korporat. Apa kelebihan, kelemahan, dan safeguard-nya?",
+c:[["Desentralisasi: keterlibatan tinggi, business ally",["desentral","kepala unit","business ally","mitra","keterlibatan","involvement"]],["Sentralisasi: independensi & konsistensi",["sentral","korporat","independen","konsisten","standar"]],["Kelemahan: kehilangan independensi vs dianggap polisi/mata-mata",["polisi","spy","mata-mata","tekanan","kompromi","kurang independen"]],["Safeguard: sistem seragam, audit, pelatihan/budaya, insentif tidak terkait laba unit",["seragam","audit","pelatihan","budaya","insentif","tidak terkait","safeguard"]]],
+m:"Solid line ke unit meningkatkan keterlibatan dan dukungan keputusan tetapi berisiko tekanan memanipulasi angka; solid line ke korporat menaikkan independensi dan standardisasi tetapi controller bisa dianggap 'polisi'. Safeguard: sistem seragam, audit, pelatihan/budaya, dan insentif yang tidak tergantung laba unit."},
+{t:"b",d:3,q:"CFO sebuah perusahaan ditekan CEO untuk 'menunda pengakuan biaya' agar target laba kuartal tercapai. Analisis tegangan peran CFO, kontrol yang seharusnya mencegahnya (SOX 404, komite audit, auditor), dan langkah CFO.",
+c:[["Tegangan management service vs fiduciary oversight",["service","layanan","fiduciary","oversight","pengawasan","tegangan"]],["Kewajiban CFO: sertifikasi laporan akurat, menantang perilaku tidak etis",["sertifikasi","certify","akurat","menantang","challenge","tidak etis"]],["SOX 404: evaluasi kontrol internal oleh manajemen & atestasi auditor",["sox","404","sarbanes","atestasi","evaluasi kontrol"]],["Komite audit / dewan / speak-up sebagai jalur eskalasi",["komite audit","dewan","board","whistle","speak-up","eskalasi","lapor"]],["Auditor independen sebagai safety net (terbatas periodik)",["auditor","safety net","independen","eksternal"]]],
+m:"CFO harus dekat cukup untuk membantu tetapi independen untuk menolak. Menunda biaya melanggar tugas fiduciary. Kontrol: SOX 404 (evaluasi manajemen + atestasi auditor), komite audit independen, jalur speak-up, dan audit independen. CFO menolak, mendokumentasikan, dan mengeskalasi ke komite audit."},
+{t:"c",d:1,q:"Jelaskan tiga elemen fraud triangle dan beri satu contoh untuk masing-masing.",
+c:[["Pressure (tekanan) + contoh: target, utang",["pressure","tekanan","target","utang","keserakahan"]],["Opportunity (kesempatan) + contoh: pengawasan lemah",["opportunity","kesempatan","pengawasan","segregation","pemisahan tugas","monitoring"]],["Rationalization (rasionalisasi) + contoh",["rasionalisasi","rationalization","semua orang","perusahaan berutang","hanya pinjam","everyone"]]],
+m:"Pressure: target yang tidak realistis atau utang pribadi. Opportunity: pengawasan lemah/tidak ada pemisahan tugas. Rationalization: 'semua orang melakukannya' atau 'aku hanya meminjam'. Ketiganya berinteraksi memicu pelanggaran."},
+{t:"c",d:2,q:"Seorang manajer menaikkan anggaran biaya (budgetary slack) 15% sebagai penyangga ketidakpastian. Menurut anda, apakah ini etis? Gunakan minimal dua lensa etika dan sebutkan faktor yang menentukan.",
+c:[["Lensa utilitarianisme (konsekuensi)",["utilitarian","konsekuensi","manfaat terbesar","consequence"]],["Lensa keadilan/fairness atau hak-kewajiban atau virtue",["keadilan","fairness","justice","hak","kewajiban","virtue","integritas","objektivitas"]],["Slack sebagai penyangga vs distorsi keputusan",["penyangga","buffer","distorsi","ketidakpastian","mendistorsi"]],["Faktor penentu: niat, kesadaran atasan, materialitas, rigiditas target",["niat","intent","kesadaran","materialitas","material","rigid","transparan"]]],
+m:"Secara utilitarian, slack bisa bermanfaat (buffer) tetapi mendistorsi alokasi sumber daya. Menurut keadilan/virtue, menyembunyikan informasi dari atasan melanggar integritas. Jawabannya bergantung pada niat, kesadaran atasan, materialitas, dan seberapa kaku target."},
+{t:"c",d:3,q:"Sebuah pemda mencatat mark-up harga pengadaan, tidak mengakui piutang retribusi, dan menyewakan aset di bawah harga pasar. Diagnosa dengan fraud triangle dan enam langkah analisis etis, lalu rekomendasikan tindakan.",
+c:[["Diagnosa pressure/opportunity/rationalization pada kasus",["pressure","tekanan","opportunity","kesempatan","rasionalisasi","rationalization"]],["Fakta, isu, opsi, nilai, dampak, keputusan (proses enam langkah)",["fakta","isu","opsi","alternatif","nilai","dampak","keputusan","langkah"]],["Pemangku kepentingan terdampak: warga, negara, pemasok",["warga","masyarakat","publik","stakeholder","pemangku","negara"]],["Lensa etika (konsekuensi, keadilan, hak, virtue)",["utilitarian","keadilan","hak","virtue","lensa","konsekuensi"]],["Tindakan: dokumentasi, koreksi keputusan & celah kontrol, monitoring, APIP/BPK",["dokumentasi","koreksi","monitor","apip","bpk","audit","tone at the top","kebijakan"]]],
+m:"Tekanan target/pribadi, kesempatan (pengawasan lemah), rasionalisasi ('sudah lazim'). Terapkan enam langkah: fakta→isu→opsi→nilai→dampak→keputusan, uji dengan empat lensa, lalu dokumentasikan, koreksi transaksi dan celah kontrol, libatkan APIP/BPK, dan pantau."},
+{t:"d",d:1,q:"Apa perbedaan mendasar organisasi nirlaba dan for-profit terkait surplus? Sebutkan tiga pihak dengan ekspektasi yang bersaing.",
+c:[["For-profit: pemilik memegang klaim residual/dividen",["pemilik","owner","residual","dividen","pemegang saham"]],["Nirlaba: surplus untuk misi/tujuan organisasi",["misi","mission","tujuan","tidak dibagikan","purpose"]],["Pihak: donor/pendana, penerima manfaat, profesional",["donor","pendana","funder","penerima manfaat","beneficiar","profesional"]]],
+m:"Pada for-profit surplus bisa dibagikan kepada pemilik; pada nirlaba surplus harus melayani misi. Pihak yang bersaing: pendana, penerima manfaat, dan profesional."},
+{t:"d",d:2,q:"Sebuah program layanan menghabiskan anggaran sesuai rencana dan menyelesaikan seluruh aktivitas. Apakah program itu sukses? Jelaskan mengapa data pengeluaran tidak cukup dan apa bukti tambahannya.",
+c:[["Tidak cukup: input/aktivitas ≠ outcome",["input","aktivitas","output","outcome","tidak cukup","belum tentu"]],["Butuh bukti perubahan pada penerima manfaat",["penerima manfaat","perubahan","dampak","impact","manfaat"]],["Faktor eksternal lain dapat menjelaskan hasil",["eksternal","faktor lain","atribusi","penjelasan lain","kausal"]],["Kombinasikan ukuran finansial dengan kualitas layanan/outcome",["kualitas","kombinasi","survei","indikator","biaya"]]],
+m:"Pengeluaran sesuai anggaran hanya menunjukkan efisiensi sumber daya dan aktivitas. Sukses misi memerlukan bukti outcome (apa yang berubah bagi penerima manfaat), mempertimbangkan faktor eksternal, dan menggabungkannya dengan biaya serta kualitas."},
+{t:"d",d:3,q:"Yayasan pendidikan dengan donor yang membatasi penggunaan dana ingin merancang bauran pengendalian. Rancang kontrol hasil, tindakan, personel, dan budaya; sertakan risiko dan biaya kontrol pada akuntabilitas dana serta keterbatasan insentif finansial.",
+c:[["Kontrol hasil: outcome + biaya dan kualitas",["hasil","outcome","kualitas","biaya"]],["Kontrol tindakan karena batasan hukum/donor",["tindakan","action","batasan","hukum","restriksi","prosedur","persetujuan"]],["Personel: seleksi, pelatihan, dukungan",["personel","seleksi","pelatihan","dukungan","kapabilitas"]],["Budaya: nilai bersama, etika, komitmen",["budaya","cultural","nilai","etika","komitmen"]],["Rantai dana: funding-allocation-delivery-reporting; risiko dana melenceng vs biaya pelaporan",["funding","alokasi","allocation","delivery","pelaporan","reporting","melenceng","tepat sasaran"]],["Insentif finansial terbatas / kurang kompetitif",["insentif","gaji","kompetitif","terbatas","non-finansial"]]],
+m:"Kontrol hasil: ukur outcome berpasangan dengan biaya/kualitas. Kontrol tindakan: prosedur & persetujuan untuk proses kritis dan batasan donor. Personel: seleksi dan pelatihan. Budaya: nilai bersama & etika. Lacak dana dari pendanaan→alokasi→penyaluran→pelaporan, seimbangkan risiko dana salah sasaran dengan biaya kontrol, dan sadari insentif finansial terbatas."}
+];
+
+let S={topic:"all",diff:2,cur:null,hist:[],sample:null,busy:false};
+const $=id=>document.getElementById(id);
+const chips=(el,obj,key)=>{el.innerHTML="";Object.entries(obj).forEach(([k,v])=>{const b=document.createElement("button");b.textContent=v;b.className=String(S[key])===String(k)?"on":"";b.onclick=()=>{S[key]=key==="diff"?+k:k;render();};el.appendChild(b);});};
+function render(){chips($("tp"),TOPICS,"topic");chips($("df"),DIFF,"diff");
+ $("bUp").disabled=S.diff>=3;$("bDn").disabled=S.diff<=1;$("bAi").disabled=!S.sample||S.busy;
+ $("aiNote").textContent=S.sample?"AI aktif: soal & penilaian dibaca secara semantik.":"Mode offline: soal dari bank & penilaian berbasis kata kunci konsep (jika AI gagal, otomatis memakai mode ini).";
+ const h=S.hist,avg=h.length?Math.round(h.reduce((a,b)=>a+b,0)/h.length):"–";
+ $("st").innerHTML=`<span>Dijawab: <b>${h.length}</b></span><span>Rata-rata: <b>${avg}</b></span><span>Terbaik: <b>${h.length?Math.max(...h):"–"}</b></span><span>Level: <b>${DIFF[S.diff]}</b></span>`;}
+function show(q){S.cur=q;$("qm").innerHTML="";[TOPICS[q.t],DIFF[q.d]+(q.ai?" · AI":"")].forEach(x=>{const s=document.createElement("span");s.className="tag";s.textContent=x;$("qm").appendChild(s);});
+ $("qt").textContent=q.q;$("ans").value="";$("res").classList.remove("s");}
+function pickBank(){let p=BANK.filter(q=>(S.topic==="all"||q.t===S.topic)&&q.d===S.diff);if(!p.length)p=BANK.filter(q=>S.topic==="all"||q.t===S.topic);
+ if(S.cur&&p.length>1)p=p.filter(q=>q.q!==S.cur.q);show(p[Math.floor(Math.random()*p.length)]);}
+async function genAi(){if(!S.sample||S.busy)return;S.busy=true;$("bAi").textContent="Membuat soal…";render();
+ const tp=S.topic==="all"?["a","b","c","d"][Math.floor(Math.random()*4)]:S.topic;
+ const lv={1:"Mudah: definisi/penjelasan konsep singkat.",2:"Sedang: studi kasus singkat yang menuntut penerapan konsep.",3:"Sulit: studi kasus multi-aspek yang menuntut analisis, trade-off, dan rekomendasi."}[S.diff];
+ const prompt=`Buat SATU soal esai untuk mata kuliah Management Control Systems dalam Bahasa Indonesia.\nMateri: ${CTX[tp]}\nTingkat: ${lv}\nSeed acak: ${Math.random().toString(36).slice(2)} (buat skenario/konteks industri yang berbeda dari biasanya, contoh: rumah sakit, startup, bank, pemda, universitas, pabrik).\nBalas HANYA JSON: {"q":"teks soal/studi kasus","concepts":["3-6 konsep kunci yang harus muncul"],"model":"contoh jawaban ideal 3-5 kalimat"}`;
+ try{const r=await S.sample.json(prompt,{cache:false});if(!r||!r.q)throw 0;show({t:tp,d:S.diff,q:r.q,ai:true,concepts:r.concepts||[],m:r.model||""});}
+ catch(e){pickBank();}
+ S.busy=false;$("bAi").textContent="✨ Soal baru dari AI";render();}
+const norm=s=>s.toLowerCase().replace(/[^\p{L}\p{N}&%\s-]/gu," ");
+function gradeLocal(q,a){const n=norm(a);let concepts=q.c;
+ if(!concepts){concepts=(q.concepts||[]).map(x=>[x,norm(x).split(/\s+/).filter(w=>w.length>4)]);}
+ const got=[],mis=[];let sc=0;concepts.forEach(([lab,kws])=>{const hits=kws.filter(k=>n.includes(norm(k).trim())).length;const need=q.c?1:Math.max(1,Math.ceil(kws.length/2));
+  if(hits>=need){got.push(lab);sc++;}else if(hits>0){got.push(lab+" (sebagian)");sc+=.5;}else mis.push(lab);});
+ const words=a.trim().split(/\s+/).filter(Boolean).length;let score=concepts.length?Math.round(sc/concepts.length*90):0;
+ if(words<25)score=Math.min(score,Math.round(score*words/25));
+ if(sc>0)score+=Math.min(10,Math.floor(words/20));
+ score=Math.max(0,Math.min(100,score));
+ return{score,covered:got,missed:mis,feedback:score>=75?"Cakupan konsep baik. Perdalam dengan contoh nyata dan analisis trade-off.":"Beberapa konsep kunci belum muncul. Kaitkan jawaban dengan konsep di daftar 'kurang' dan jelaskan alasannya.",offline:true};}
+async function gradeAi(q,a){const rub=q.c?q.c.map(x=>x[0]):q.concepts||[];
+ const p=`Kamu dosen penilai Management Control Systems yang adil dan cermat. Nilai jawaban mahasiswa 0-100.\n\nSOAL: ${q.q}\nKONSEP KUNCI (panduan, bukan template wajib): ${rub.join(" | ")}\nCONTOH JAWABAN IDEAL: ${q.m||"-"}\nRINGKAS MATERI: ${CTX[q.t]}\n\nJAWABAN MAHASISWA:\n"""${a}"""\n\nATURAN PENILAIAN:\n- Nilai MAKNA, bukan kata. Parafrase, sinonim, istilah Inggris/Indonesia, dan urutan berbeda tetap diberi kredit penuh.\n- Alasan/argumen alternatif yang valid secara logis dan konsisten dengan teori diberi kredit meskipun tidak ada di daftar konsep.\n- Kurangi nilai untuk klaim yang keliru/kontradiktif, jawaban tidak relevan, atau hanya menyebut istilah tanpa penjelasan. Panjang bukan kriteria.\n- Skala: 90-100 lengkap+mendalam; 75-89 baik, ada celah kecil; 60-74 cukup, beberapa konsep hilang/dangkal; 40-59 sebagian; 1-39 sangat kurang; 0 kosong/tidak relevan.\n- Umpan balik spesifik, konstruktif, dalam Bahasa Indonesia, merujuk isi jawaban mahasiswa.\nBalas HANYA JSON: {"score":0-100,"covered":["konsep yang benar-benar dijelaskan"],"missed":["konsep/penalaran yang kurang atau keliru"],"feedback":"2-4 kalimat","verdict":"label singkat"}`;
+ const r=await S.sample.json(p,{cache:false,modelTier:"complex"});
+ return{score:Math.max(0,Math.min(100,Math.round(+r.score||0))),covered:r.covered||[],missed:r.missed||[],feedback:r.feedback||"",verdict:r.verdict};}
+const li=(ul,arr,c)=>{ul.innerHTML="";(arr.length?arr:["–"]).forEach(t=>{const l=document.createElement("li");l.className=c;l.textContent=t;ul.appendChild(l);});};
+async function grade(){const a=$("ans").value.trim();if(!S.cur||S.busy)return;if(a.length<5){alert("Tulis jawabanmu dulu ya.");return;}
+ S.busy=true;$("bGrade").textContent="Menilai…";$("bGrade").disabled=true;let r,ai=false;
+ if(S.sample){try{r=await gradeAi(S.cur,a);ai=true;}catch(e){r=null;}}
+ if(!r)r=gradeLocal(S.cur,a);
+ const s=r.score,col=s>=75?"var(--ok)":s>=50?"var(--warn)":"var(--bad)";
+ $("ring").style.setProperty("--p",s);$("ring").style.setProperty("--c",col);$("scn").textContent=s;
+ $("verd").textContent=r.verdict||(s>=85?"Sangat baik":s>=70?"Baik":s>=50?"Cukup":"Perlu diperdalam");
+ $("mode").textContent=ai?"Dinilai AI (semantik)":"Dinilai offline (kata kunci konsep)";
+ li($("got"),r.covered,"g");li($("mis"),r.missed,"m");$("fb").textContent=r.feedback;$("mdl").textContent=S.cur.m||"–";
+ $("res").classList.add("s");$("res").scrollIntoView({behavior:"smooth",block:"nearest"});
+ S.hist.push(s);S.busy=false;$("bGrade").textContent="Nilai jawaban saya";$("bGrade").disabled=false;render();}
+$("bAi").onclick=genAi;$("bRnd").onclick=pickBank;$("bSkip").onclick=()=>S.sample?genAi():pickBank();
+$("bGrade").onclick=grade;
+$("bUp").onclick=()=>{S.diff=Math.min(3,S.diff+1);render();S.sample?genAi():pickBank();};
+$("bDn").onclick=()=>{S.diff=Math.max(1,S.diff-1);render();S.sample?genAi():pickBank();};
+render();pickBank();
+S.sample={json:async(prompt,o)=>{const r=await fetch("/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt,tier:o&&o.modelTier})});if(!r.ok)throw new Error("api "+r.status);return r.json();}};render();
+</script>
+</body>
+</html>
