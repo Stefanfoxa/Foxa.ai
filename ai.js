@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
       headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" },
       body: JSON.stringify({
         model,
-        max_tokens: 1200,
+        max_tokens: 3500,
         system: "Kamu asisten dosen Management Control Systems. Balas HANYA dengan satu objek JSON valid, tanpa teks lain dan tanpa markdown.",
         messages: [{ role: "user", content: prompt }],
       }),
