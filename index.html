@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MCS Studio – Latihan Soal & Studi Kasus</title>
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f5f1;--card:#fff;--ink:#1c1b19;--mut:#6b6960;--line:#e3e0d7;--ac:#3b5bdb;--acs:#e7ecff;--ok:#2b8a3e;--warn:#e67700;--bad:#c92a2a}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--card:#1f1f1d;--ink:#eeece6;--mut:#a09d92;--line:#33322e;--ac:#7c93ff;--acs:#262c4a;--ok:#69db7c;--warn:#ffa94d;--bad:#ff8787}}
-:root[data-theme="dark"]{--bg:#151514;--card:#1f1f1d;--ink:#eeece6;--mut:#a09d92;--line:#33322e;--ac:#7c93ff;--acs:#262c4a;--ok:#69db7c;--warn:#ffa94d;--bad:#ff8787}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f5f1;--card:#fff;--ink:#1c1b19;--mut:#6b6960;--line:#e3e0d7;--ac:#3b5bdb;--acs:#e7ecff;--ok:#2b8a3e;--oks:#eaf7ec;--warn:#e67700;--warns:#fff3e0;--bad:#c92a2a;--bads:#fdecec}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--card:#1f1f1d;--ink:#eeece6;--mut:#a09d92;--line:#33322e;--ac:#7c93ff;--acs:#262c4a;--ok:#69db7c;--oks:#173822;--warn:#ffa94d;--warns:#3a2a12;--bad:#ff8787;--bads:#3a1c1c}}
+:root[data-theme="dark"]{--bg:#151514;--card:#1f1f1d;--ink:#eeece6;--mut:#a09d92;--line:#33322e;--ac:#7c93ff;--acs:#262c4a;--ok:#69db7c;--oks:#173822;--warn:#ffa94d;--warns:#3a2a12;--bad:#ff8787;--bads:#3a1c1c}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
@@ -19,15 +19,20 @@ h1{font-size:24px;margin:0}.sub{color:var(--mut);margin:2px 0 18px;font-size:14p
 button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px}
 button:hover{border-color:var(--ac)}button.on{background:var(--acs);border-color:var(--ac);color:var(--ac);font-weight:600}
 button.p{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:600;border-radius:10px}
+button.ghost{background:transparent}
+button.danger{color:var(--bad);border-color:var(--bad)}
 button:disabled{opacity:.5;cursor:default}
 .tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:99px;background:var(--acs);color:var(--ac);margin-right:6px}
+.tag.w{background:var(--warns);color:var(--warn)}
 .q{font-size:17px;margin:8px 0 0;white-space:pre-wrap}
 textarea{width:100%;min-height:150px;margin-top:10px;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
 .res{display:none}.res.s{display:block}
 .sc{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.ring{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--line) 0)}
+.ring{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--line) 0);flex:none}
 .ring span{width:76px;height:76px;border-radius:50%;background:var(--card);display:grid;place-items:center}
+.ring.sm{width:56px;height:56px;font-size:16px}.ring.sm span{width:44px;height:44px}
 ul{margin:6px 0;padding-left:20px}li.g::marker{color:var(--ok)}li.m::marker{color:var(--bad)}
+ol.rec{margin:6px 0;padding-left:20px}ol.rec li{margin-bottom:4px}
 .mut{color:var(--mut);font-size:14px}.stat{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--mut)}.stat b{color:var(--ink)}
 details{margin-top:10px}summary{cursor:pointer;color:var(--ac)}
 input[type=number]{width:84px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
@@ -36,27 +41,63 @@ input[type=number]{width:84px;padding:8px 10px;border-radius:10px;border:1px sol
 .nav{justify-content:space-between;margin-top:10px}
 @keyframes inR{from{transform:translateX(36px);opacity:.2}to{transform:none;opacity:1}}@keyframes inL{from{transform:translateX(-36px);opacity:.2}to{transform:none;opacity:1}}
 #qc.inR{animation:inR .22s}#qc.inL{animation:inL .22s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;margin-right:6px;vertical-align:-2px;opacity:.8}
+.banner{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--acs);border:1px solid var(--ac);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.banner p{margin:0;font-size:14px}
+.hist-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;gap:10px}
+.hist-row:last-child{border-bottom:none}
+.hist-row .sc-pill{font-weight:700;padding:2px 9px;border-radius:99px;font-size:13px}
+.review-item{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.review-item:first-child{border-top:none;margin-top:0;padding-top:0}
+.review-a{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:14px;white-space:pre-wrap}
+.topicbar{display:flex;align-items:center;gap:8px;font-size:13px;margin:5px 0}
+.topicbar .tlab{width:130px;flex:none;color:var(--mut)}
+.topicbar .tb{flex:1;height:8px;background:var(--line);border-radius:5px;overflow:hidden}
+.topicbar .tb i{display:block;height:100%;border-radius:5px}
+.topicbar .tn{width:34px;text-align:right;font-weight:600}
+@media print{
+  body{background:#fff}
+  .no-print,button,input,#tp,#df,.card:has(#tp){display:none!important}
+  .w{max-width:100%;padding:0}
+  .card{border:none;border-bottom:1px solid #ccc;border-radius:0;break-inside:avoid}
+}
 </style>
 </head>
 <body>
 <div class="w">
   <h1>MCS Studio</h1>
-  <p class="sub">Latihan soal & studi kasus Management Control Systems · nilai 0–100 dengan penilaian makna, bukan template</p>
-  <div class="card">
+  <p class="sub">Latihan soal & studi kasus Management Control Systems · dinilai secara semantik, bukan template</p>
+
+  <div id="resumeBanner" class="banner no-print" style="display:none">
+    <p>Ada sesi latihan yang belum selesai dari kunjungan sebelumnya. Lanjutkan?</p>
+    <div class="row"><button class="p" id="bResume">Lanjutkan</button><button id="bDiscard">Mulai baru</button></div>
+  </div>
+
+  <div class="card no-print" id="histCard" style="display:none">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div class="lbl" style="margin:0">Riwayat latihan</div>
+      <button class="ghost" id="bHistToggle" style="padding:4px 10px;font-size:13px">Tampilkan ▾</button>
+    </div>
+    <div id="histBody" style="display:none;margin-top:8px"></div>
+  </div>
+
+  <div class="card no-print">
     <div class="lbl">Materi</div><div class="row" id="tp"></div>
     <div class="lbl" style="margin-top:14px">Tingkat kesulitan</div><div class="row" id="df"></div>
     <div class="lbl" style="margin-top:14px">Jumlah soal (1–30)</div>
-    <div class="row"><input type="number" id="cnt" min="1" max="30" value="10"><button class="p" id="bAi">✨ Buat set soal (AI)</button><button id="bRnd">🎲 Acak dari bank</button></div>
+    <div class="row"><input type="number" id="cnt" min="1" max="30" value="10"><button class="p" id="bAi">✨ Buat set soal (AI · HOTS)</button><button id="bRnd">🎲 Acak dari bank</button></div>
     <div class="mut" id="aiNote" style="margin-top:8px"></div>
   </div>
+
   <div id="quiz" style="display:none">
     <div class="card" id="qc">
       <div class="row" style="justify-content:space-between;align-items:center"><div id="qm"></div><span class="mut" id="pos"></span></div>
       <div class="bar"><i id="barf"></i></div>
       <p class="q" id="qt"></p>
       <textarea id="ans" placeholder="Tulis jawabanmu dengan bahasamu sendiri (Indonesia/Inggris). Jelaskan konsep, alasan, dan contohnya…"></textarea>
-      <div class="row nav"><button id="bPrev">← Sebelumnya</button><button class="p" id="bGrade">Nilai jawaban</button><button id="bNext">Berikutnya →</button></div>
-      <div class="mut" style="margin-top:8px;font-size:13px">Tip: geser layar ke kiri/kanan atau pakai tombol panah keyboard untuk pindah soal.</div>
+      <div class="row nav no-print"><button id="bPrev">← Sebelumnya</button><button class="p" id="bGrade">Nilai jawaban</button><button id="bNext">Berikutnya →</button></div>
+      <div class="mut no-print" style="margin-top:8px;font-size:13px">Tip: geser layar ke kiri/kanan atau pakai tombol panah keyboard untuk pindah soal.</div>
     </div>
     <div class="card res" id="res">
       <div class="sc"><div class="ring" id="ring"><span id="scn">0</span></div>
@@ -64,9 +105,37 @@ input[type=number]{width:84px;padding:8px 10px;border-radius:10px;border:1px sol
       <div class="lbl" style="margin-top:14px">Konsep yang tercakup</div><ul id="got"></ul>
       <div class="lbl" style="margin-top:10px">Yang masih kurang / keliru</div><ul id="mis"></ul>
       <div class="lbl" style="margin-top:10px">Umpan balik</div><div id="fb"></div>
+      <div class="lbl" style="margin-top:10px">Rekomendasi untuk memperbaiki jawaban</div><ol class="rec" id="rec"></ol>
       <details><summary>Lihat contoh jawaban ideal</summary><div id="mdl" style="margin-top:8px"></div></details>
     </div>
-    <div class="card"><div class="lbl">Navigasi soal & ringkasan (hijau ≥75, oranye ≥50, merah &lt;50, putus-putus = terjawab belum dinilai)</div><div class="row" id="dots"></div><div class="stat" id="st" style="margin-top:12px"></div></div>
+    <div class="card no-print"><div class="lbl">Navigasi soal & ringkasan (hijau ≥75, oranye ≥50, merah &lt;50, putus-putus = terjawab belum dinilai)</div><div class="row" id="dots"></div><div class="stat" id="st" style="margin-top:12px"></div>
+      <div class="row" style="margin-top:12px"><button id="bSummary">📊 Ringkasan sesi</button><button id="bReview">🔎 Tinjau semua jawaban</button></div>
+    </div>
+
+    <div class="card" id="sumCard" style="display:none">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <div class="lbl" style="margin:0">Ringkasan sesi</div>
+        <div class="row no-print"><button class="ghost" id="bPrint" style="font-size:13px">🖨️ Ekspor / cetak</button></div>
+      </div>
+      <div class="sc" style="margin-top:6px"><div class="ring" id="sRing"><span id="sScn">0</span></div>
+        <div><div style="font-weight:700;font-size:18px" id="sVerd"></div><div class="mut" id="sStat"></div></div></div>
+      <div class="lbl" style="margin-top:14px">Per materi</div>
+      <div id="sTopics"></div>
+      <div class="lbl" style="margin-top:14px">Konsep yang paling sering terlewat</div>
+      <ul id="sWeak"></ul>
+      <div class="row no-print" style="margin-top:12px">
+        <button class="p" id="bRetryWeak">🔁 Latihan ulang soal &lt; 75</button>
+        <button id="bSaveHist">💾 Simpan ke riwayat</button>
+      </div>
+    </div>
+
+    <div class="card" id="revCard" style="display:none">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <div class="lbl" style="margin:0">Tinjauan lengkap</div>
+        <button class="ghost no-print" id="bPrint2" style="font-size:13px">🖨️ Ekspor / cetak</button>
+      </div>
+      <div id="revBody"></div>
+    </div>
   </div>
 </div>
 
@@ -118,27 +187,78 @@ c:[["Kontrol hasil: outcome + biaya dan kualitas",["hasil","outcome","kualitas",
 m:"Kontrol hasil: ukur outcome berpasangan dengan biaya/kualitas. Kontrol tindakan: prosedur & persetujuan untuk proses kritis dan batasan donor. Personel: seleksi dan pelatihan. Budaya: nilai bersama & etika. Lacak dana dari pendanaan→alokasi→penyaluran→pelaporan, seimbangkan risiko dana salah sasaran dengan biaya kontrol, dan sadari insentif finansial terbatas."}
 ];
 
-const T4=["a","b","c","d"],LV={1:"Mudah: definisi/penjelasan konsep singkat.",2:"Sedang: studi kasus singkat yang menuntut penerapan konsep.",3:"Sulit: studi kasus multi-aspek yang menuntut analisis, trade-off, dan rekomendasi."};
-let S={topic:"all",diff:0,qs:[],i:0,sample:null,busy:false,msg:""};
+const T4=["a","b","c","d"],LV={1:"Mudah — tetap minta penerapan/alasan singkat, bukan sekadar definisi hafalan.",2:"Sedang — studi kasus singkat (analisis: mengapa/bagaimana) yang menuntut penerapan konsep pada situasi konkret.",3:"Sulit — studi kasus multi-aspek HOTS: menuntut analisis akar masalah, evaluasi trade-off dari beberapa sudut pandang, dan rekomendasi/keputusan yang dijustifikasi (level Bloom: menganalisis–mengevaluasi–mencipta)."};
+const LS_DRAFT="mcs_draft_v1", LS_HIST="mcs_hist_v1";
+let S={topic:"all",diff:0,qs:[],i:0,sample:null,busy:false,msg:"",startedAt:null};
 const $=id=>document.getElementById(id);
+
+/* ---------- persistence ---------- */
+function saveDraft(){try{if(!S.qs.length)return;localStorage.setItem(LS_DRAFT,JSON.stringify({topic:S.topic,diff:S.diff,i:S.i,startedAt:S.startedAt,qs:S.qs.map(q=>({t:q.t,d:q.d,q:q.q,m:q.m,c:q.c,concepts:q.concepts,ai:q.ai,ans:q.ans,res:q.res}))}));}catch(e){}}
+function clearDraft(){try{localStorage.removeItem(LS_DRAFT);}catch(e){}}
+function loadDraft(){try{const raw=localStorage.getItem(LS_DRAFT);if(!raw)return null;const d=JSON.parse(raw);return d&&d.qs&&d.qs.length?d:null;}catch(e){return null;}}
+function loadHist(){try{return JSON.parse(localStorage.getItem(LS_HIST)||"[]");}catch(e){return [];}}
+function saveHistEntry(entry){try{const h=loadHist();h.unshift(entry);localStorage.setItem(LS_HIST,JSON.stringify(h.slice(0,30)));}catch(e){}}
+
+/* ---------- setup UI ---------- */
 const chips=(el,obj,key)=>{el.innerHTML="";Object.entries(obj).forEach(([k,v])=>{const b=document.createElement("button");b.textContent=v;b.className=String(S[key])===String(k)?"on":"";b.onclick=()=>{S[key]=key==="diff"?+k:k;render();};el.appendChild(b);});};
-function render(){chips($("tp"),TOPICS,"topic");chips($("df"),DIFF,"diff");$("bAi").disabled=!S.sample||S.busy;$("bRnd").disabled=S.busy;
- $("aiNote").textContent=S.msg||(S.sample?"AI aktif: soal dibuat baru dan jawaban dinilai secara semantik. Level 'Campur' = naik bertahap dari mudah ke sulit.":"Mode offline: soal dari bank & penilaian kata kunci konsep (jika AI gagal).");}
+function render(){chips($("tp"),TOPICS,"topic");chips($("df"),DIFF,"diff");$("bAi").disabled=!S.sample||S.busy;$("bAi").innerHTML=S.busy?'<span class="spin"></span>'+S.msg:"✨ Buat set soal (AI · HOTS)";$("bRnd").disabled=S.busy;
+ $("aiNote").textContent=S.busy?"":(S.msg||(S.sample?"AI aktif: soal baru & HOTS (analisis/evaluasi/rekomendasi), dinilai secara semantik. Level 'Campur' = naik bertahap dari mudah ke sulit.":"Mode offline: soal dari bank & penilaian kata kunci konsep (dipakai jika AI gagal)."));}
 const N=()=>Math.max(1,Math.min(30,parseInt($("cnt").value)||10));
 const spec=(k,n)=>({tp:S.topic==="all"?T4[k%4]:S.topic,d:S.diff||Math.min(3,Math.floor(k*3/n)+1)});
-function bankPick(tp,d,used){let p=BANK.filter(q=>q.t===tp&&q.d===d&&!used.has(q.q));if(!p.length)p=BANK.filter(q=>q.t===tp&&!used.has(q.q));if(!p.length)return null;const q=p[Math.floor(Math.random()*p.length)];used.add(q.q);return{...q};}
-function start(qs,msg){S.qs=qs.map(q=>({...q,ans:"",res:null}));S.i=0;S.msg=msg||"";$("quiz").style.display="block";view();render();}
+function bankPick(tp,d,used){let p=BANK.filter(q=>q.t===tp&&q.d===d&&!used.has(q.q));if(!p.length)p=BANK.filter(q=>q.t===tp&&!used.has(q.q));if(!p.length)p=BANK.filter(q=>q.t===tp);if(!p.length)return null;const q=p[Math.floor(Math.random()*p.length)];used.add(q.q);return{...q};}
+
+function start(qs,msg){S.qs=qs.map(q=>({...q,ans:"",res:null}));S.i=0;S.msg=msg||"";S.startedAt=Date.now();$("quiz").style.display="block";$("sumCard").style.display="none";$("revCard").style.display="none";view();render();saveDraft();$("quiz").scrollIntoView({behavior:"smooth",block:"start"});}
+
 function bankStart(){if(S.busy)return;const n=N(),avail=BANK.filter(q=>S.topic==="all"||q.t===S.topic).length,m=Math.min(n,avail),used=new Set(),qs=[];
  for(let k=0;k<m;k++){const s=spec(k,m),q=bankPick(s.tp,s.d,used);if(q)qs.push(q);}
- start(qs,n>avail?`Bank hanya punya ${avail} soal untuk pilihan ini. Pakai AI untuk jumlah lebih banyak.`:"");}
-async function aiChunk(sp){const p=`Buat ${sp.length} soal esai BERBEDA untuk mata kuliah Management Control Systems dalam Bahasa Indonesia, sesuai spesifikasi:\n${sp.map((s,i)=>`${i+1}. Materi: ${CTX[s.tp]}\n   Tingkat: ${LV[s.d]}`).join("\n")}\nSeed acak: ${Math.random().toString(36).slice(2)}. Gunakan konteks industri yang bervariasi (rumah sakit, startup, bank, pemda, universitas, pabrik, dll).\nBalas HANYA JSON: {"items":[{"q":"teks soal/studi kasus","concepts":["3-6 konsep kunci"],"model":"contoh jawaban ideal 3-5 kalimat"}]} dengan urutan sama.`;
- const r=await S.sample.json(p,{cache:false});return sp.map((s,i)=>{const it=r.items&&r.items[i];return it&&it.q?{t:s.tp,d:s.d,q:it.q,ai:true,concepts:it.concepts||[],m:it.model||""}:null;});}
+ start(qs,n>avail?`Bank soal offline hanya punya ${avail} soal unik untuk pilihan ini (beberapa mungkin terulang). Pakai "Buat set soal (AI)" untuk soal baru dalam jumlah lebih banyak.`:"");}
+
+/* ---------- AI question generation (HOTS, with retry) ---------- */
+async function aiChunkOnce(sp,seedExtra){
+ const p=`Kamu perancang soal ujian untuk mata kuliah Management Control Systems tingkat sarjana/magister. Buat ${sp.length} soal esai/studi kasus BERBEDA dalam Bahasa Indonesia sesuai spesifikasi berikut:
+${sp.map((s,i)=>`${i+1}. Materi: ${CTX[s.tp]}
+   Target tingkat kognitif: ${LV[s.d]}`).join("\n")}
+
+ATURAN WAJIB:
+- Semua soal HARUS berbasis skenario/kasus konkret (organisasi, industri, atau situasi nyata yang spesifik) — jangan membuat soal definisi telanjang ("Apa itu X?"). Bahkan soal 'Mudah' harus meminta penjelasan disertai contoh/alasan singkat.
+- Untuk tingkat Sedang/Sulit, soal harus HOTS: minta mahasiswa menganalisis penyebab, membandingkan/mengevaluasi trade-off dari lebih dari satu sudut pandang, atau memberi rekomendasi yang dijustifikasi dengan konsep — bukan sekadar mengingat definisi.
+- Variasikan konteks industri/organisasi secara nyata antar soal (mis. rumah sakit, startup teknologi, bank, pemerintah daerah, universitas, pabrik manufaktur, NGO, maskapai, ritel, dsb) — jangan mengulang konteks yang sama dua kali dalam set ini.
+- Jangan membuat soal pilihan ganda atau ya/tidak sederhana; semua harus esai/analisis.
+- Setiap soal singkat, jelas, 2-5 kalimat konteks lalu 1-2 kalimat pertanyaan.
+Seed variasi: ${seedExtra}.
+
+Balas HANYA dengan JSON valid (tanpa markdown, tanpa teks lain) persis format ini, urutan harus sama dengan spesifikasi di atas:
+{"items":[{"q":"teks soal/studi kasus lengkap","concepts":["3-6 konsep kunci spesifik yang idealnya muncul di jawaban"],"model":"contoh jawaban ideal 3-5 kalimat yang menunjukkan penalaran, bukan hanya daftar istilah"}]}`;
+ const r=await S.sample.json(p,{cache:false,tier:"generate"});
+ if(!r||!Array.isArray(r.items))throw new Error("format tidak sesuai");
+ return sp.map((s,i)=>{const it=r.items[i];return it&&it.q&&it.q.trim().length>10?{t:s.tp,d:s.d,q:it.q.trim(),ai:true,concepts:Array.isArray(it.concepts)?it.concepts:[],m:it.model||""}:null;});
+}
+async function aiChunk(sp){
+ // try full chunk, retry whole chunk once, then retry each item individually once more before giving up
+ for(let attempt=0;attempt<2;attempt++){
+   try{const out=await aiChunkOnce(sp,Math.random().toString(36).slice(2)+"-"+attempt);if(out.every(Boolean))return out;if(attempt===1){/* fall through to per-item retry below using whatever we have */ 
+     const merged=out.slice();
+     for(let i=0;i<merged.length;i++){if(!merged[i]){try{const single=await aiChunkOnce([sp[i]],Math.random().toString(36).slice(2)+"-solo"+i);if(single[0])merged[i]=single[0];}catch(e){}}}
+     return merged;
+   }}catch(e){ if(attempt===1){
+     // last-ditch: try items one by one
+     const merged=[];
+     for(let i=0;i<sp.length;i++){try{const single=await aiChunkOnce([sp[i]],Math.random().toString(36).slice(2)+"-solo"+i);merged.push(single[0]||null);}catch(e2){merged.push(null);}}
+     return merged;
+   }}
+ }
+ return sp.map(()=>null);
+}
 async function aiStart(){if(!S.sample||S.busy)return;const n=N();S.busy=true;const sp=[...Array(n)].map((_,k)=>spec(k,n)),ch=[];for(let i=0;i<n;i+=3)ch.push(sp.slice(i,i+3));
- let done=0;const used=new Set();S.msg=`Membuat soal… 0/${n}`;render();
- const res=await Promise.all(ch.map(async c=>{let o=[];try{o=await aiChunk(c);}catch(e){}done+=c.length;S.msg=`Membuat soal… ${done}/${n}`;render();return c.map((s,i)=>o[i]||bankPick(s.tp,s.d,used));}));
+ let done=0;const used=new Set();S.msg=`0/${n} soal…`;render();
+ const res=await Promise.all(ch.map(async c=>{let o=[];try{o=await aiChunk(c);}catch(e){o=c.map(()=>null);}
+  const filled=c.map((s,i)=>o[i]||bankPick(s.tp,s.d,used));done+=c.length;S.msg=`${done}/${n} soal…`;render();return filled;}));
  const qs=res.flat().filter(Boolean);S.busy=false;
- if(!qs.length){S.msg="Gagal membuat soal, coba lagi.";render();return;}
- start(qs,qs.some(q=>!q.ai)?"Sebagian soal diambil dari bank karena AI gagal.":"");}
+ const fromBank=qs.filter(q=>!q.ai).length;
+ if(!qs.length){S.msg="AI gagal membuat soal setelah beberapa percobaan. Coba lagi, atau pakai 'Acak dari bank' sementara.";render();return;}
+ start(qs,fromBank?`${fromBank} dari ${qs.length} soal diambil dari bank offline karena AI gagal untuk sisanya (koneksi/timeout). Sisanya soal baru dari AI.`:"");}
+
+/* ---------- grading ---------- */
 const norm=s=>s.toLowerCase().replace(/[^\p{L}\p{N}&%\s-]/gu," ");
 function gradeLocal(q,a){const n=norm(a);let concepts=q.c;
  if(!concepts){concepts=(q.concepts||[]).map(x=>[x,norm(x).split(/\s+/).filter(w=>w.length>4)]);}
@@ -148,39 +268,144 @@ function gradeLocal(q,a){const n=norm(a);let concepts=q.c;
  if(words<25)score=Math.min(score,Math.round(score*words/25));
  if(sc>0)score+=Math.min(10,Math.floor(words/20));
  score=Math.max(0,Math.min(100,score));
- return{score,covered:got,missed:mis,feedback:score>=75?"Cakupan konsep baik. Perdalam dengan contoh nyata dan analisis trade-off.":"Beberapa konsep kunci belum muncul. Kaitkan jawaban dengan konsep di daftar 'kurang' dan jelaskan alasannya.",offline:true};}
+ const rec=mis.length?mis.slice(0,3).map(m=>`Tambahkan penjelasan tentang: ${m.replace(" (sebagian)","")}.`):["Perkuat jawaban dengan contoh konkret atau data pendukung."];
+ return{score,covered:got,missed:mis,feedback:score>=75?"Cakupan konsep sudah baik. Perdalam lagi dengan contoh nyata dan analisis trade-off agar semakin kuat.":"Beberapa konsep kunci belum muncul secara eksplisit. Kaitkan jawaban dengan istilah pada daftar 'kurang' dan jelaskan alasannya, bukan hanya menyebutkannya.",rec,offline:true};}
+
 async function gradeAi(q,a){const rub=q.c?q.c.map(x=>x[0]):q.concepts||[];
- const p=`Kamu dosen penilai Management Control Systems yang adil dan cermat. Nilai jawaban mahasiswa 0-100.\n\nSOAL: ${q.q}\nKONSEP KUNCI (panduan, bukan template wajib): ${rub.join(" | ")}\nCONTOH JAWABAN IDEAL: ${q.m||"-"}\nRINGKAS MATERI: ${CTX[q.t]}\n\nJAWABAN MAHASISWA:\n"""${a}"""\n\nATURAN PENILAIAN:\n- Nilai MAKNA, bukan kata. Parafrase, sinonim, istilah Inggris/Indonesia, dan urutan berbeda tetap diberi kredit penuh.\n- Alasan/argumen alternatif yang valid secara logis dan konsisten dengan teori diberi kredit meskipun tidak ada di daftar konsep.\n- Kurangi nilai untuk klaim yang keliru/kontradiktif, jawaban tidak relevan, atau hanya menyebut istilah tanpa penjelasan. Panjang bukan kriteria.\n- Skala: 90-100 lengkap+mendalam; 75-89 baik, ada celah kecil; 60-74 cukup, beberapa konsep hilang/dangkal; 40-59 sebagian; 1-39 sangat kurang; 0 kosong/tidak relevan.\n- Umpan balik spesifik, konstruktif, dalam Bahasa Indonesia, merujuk isi jawaban mahasiswa.\nBalas HANYA JSON: {"score":0-100,"covered":["konsep yang benar-benar dijelaskan"],"missed":["konsep/penalaran yang kurang atau keliru"],"feedback":"2-4 kalimat","verdict":"label singkat"}`;
- const r=await S.sample.json(p,{cache:false,modelTier:"complex"});
- return{score:Math.max(0,Math.min(100,Math.round(+r.score||0))),covered:r.covered||[],missed:r.missed||[],feedback:r.feedback||"",verdict:r.verdict};}
+ const p=`Kamu dosen Management Control Systems yang berpengalaman, adil, suportif, dan tidak kaku. Nilai jawaban esai mahasiswa berikut (skala 0-100).
+
+SOAL:
+${q.q}
+
+KONSEP KUNCI (ini panduan arah jawaban ideal, BUKAN daftar wajib/template — jangan memotong nilai hanya karena istilah persis tidak disebut):
+${rub.join(" | ")}
+
+CONTOH JAWABAN IDEAL (referensi kualitas, bukan satu-satunya jawaban benar):
+${q.m||"-"}
+
+RINGKASAN MATERI KULIAH TERKAIT:
+${CTX[q.t]}
+
+JAWABAN MAHASISWA:
+"""${a}"""
+
+CARA MENILAI (penting):
+1. Nilai MAKNA dan kualitas PENALARAN, bukan pencocokan kata. Parafrase, sinonim, istilah Inggris/Indonesia campur, urutan berbeda, atau sudut pandang alternatif yang logis dan konsisten dengan teori manajemen tetap diberi kredit penuh — bahkan jika tidak persis sama dengan contoh jawaban ideal atau daftar konsep.
+2. Hargai pemikiran kritis: jika mahasiswa memberi argumen berbeda dari contoh jawaban tapi masuk akal dan didukung penalaran yang valid, beri nilai tinggi dan sebutkan itu di feedback.
+3. Turunkan nilai untuk: klaim yang keliru/kontradiktif secara faktual, jawaban yang tidak relevan dengan soal, atau hanya menyebut istilah tanpa penjelasan ("menyebut nama" tanpa "menjelaskan makna"). Panjang jawaban BUKAN kriteria penilaian — jawaban singkat tapi tepat sasaran bisa dapat nilai tinggi.
+4. Skala umum: 90-100 lengkap, mendalam, dan bernalar kuat; 75-89 baik dengan celah kecil; 60-74 cukup namun beberapa aspek dangkal/hilang; 40-59 sebagian besar kurang; 1-39 sangat kurang tapi ada usaha; 0 kosong/sepenuhnya tidak relevan.
+5. Tulis feedback dan rekomendasi dengan nada seperti dosen yang berbicara langsung ke mahasiswa: hangat, spesifik, merujuk isi jawaban mereka sendiri (bukan template generik seperti "tambahkan lebih banyak konsep"). Hindari kalimat kaku/robotic.
+6. "recommendations": 2-4 langkah PERBAIKAN KONKRET dan actionable, urut dari yang paling penting, masing-masing 1 kalimat jelas — misalnya menyebutkan konsep spesifik apa yang perlu ditambahkan, contoh apa yang bisa dipakai, atau bagian mana yang perlu diluruskan. Jangan generik.
+
+Balas HANYA dengan JSON valid (tanpa markdown code fence, tanpa teks lain):
+{"score":0-100,"covered":["konsep/penalaran yang benar-benar dijelaskan dengan baik oleh mahasiswa, dalam bahasa natural"],"missed":["konsep/penalaran penting yang kurang, dangkal, atau keliru"],"feedback":"3-5 kalimat, natural, merujuk langsung ke jawaban mahasiswa, sebutkan kekuatan dan kelemahan spesifik","recommendations":["langkah perbaikan konkret 1","langkah perbaikan konkret 2","..."],"verdict":"label singkat 2-4 kata, mis. 'Analisis kuat, kurang contoh'"}`;
+ const r=await S.sample.json(p,{cache:false,tier:"complex"});
+ return{score:Math.max(0,Math.min(100,Math.round(+r.score||0))),covered:Array.isArray(r.covered)?r.covered:[],missed:Array.isArray(r.missed)?r.missed:[],feedback:r.feedback||"",rec:Array.isArray(r.recommendations)&&r.recommendations.length?r.recommendations:["Baca kembali contoh jawaban ideal dan bandingkan struktur penalarannya dengan jawabanmu."],verdict:r.verdict};}
+
 const li=(ul,arr,c)=>{ul.innerHTML="";(arr.length?arr:["–"]).forEach(t=>{const l=document.createElement("li");l.className=c;l.textContent=t;ul.appendChild(l);});};
+const ol=(o,arr)=>{o.innerHTML="";arr.forEach(t=>{const l=document.createElement("li");l.textContent=t;o.appendChild(l);});};
 function showRes(r){const s=r.score,col=s>=75?"var(--ok)":s>=50?"var(--warn)":"var(--bad)";
  $("ring").style.setProperty("--p",s);$("ring").style.setProperty("--c",col);$("scn").textContent=s;
  $("verd").textContent=r.verdict||(s>=85?"Sangat baik":s>=70?"Baik":s>=50?"Cukup":"Perlu diperdalam");
- $("mode").textContent=r.ai?"Dinilai AI (semantik)":"Dinilai offline (kata kunci konsep)";
- li($("got"),r.covered,"g");li($("mis"),r.missed,"m");$("fb").textContent=r.feedback;$("mdl").textContent=S.qs[S.i].m||"–";$("res").classList.add("s");}
+ $("mode").textContent=r.ai?"Dinilai AI (semantik, tidak kaku pada kata)":"Dinilai offline (kata kunci konsep — fallback)";
+ li($("got"),r.covered,"g");li($("mis"),r.missed,"m");$("fb").textContent=r.feedback;ol($("rec"),r.rec||[]);$("mdl").textContent=S.qs[S.i].m||"–";$("res").classList.add("s");}
 function dots(){const d=$("dots");d.innerHTML="";S.qs.forEach((c,k)=>{const b=document.createElement("button");b.className="dot"+(k===S.i?" on":"");b.textContent=k+1;
   if(c.res)b.style.borderColor=c.res.score>=75?"var(--ok)":c.res.score>=50?"var(--warn)":"var(--bad)";else if(c.ans.trim())b.style.borderStyle="dashed";
   b.onclick=()=>go(k);d.appendChild(b);});
  const g=S.qs.filter(c=>c.res),a=S.qs.filter(c=>c.ans.trim()).length,avg=g.length?Math.round(g.reduce((x,c)=>x+c.res.score,0)/g.length):"–";
- $("st").innerHTML=`<span>Terjawab: <b>${a}/${S.qs.length}</b></span><span>Dinilai: <b>${g.length}</b></span><span>Rata-rata: <b>${avg}</b></span>`;}
+ $("st").innerHTML=`<span>Terjawab: <b>${a}/${S.qs.length}</b></span><span>Dinilai: <b>${g.length}</b></span><span>Rata-rata: <b>${avg}</b></span>`;
+ if($("sumCard").style.display!=="none")buildSummary();
+ if($("revCard").style.display!=="none")buildReview();
+}
 function view(){const c=S.qs[S.i],n=S.qs.length;if(!c)return;$("qm").innerHTML="";
  [TOPICS[c.t],DIFF[c.d]+(c.ai?" · AI":"")].forEach(x=>{const s=document.createElement("span");s.className="tag";s.textContent=x;$("qm").appendChild(s);});
  $("pos").textContent=`Soal ${S.i+1} / ${n}`;$("barf").style.width=((S.i+1)/n*100)+"%";$("qt").textContent=c.q;$("ans").value=c.ans;
- $("bPrev").disabled=S.i===0;$("bNext").disabled=S.i===n-1;$("bGrade").disabled=!!c.busy;$("bGrade").textContent=c.busy?"Menilai…":(c.res?"Nilai ulang":"Nilai jawaban");
+ $("bPrev").disabled=S.i===0;$("bNext").disabled=S.i===n-1;$("bGrade").disabled=!!c.busy;$("bGrade").innerHTML=c.busy?'<span class="spin"></span>Menilai…':(c.res?"Nilai ulang":"Nilai jawaban");
  if(c.res)showRes(c.res);else $("res").classList.remove("s");dots();}
 function go(i){if(i<0||i>=S.qs.length||i===S.i)return;S.qs[S.i].ans=$("ans").value;const dir=i>S.i?"inR":"inL";S.i=i;view();const q=$("qc");q.classList.remove("inR","inL");void q.offsetWidth;q.classList.add(dir);}
 async function grade(){const c=S.qs[S.i];if(!c||c.busy)return;const a=$("ans").value.trim();c.ans=a;if(a.length<5){alert("Tulis jawabanmu dulu ya.");return;}
- c.busy=true;view();let r,ai=false;if(S.sample){try{r=await gradeAi(c,a);ai=true;}catch(e){}}
- if(!r)r=gradeLocal(c,a);r.ai=ai;c.res=r;c.busy=false;if(S.qs[S.i]===c){view();$("res").scrollIntoView({behavior:"smooth",block:"nearest"});}else dots();}
+ c.busy=true;view();let r,ai=false;
+ if(S.sample){for(let attempt=0;attempt<2&&!r;attempt++){try{r=await gradeAi(c,a);ai=true;}catch(e){}}}
+ if(!r)r=gradeLocal(c,a);r.ai=ai;c.res=r;c.busy=false;if(S.qs[S.i]===c){view();$("res").scrollIntoView({behavior:"smooth",block:"nearest"});}else dots();saveDraft();}
+
+/* ---------- session summary ---------- */
+function buildSummary(){
+ const graded=S.qs.filter(q=>q.res);
+ const avg=graded.length?Math.round(graded.reduce((x,q)=>x+q.res.score,0)/graded.length):0;
+ const col=avg>=75?"var(--ok)":avg>=50?"var(--warn)":"var(--bad)";
+ $("sRing").style.setProperty("--p",avg);$("sRing").style.setProperty("--c",col);$("sScn").textContent=graded.length?avg:"–";
+ $("sVerd").textContent=!graded.length?"Belum ada soal dinilai":avg>=85?"Pemahaman sangat baik":avg>=70?"Pemahaman baik":avg>=50?"Pemahaman cukup, masih ada celah":"Perlu banyak diperdalam lagi";
+ const mins=S.startedAt?Math.max(1,Math.round((Date.now()-S.startedAt)/60000)):0;
+ $("sStat").textContent=`${graded.length}/${S.qs.length} soal dinilai · ±${mins} menit`;
+ const topicsEl=$("sTopics");topicsEl.innerHTML="";
+ T4.filter(t=>S.qs.some(q=>q.t===t)).forEach(t=>{
+   const g=S.qs.filter(q=>q.t===t&&q.res);const av=g.length?Math.round(g.reduce((x,q)=>x+q.res.score,0)/g.length):null;
+   const row=document.createElement("div");row.className="topicbar";
+   row.innerHTML=`<div class="tlab">${TOPICS[t]}</div><div class="tb"><i style="width:${av||0}%;background:${av===null?"var(--line)":av>=75?"var(--ok)":av>=50?"var(--warn)":"var(--bad)"}"></i></div><div class="tn">${av===null?"–":av}</div>`;
+   topicsEl.appendChild(row);
+ });
+ const missCount={};graded.forEach(q=>(q.res.missed||[]).forEach(m=>{const k=m.replace(" (sebagian)","");missCount[k]=(missCount[k]||0)+1;}));
+ const weak=Object.entries(missCount).sort((a,b)=>b[1]-a[1]).slice(0,6);
+ li($("sWeak"),weak.map(([k,c])=>`${k} — terlewat di ${c} soal`),"m");
+ $("bRetryWeak").disabled=!graded.some(q=>q.res.score<75);
+}
+function toggleSummary(){const show=$("sumCard").style.display==="none";$("sumCard").style.display=show?"block":"none";$("revCard").style.display="none";if(show){buildSummary();$("sumCard").scrollIntoView({behavior:"smooth",block:"start"});}}
+function retryWeak(){const weak=S.qs.filter(q=>q.res&&q.res.score<75);if(!weak.length)return;
+ S.qs=weak.map(q=>({...q,ans:"",res:null}));S.i=0;S.startedAt=Date.now();$("sumCard").style.display="none";$("revCard").style.display="none";view();dots();saveDraft();$("quiz").scrollIntoView({behavior:"smooth",block:"start"});}
+function saveToHistory(){const graded=S.qs.filter(q=>q.res);if(!graded.length){alert("Belum ada soal yang dinilai.");return;}
+ const avg=Math.round(graded.reduce((x,q)=>x+q.res.score,0)/graded.length);
+ saveHistEntry({date:Date.now(),topic:S.topic,diff:S.diff,count:S.qs.length,graded:graded.length,avg});
+ renderHistory();alert("Ringkasan sesi disimpan ke riwayat (tersimpan di perangkat ini saja).");}
+
+/* ---------- review ---------- */
+function buildReview(){const body=$("revBody");body.innerHTML="";
+ S.qs.forEach((q,idx)=>{
+   const div=document.createElement("div");div.className="review-item";
+   const scoreTag=q.res?`<span class="tag" style="background:${q.res.score>=75?"var(--oks)":q.res.score>=50?"var(--warns)":"var(--bads)"};color:${q.res.score>=75?"var(--ok)":q.res.score>=50?"var(--warn)":"var(--bad)"}">Skor ${q.res.score}</span>`:'<span class="tag w">Belum dinilai</span>';
+   div.innerHTML=`<div class="row" style="justify-content:space-between;align-items:center"><b>Soal ${idx+1}</b> ${scoreTag}</div>
+     <p class="q" style="font-size:15px">${q.q.replace(/</g,"&lt;")}</p>
+     <div class="review-a"><b>Jawabanmu:</b><br>${(q.ans||"(kosong)").replace(/</g,"&lt;")}</div>
+     ${q.res?`<div class="mut" style="font-size:13px"><b>Feedback:</b> ${q.res.feedback}</div>`:""}
+     ${q.res&&q.res.rec&&q.res.rec.length?`<div class="mut" style="font-size:13px;margin-top:4px"><b>Rekomendasi:</b> ${q.res.rec.join(" ")}</div>`:""}`;
+   body.appendChild(div);
+ });
+}
+function toggleReview(){const show=$("revCard").style.display==="none";$("revCard").style.display=show?"block":"none";$("sumCard").style.display="none";if(show){buildReview();$("revCard").scrollIntoView({behavior:"smooth",block:"start"});}}
+
+/* ---------- history UI ---------- */
+function scorePillCol(s){return s>=75?["var(--oks)","var(--ok)"]:s>=50?["var(--warns)","var(--warn)"]:["var(--bads)","var(--bad)"];}
+function renderHistory(){const h=loadHist();$("histCard").style.display=h.length?"block":"none";if(!h.length)return;
+ const body=$("histBody");body.innerHTML="";
+ h.forEach(e=>{const[bg,fg]=scorePillCol(e.avg);const d=new Date(e.date);
+  const row=document.createElement("div");row.className="hist-row";
+  row.innerHTML=`<span>${d.toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric"})} · ${TOPICS[e.topic]||"Semua"} · ${DIFF[e.diff]}</span><span class="sc-pill" style="background:${bg};color:${fg}">${e.avg} (${e.graded}/${e.count})</span>`;
+  body.appendChild(row);});
+}
+
+/* ---------- resume banner ---------- */
+function initResume(){const d=loadDraft();if(!d)return;
+ $("resumeBanner").style.display="flex";
+ $("bResume").onclick=()=>{S.topic=d.topic;S.diff=d.diff;S.startedAt=d.startedAt||Date.now();S.qs=d.qs.map(q=>({...q}));S.i=Math.min(d.i||0,S.qs.length-1);
+  $("resumeBanner").style.display="none";$("quiz").style.display="block";render();view();dots();$("quiz").scrollIntoView({behavior:"smooth"});};
+ $("bDiscard").onclick=()=>{clearDraft();$("resumeBanner").style.display="none";};
+}
+
+/* ---------- events ---------- */
 $("bAi").onclick=aiStart;$("bRnd").onclick=bankStart;$("bGrade").onclick=grade;$("bPrev").onclick=()=>go(S.i-1);$("bNext").onclick=()=>go(S.i+1);
-$("ans").oninput=()=>{S.qs[S.i].ans=$("ans").value;};$("ans").onblur=dots;
+$("bSummary").onclick=toggleSummary;$("bReview").onclick=toggleReview;$("bRetryWeak").onclick=retryWeak;$("bSaveHist").onclick=saveToHistory;
+$("bPrint").onclick=()=>{buildReview();window.print();};$("bPrint2").onclick=()=>window.print();
+$("bHistToggle").onclick=()=>{const s=$("histBody").style.display==="none";$("histBody").style.display=s?"block":"none";$("bHistToggle").textContent=s?"Sembunyikan ▴":"Tampilkan ▾";};
+let saveTimer=null;
+$("ans").oninput=()=>{S.qs[S.i].ans=$("ans").value;clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,600);};
+$("ans").onblur=()=>{dots();saveDraft();};
 let tx=0,ty=0;const QZ=$("quiz");
 QZ.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
 QZ.addEventListener("touchend",e=>{if(e.target.tagName==="TEXTAREA")return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(S.i+(dx<0?1:-1));});
 document.addEventListener("keydown",e=>{if(/TEXTAREA|INPUT/.test(document.activeElement.tagName))return;if(e.key==="ArrowRight")go(S.i+1);if(e.key==="ArrowLeft")go(S.i-1);});
-render();bankStart();
-S.sample={json:async(prompt,o)=>{const r=await fetch("/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt,tier:o&&o.modelTier})});if(!r.ok)throw new Error("api "+r.status);return r.json();}};render();
+
+render();renderHistory();initResume();
+if(!loadDraft())bankStart();else{$("quiz").style.display="none";}
+S.sample={json:async(prompt,o)=>{const r=await fetch("/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt,tier:o&&o.tier})});if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||("api "+r.status));}return r.json();}};render();
 </script>
 </body>
 </html>
