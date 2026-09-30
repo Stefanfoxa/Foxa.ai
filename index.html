@@ -3,153 +3,214 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MCS Studio – Latihan Soal & Studi Kasus</title>
+<title>MyFoxy – Kuis Studi Kasus</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f7f5fd;--card:#fff;--ink:#1e1633;--mut:#6f6789;--line:#e6e0f5;--ac:#6d28d9;--acs:#efe7ff;--ok:#2b8a3e;--oks:#eaf7ec;--warn:#e67700;--warns:#fff3e0;--bad:#c92a2a;--bads:#fdecec}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#130f1f;--card:#1c1630;--ink:#f1ecfb;--mut:#a79fc0;--line:#2f2748;--ac:#a78bfa;--acs:#2a2050;--ok:#69db7c;--oks:#173822;--warn:#ffa94d;--warns:#3a2a12;--bad:#ff8787;--bads:#3a1c1c}}
-:root[data-theme="dark"]{--bg:#130f1f;--card:#1c1630;--ink:#f1ecfb;--mut:#a79fc0;--line:#2f2748;--ac:#a78bfa;--acs:#2a2050;--ok:#69db7c;--oks:#173822;--warn:#ffa94d;--warns:#3a2a12;--bad:#ff8787;--bads:#3a1c1c}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.w{max-width:820px;margin:0 auto;padding:20px 16px 60px}
-h1{font-size:26px;margin:0;font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,#7c3aed,#4c1d95);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--mut);margin:2px 0 18px;font-size:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 1px 2px rgba(60,20,120,.05)}
-.lbl{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin-bottom:8px;font-weight:600}
+:root{box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f5f2ff;--card:#fff;--ink:#1e1633;--mut:#6f6789;--line:#e4dcf8;--ac:#7c3aed;--ac2:#5b21b6;--acs:#f0e9ff;--ok:#2b8a3e;--oks:#eaf7ec;--warn:#e67700;--warns:#fff3e0;--bad:#c92a2a;--bads:#fdecec;--sh:0 6px 24px rgba(91,33,182,.10)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#110c1d;--card:#1b1530;--ink:#f1ecfb;--mut:#a79fc0;--line:#2f2748;--ac:#a78bfa;--ac2:#7c3aed;--acs:#2a2050;--ok:#69db7c;--oks:#173822;--warn:#ffa94d;--warns:#3a2a12;--bad:#ff8787;--bads:#3a1c1c;--sh:0 6px 24px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#110c1d;--card:#1b1530;--ink:#f1ecfb;--mut:#a79fc0;--line:#2f2748;--ac:#a78bfa;--ac2:#7c3aed;--acs:#2a2050;--ok:#69db7c;--oks:#173822;--warn:#ffa94d;--warns:#3a2a12;--bad:#ff8787;--bads:#3a1c1c;--sh:0 6px 24px rgba(0,0,0,.35)}
+*{box-sizing:border-box}html{scroll-padding-top:80px}
+body{margin:0;color:var(--ink);font:15.5px/1.6 "Plus Jakarta Sans",system-ui,sans-serif;background:radial-gradient(900px 500px at 90% -10%,rgba(139,92,246,.22),transparent),radial-gradient(700px 400px at -10% 10%,rgba(236,72,153,.10),transparent),var(--bg);min-height:100vh}
+h1,h2,h3,.brand b{font-family:Poppins,"Plus Jakarta Sans",sans-serif}
+.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .in{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:8px}.brand b{font-size:19px;background:linear-gradient(135deg,#8b5cf6,#5b21b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#8b5cf6,#5b21b6);display:grid;place-items:center;font-size:20px;box-shadow:0 3px 0 #4c1d95}
+.hud{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chip{font-size:13px;font-weight:700;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px 10px}
+.lvl{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700}.xp{width:70px;height:8px;border-radius:9px;background:var(--line);overflow:hidden}.xp i{display:block;height:100%;width:0;background:linear-gradient(90deg,#c084fc,#7c3aed);transition:width .5s}
+.ic{padding:5px 10px;font-size:13px}
+.w{max-width:860px;margin:0 auto;padding:18px 16px 70px}
+.hero{display:flex;gap:14px;align-items:center;margin:6px 0 18px}
+.mas{font-size:52px;animation:bob 2.4s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-6px)}}
+.bub{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:10px 14px;position:relative;box-shadow:var(--sh);font-weight:600}
+.hero h1{margin:0 0 4px;font-size:26px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:16px;box-shadow:var(--sh)}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin-bottom:10px;font-weight:700}
+.step{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ac);color:#fff;font-size:11px;margin-right:6px}
 .row{display:flex;flex-wrap:wrap;gap:8px}
-button{font:inherit;font-family:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px}
-button:hover{border-color:var(--ac)}button.on{background:var(--acs);border-color:var(--ac);color:var(--ac);font-weight:600}
-button.p{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;border:0;font-weight:700;border-radius:12px;box-shadow:0 4px 14px rgba(109,40,217,.28)}
-button.ghost{background:transparent}
-button.danger{color:var(--bad);border-color:var(--bad)}
-button:disabled{opacity:.5;cursor:default}
-.tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:99px;background:var(--acs);color:var(--ac);margin-right:6px;font-weight:600}
-.tag.w{background:var(--warns);color:var(--warn)}
-.q{font-size:17px;margin:8px 0 0;white-space:pre-wrap}
-textarea{width:100%;min-height:150px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
-textarea:focus,input:focus{outline:2px solid var(--ac);outline-offset:1px}
-.res{display:none}.res.s{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+button{font:inherit;font-family:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px;transition:transform .12s,border-color .12s,box-shadow .12s}
+button:hover{border-color:var(--ac)}button:active{transform:translateY(2px)}
+button.p{background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:0;font-weight:800;border-radius:14px;padding:11px 20px;box-shadow:0 4px 0 #4c1d95}
+button.p:active{box-shadow:0 1px 0 #4c1d95;transform:translateY(3px)}
+button.ghost{background:transparent}button:disabled{opacity:.5;cursor:default}
+.opt{border-radius:16px;border:2px solid var(--line);padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:700;font-size:13.5px;text-align:center;box-shadow:0 3px 0 var(--line)}
+.opt .em{font-size:26px}.opt:hover{transform:translateY(-2px)}
+.opt.on{border-color:var(--ac);background:var(--acs);color:var(--ac);box-shadow:0 3px 0 var(--ac)}
+input[type=range]{width:100%;accent-color:var(--ac)}
+.cntv{font-family:Poppins;font-weight:800;font-size:22px;color:var(--ac);min-width:38px;text-align:center}
+.dz{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;border:2px dashed var(--ac);border-radius:18px;padding:18px;cursor:pointer;background:var(--acs);transition:.15s}
+.dz.over{background:var(--card);transform:scale(1.01)}.dz .big{font-size:30px}.dz small{color:var(--mut)}
+.fchip{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;background:var(--oks);color:var(--ok);border-radius:12px;padding:8px 12px;font-weight:700;font-size:14px}
+.mut{color:var(--mut);font-size:14px}
+.diag{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;font-size:14px}.diag.ok{background:var(--oks);color:var(--ok)}.diag.bad{background:var(--bads);color:var(--bad)}
+.banner{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--acs);border:2px solid var(--ac);border-radius:16px;padding:12px 14px;margin-bottom:16px}.banner p{margin:0;font-size:14px;font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:16px;box-shadow:var(--sh)}
+.tag{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;background:var(--acs);color:var(--ac);margin:0 6px 4px 0;font-weight:700}.tag.w{background:var(--warns);color:var(--warn)}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.bar{height:10px;background:var(--line);border-radius:9px;margin:12px 0;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#c084fc,#7c3aed);border-radius:9px;transition:width .3s}
+.q{font-size:17.5px;margin:8px 0 0;white-space:pre-wrap;font-weight:500}
+textarea{width:100%;min-height:160px;margin-top:12px;padding:14px;border-radius:16px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+textarea:focus{outline:none;border-color:var(--ac)}
+.hint{display:none;margin-top:10px;background:var(--warns);color:var(--warn);border-radius:12px;padding:8px 12px;font-size:14px;font-weight:600}
+.nav{justify-content:space-between;margin-top:12px;align-items:center}
+.res{display:none}.res.s{display:block;animation:pop .35s}@keyframes pop{from{transform:scale(.96);opacity:0}}
 .sc{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.ring{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--line) 0);flex:none}
-.ring span{width:76px;height:76px;border-radius:50%;background:var(--card);display:grid;place-items:center}
-.ring.sm{width:56px;height:56px;font-size:16px}.ring.sm span{width:44px;height:44px}
-ul{margin:6px 0;padding-left:20px}li.g::marker{color:var(--ok)}li.m::marker{color:var(--bad)}
-ol.rec{margin:6px 0;padding-left:20px}ol.rec li{margin-bottom:4px}
-.mut{color:var(--mut);font-size:14px}.stat{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--mut)}.stat b{color:var(--ink)}
-details{margin-top:10px}summary{cursor:pointer;color:var(--ac);font-weight:600}
-input[type=number]{width:84px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
-.bar{height:5px;background:var(--line);border-radius:9px;margin:10px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,#8b5cf6,#6d28d9);border-radius:9px;transition:width .25s}
-.dot{width:38px;height:38px;padding:0;border-radius:10px;border-width:2px}.dot.on{background:var(--acs);color:var(--ac);font-weight:700}
-.nav{justify-content:space-between;margin-top:10px}
-@keyframes inR{from{transform:translateX(36px);opacity:.2}to{transform:none;opacity:1}}@keyframes inL{from{transform:translateX(-36px);opacity:.2}to{transform:none;opacity:1}}
-#qc.inR{animation:inR .22s}#qc.inL{animation:inL .22s}
-@keyframes spin{to{transform:rotate(360deg)}}
-.spin{display:inline-block;width:13px;height:13px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;margin-right:6px;vertical-align:-2px;opacity:.8}
-.banner{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--acs);border:1px solid var(--ac);border-radius:14px;padding:12px 14px;margin-bottom:14px}
-.banner p{margin:0;font-size:14px}
-.hist-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;gap:10px}
-.hist-row:last-child{border-bottom:none}
-.hist-row .sc-pill{font-weight:700;padding:2px 9px;border-radius:99px;font-size:13px}
-.review-item{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
-.review-item:first-child{border-top:none;margin-top:0;padding-top:0}
-.review-a{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:14px;white-space:pre-wrap}
-.topicbar{display:flex;align-items:center;gap:8px;font-size:13px;margin:5px 0}
-.topicbar .tlab{width:130px;flex:none;color:var(--mut)}
-.topicbar .tb{flex:1;height:8px;background:var(--line);border-radius:5px;overflow:hidden}
-.topicbar .tb i{display:block;height:100%;border-radius:5px}
-.topicbar .tn{width:34px;text-align:right;font-weight:600}
-.crit{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
-.crit:last-child{border-bottom:none}.crit small{display:block;color:var(--mut)}.crit b{white-space:nowrap}
-@media print{
-  body{background:#fff}
-  .no-print,button,input,#tp,#df,.card:has(#tp){display:none!important}
-  .w{max-width:100%;padding:0}
-  .card{border:none;border-bottom:1px solid #ccc;border-radius:0;break-inside:avoid;box-shadow:none}
-}
+.ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-weight:800;font-family:Poppins;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--line) 0);flex:none;transition:.4s}
+.ring span{width:82px;height:82px;border-radius:50%;background:var(--card);display:grid;place-items:center}
+.mrow{display:flex;gap:10px;align-items:center;margin-top:12px}.mrow .em{font-size:34px}
+ul{margin:6px 0;padding-left:20px}li.g::marker{color:var(--ok)}li.m::marker{color:var(--bad)}ol.rec{margin:6px 0;padding-left:20px}ol.rec li{margin-bottom:4px}
+.stat{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--mut)}.stat b{color:var(--ink)}
+details{margin-top:10px}summary{cursor:pointer;color:var(--ac);font-weight:700}
+.dot{width:38px;height:38px;padding:0;border-radius:12px;border-width:2px;font-weight:700}.dot.on{background:var(--acs);color:var(--ac)}
+.crit{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}.crit:last-child{border:0}.crit small{display:block;color:var(--mut)}.crit b{white-space:nowrap}
+.hist-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;gap:10px}.hist-row:last-child{border:0}.sc-pill{font-weight:700;padding:2px 9px;border-radius:99px;font-size:13px}
+.review-item{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}.review-item:first-child{border:0;margin:0;padding:0}
+.review-a{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14px;white-space:pre-wrap}
+.topicbar{display:flex;align-items:center;gap:8px;font-size:13px;margin:6px 0}.tlab{width:130px;flex:none;color:var(--mut)}.tb{flex:1;height:10px;background:var(--line);border-radius:5px;overflow:hidden}.tb i{display:block;height:100%;border-radius:5px}.tn{width:34px;text-align:right;font-weight:700}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:sp .7s linear infinite;margin-right:6px;vertical-align:-2px}@keyframes sp{to{transform:rotate(360deg)}}
+#qc.inR{animation:inR .22s}#qc.inL{animation:inL .22s}@keyframes inR{from{transform:translateX(36px);opacity:.2}}@keyframes inL{from{transform:translateX(-36px);opacity:.2}}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:90vw;text-align:center}
+#toast.s{opacity:1;transform:translate(-50%,0)}
+.cf{position:fixed;top:-12px;width:9px;height:14px;border-radius:2px;z-index:60;animation:fall 2.4s ease-in forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+body.kid .opt{border-radius:20px}body.kid .panel,body.kid .card{border-radius:26px}
+
+/* ---- tampilan profesional ---- */
+body{background:var(--bg);font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+h1,h2,h3,.brand b,.ring,.cntv{font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-weight:700}
+.brand b{background:none;color:var(--ink);-webkit-text-fill-color:currentColor;font-size:17px}
+.logo{width:30px;height:30px;border-radius:8px;font-size:15px;font-weight:800;color:#fff;box-shadow:none;background:var(--ac2)}
+.mas,.em,#bMode,.mrow .em{display:none!important}
+.hero{margin:4px 0 16px}.hero h1{font-size:24px;font-weight:700}
+.panel,.card{border-radius:14px;box-shadow:none}
+button{border-radius:10px}
+button.p{background:var(--ac2);color:#fff;box-shadow:none;border-radius:10px;font-weight:600;padding:10px 18px}
+button.p:active{transform:none}
+.opt{flex-direction:row;justify-content:flex-start;text-align:left;padding:11px 14px;border-radius:10px;border-width:1px;box-shadow:none;font-weight:600}
+.opt:hover{transform:none}.opt.on{box-shadow:inset 0 0 0 1px var(--ac)}
+.dot{border-radius:8px;border-width:1px}
+.dz{border-width:1px;border-radius:12px;background:transparent}
+.bub{border-radius:10px;box-shadow:none;font-weight:500;border-width:1px}
+.tag{border-radius:6px}.step{border-radius:6px}
+.bar,.bar i,.xp,.xp i{border-radius:4px}.bar{height:6px}.bar i,.xp i{background:var(--ac)}
+
+/* ---- splash, layar & pustaka ---- */
+:root{--gold:#f2b544}
+.hero h1::after{content:"";display:block;width:36px;height:3px;background:var(--gold);border-radius:3px;margin-top:8px}
+.xp i{background:var(--gold)}
+.scr{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}@media(max-width:720px){.hgrid{grid-template-columns:1fr}}
+.li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;transition:border-color .15s}
+.li:hover{border-color:var(--ac)}.lm{min-width:0}.lm b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lm small{color:var(--mut)}
+button.sm{padding:6px 12px;font-size:13px}
+#splash{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;background:radial-gradient(900px 560px at 50% 38%,#5b21b6,#2e1065 72%);color:#f5f0ff;transition:opacity .6s,visibility .6s;cursor:pointer}
+#splash.out{opacity:0;visibility:hidden}
+#splash::before,#splash::after{content:"";position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:drift 7s ease-in-out infinite alternate}
+#splash::before{width:340px;height:340px;background:#8b5cf6;left:-80px;top:-60px}
+#splash::after{width:220px;height:220px;background:var(--gold);opacity:.18;right:-40px;bottom:-40px;animation-delay:-3s}
+@keyframes drift{to{transform:translate(50px,40px) scale(1.15)}}
+.sp-in{position:relative;text-align:center;padding:24px}
+.sp-logo{position:relative;width:96px;height:96px;margin:0 auto 20px;display:grid;place-items:center;font-size:40px;font-weight:800;border-radius:28px;background:rgba(255,255,255,.1);animation:spIn .8s cubic-bezier(.2,.9,.3,1.2) both}
+.sp-logo svg{position:absolute;inset:-6px;width:calc(100% + 12px);height:calc(100% + 12px);transform:rotate(-90deg)}
+.sp-ring{fill:none;stroke:var(--gold);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:276;stroke-dashoffset:276;animation:spDraw 1.3s .3s ease forwards}
+.sp-t{margin:0;font-size:30px;letter-spacing:.02em;animation:spUp .7s .55s both}
+.sp-s{margin:6px 0 0;opacity:.8;font-size:15px;animation:spUp .7s .75s both}
+.sp-bar{width:160px;height:3px;border-radius:3px;background:rgba(255,255,255,.18);margin:26px auto 0;overflow:hidden}
+.sp-bar i{display:block;width:0;height:100%;background:var(--gold);animation:spBar 2s .2s ease forwards}
+@keyframes spIn{from{opacity:0;transform:scale(.6)}}@keyframes spDraw{to{stroke-dashoffset:0}}
+@keyframes spUp{from{opacity:0;transform:translateY(14px)}}@keyframes spBar{to{width:100%}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{#home,#splash{display:none!important}}
+@media print{body{background:#fff}.no-print,button,textarea,.top,#setup{display:none!important}.w{max-width:100%;padding:0}.card{box-shadow:none;border-radius:0;border-bottom:1px solid #ccc;break-inside:avoid}}
 </style>
 </head>
 <body>
+<div id="splash"><div class="sp-in"><div class="sp-logo"><svg viewBox="0 0 100 100"><circle class="sp-ring" cx="50" cy="50" r="44"/></svg><span>M</span></div><h2 class="sp-t">MyFoxy</h2><p class="sp-s">Latihan studi kasus Management Control Systems</p><div class="sp-bar"><i></i></div></div></div>
+<header class="top no-print"><div class="in">
+  <div class="brand"><span class="logo">M</span><b>MyFoxy</b></div>
+  <div class="hud"><span class="chip" id="hStreak">Streak 0</span><div class="lvl"><span id="hLvl">Lv 1</span><div class="xp"><i id="hXp"></i></div></div><button class="ic" id="bMode"></button><button class="ic" id="bTheme">Tema</button></div>
+</div></header>
 <div class="w">
-  <h1>MCS Studio</h1>
-  <p class="sub">Latihan soal & studi kasus Management Control Systems · dinilai secara semantik, bukan template</p>
-
-  <div id="resumeBanner" class="banner no-print" style="display:none">
-    <p>Ada sesi latihan yang belum selesai dari kunjungan sebelumnya. Lanjutkan?</p>
-    <div class="row"><button class="p" id="bResume">Lanjutkan</button><button id="bDiscard">Mulai baru</button></div>
-  </div>
-
-  <div class="card no-print" id="histCard" style="display:none">
-    <div class="row" style="justify-content:space-between;align-items:center">
-      <div class="lbl" style="margin:0">Riwayat latihan</div>
-      <button class="ghost" id="bHistToggle" style="padding:4px 10px;font-size:13px">Tampilkan ▾</button>
+ <div id="home" class="scr">
+  <div class="hero"><div><h1>Mulai belajar</h1><div class="bub">Unggah materi baru, atau lanjutkan set belajar yang pernah kamu buat.</div></div></div>
+  <div class="hgrid">
+    <div class="panel">
+      <div class="lbl">Opsi 1 &middot; Unggah materi baru</div>
+      <label class="dz" id="dz"><input type="file" id="file" accept=".pdf,.docx,.txt,.md" hidden><b>Seret &amp; lepas file, atau klik untuk memilih</b><small>PDF, DOCX, TXT, MD (maks 15 MB). AI membuat soal dari isi file ini dan menyimpannya sebagai set belajar.</small></label>
+      <div class="fchip" id="fchip" style="display:none"></div>
     </div>
+    <div class="panel">
+      <div class="lbl">Opsi 2 &middot; Set belajar sebelumnya</div>
+      <div id="lib"></div>
+    </div>
+  </div>
+  <div class="row"><button class="ghost" id="bTest" style="font-size:13px">Tes koneksi AI</button></div>
+  <div class="diag" id="diag"></div>
+ </div>
+
+ <div id="setup" class="scr" style="display:none">
+  <div class="row" style="align-items:center;justify-content:space-between;margin-bottom:12px"><button class="ghost" id="bHome">&larr; Semua set belajar</button><span class="mut" id="setMeta"></span></div>
+  <div class="hero"><div><h1 id="setName">Set belajar</h1></div></div>
+  <div id="resumeBanner" class="banner no-print" style="display:none"><p>Ada sesi yang belum selesai di set ini. Lanjutkan?</p><div class="row"><button class="p" id="bResume">Lanjutkan</button><button id="bDiscard">Mulai baru</button></div></div>
+  <div class="panel">
+    <div id="topicBox"><div class="lbl">Pilih materi</div><div class="grid" id="tp"></div></div>
+    <div class="lbl" style="margin-top:18px">Tingkat kesulitan</div><div class="grid" id="df"></div>
+    <div class="lbl" style="margin-top:18px">Jumlah soal</div>
+    <div class="row" style="align-items:center;flex-wrap:nowrap"><input type="range" id="cnt" min="1" max="30" value="10"><div class="cntv" id="cntv">10</div></div>
+    <div class="row" style="margin-top:18px"><button class="p" id="bAi">Buat soal dengan AI</button><button id="bRnd">Acak dari bank</button></div>
+    <div class="mut" id="aiNote" style="margin-top:10px"></div>
+  </div>
+  <div class="panel no-print" id="histCard" style="display:none">
+    <div class="row" style="justify-content:space-between;align-items:center"><div class="lbl" style="margin:0">Riwayat sesi set ini</div><button class="ghost" id="bHistToggle" style="font-size:13px">Tampilkan &darr;</button></div>
     <div id="histBody" style="display:none;margin-top:8px"></div>
   </div>
+ </div>
 
-  <div class="card no-print">
-    <div class="lbl">Materi</div><div class="row" id="tp"></div>
-    <div class="lbl" style="margin-top:14px">Tingkat kesulitan</div><div class="row" id="df"></div>
-    <div class="lbl" style="margin-top:14px">Jumlah soal (1–30)</div>
-    <div class="row"><input type="number" id="cnt" min="1" max="30" value="10"><button class="p" id="bAi">✨ Buat set soal (AI · HOTS)</button><button id="bRnd">🎲 Acak dari bank</button></div>
-    <div class="mut" id="aiNote" style="margin-top:8px"></div>
+ <div id="quiz" style="display:none">
+  <div class="card" id="qc">
+    <div class="qtop no-print"><button class="ghost" id="bBack" style="font-size:13px">← Menu</button><span class="mut" id="tmr">Waktu 00:00</span><span class="mut" id="pos"></span></div>
+    <div class="bar"><i id="barf"></i></div>
+    <div id="qm"></div>
+    <p class="q" id="qt"></p>
+    <textarea id="ans" placeholder="Tulis jawabanmu dengan bahasamu sendiri. Jelaskan konsep, alasan, dan contohnya…"></textarea>
+    <div class="hint" id="hint"></div>
+    <div class="row nav no-print"><button id="bPrev">←</button><div class="row"><button id="bHint"> Petunjuk</button><label class="ghost" style="cursor:pointer;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:14px"> Unggah jawaban<input type="file" id="afile" accept=".pdf,.docx,.txt,.md" hidden></label><button class="p" id="bGrade">Nilai jawaban</button></div><button id="bNext">→</button></div>
   </div>
-
-  <div id="quiz" style="display:none">
-    <div class="card" id="qc">
-      <div class="row" style="justify-content:space-between;align-items:center"><div id="qm"></div><span class="mut" id="pos"></span></div>
-      <div class="bar"><i id="barf"></i></div>
-      <p class="q" id="qt"></p>
-      <textarea id="ans" placeholder="Tulis jawabanmu dengan bahasamu sendiri (Indonesia/Inggris). Jelaskan konsep, alasan, dan contohnya…"></textarea>
-      <div class="row nav no-print"><button id="bPrev">← Sebelumnya</button><button class="p" id="bGrade">Nilai jawaban</button><button id="bNext">Berikutnya →</button></div>
-      <div class="mut no-print" style="margin-top:8px;font-size:13px">Tip: geser layar ke kiri/kanan atau pakai tombol panah keyboard untuk pindah soal.</div>
-    </div>
-    <div class="card res" id="res">
-      <div class="sc"><div class="ring" id="ring"><span id="scn">0</span></div>
-        <div><div style="font-weight:700;font-size:18px" id="verd"></div><div class="mut" id="mode"></div></div></div>
-      <div id="critWrap" style="display:none"><div class="lbl" style="margin-top:14px">Skor per kriteria</div><div id="crit"></div></div>
-      <div class="lbl" style="margin-top:14px">Konsep yang tercakup</div><ul id="got"></ul>
-      <div class="lbl" style="margin-top:10px">Yang masih kurang / keliru</div><ul id="mis"></ul>
-      <div class="lbl" style="margin-top:10px">Umpan balik</div><div id="fb"></div>
-      <div class="lbl" style="margin-top:10px">Rekomendasi untuk memperbaiki jawaban</div><ol class="rec" id="rec"></ol>
-      <details><summary>Lihat contoh jawaban ideal</summary><div id="mdl" style="margin-top:8px"></div></details>
-    </div>
-    <div class="card no-print"><div class="lbl">Navigasi soal & ringkasan (hijau ≥75, oranye ≥50, merah &lt;50, putus-putus = terjawab belum dinilai)</div><div class="row" id="dots"></div><div class="stat" id="st" style="margin-top:12px"></div>
-      <div class="row" style="margin-top:12px"><button id="bSummary">📊 Ringkasan sesi</button><button id="bReview">🔎 Tinjau semua jawaban</button></div>
-    </div>
-
-    <div class="card" id="sumCard" style="display:none">
-      <div class="row" style="justify-content:space-between;align-items:center">
-        <div class="lbl" style="margin:0">Ringkasan sesi</div>
-        <div class="row no-print"><button class="ghost" id="bPrint" style="font-size:13px">🖨️ Ekspor / cetak</button></div>
-      </div>
-      <div class="sc" style="margin-top:6px"><div class="ring" id="sRing"><span id="sScn">0</span></div>
-        <div><div style="font-weight:700;font-size:18px" id="sVerd"></div><div class="mut" id="sStat"></div></div></div>
-      <div class="lbl" style="margin-top:14px">Per materi</div>
-      <div id="sTopics"></div>
-      <div class="lbl" style="margin-top:14px">Konsep yang paling sering terlewat</div>
-      <ul id="sWeak"></ul>
-      <div class="row no-print" style="margin-top:12px">
-        <button class="p" id="bRetryWeak">🔁 Latihan ulang soal &lt; 75</button>
-        <button id="bSaveHist">💾 Simpan ke riwayat</button>
-      </div>
-    </div>
-
-    <div class="card" id="revCard" style="display:none">
-      <div class="row" style="justify-content:space-between;align-items:center">
-        <div class="lbl" style="margin:0">Tinjauan lengkap</div>
-        <button class="ghost no-print" id="bPrint2" style="font-size:13px">🖨️ Ekspor / cetak</button>
-      </div>
-      <div id="revBody"></div>
-    </div>
+  <div class="card res" id="res">
+    <div class="sc"><div class="ring" id="ring"><span id="scn">0</span></div><div><div style="font-weight:800;font-size:19px;font-family:Poppins" id="verd"></div><div class="mut" id="mode"></div></div></div>
+    <div class="mrow"><span class="em" id="mEmo"></span><div class="bub" id="mTxt"></div></div>
+    <div id="critWrap" style="display:none"><div class="lbl" style="margin-top:16px">Skor per kriteria</div><div id="crit"></div></div>
+    <div class="lbl" style="margin-top:16px">Sudah bagus </div><ul id="got"></ul>
+    <div class="lbl" style="margin-top:10px">Perlu diperbaiki </div><ul id="mis"></ul>
+    <div class="lbl" style="margin-top:10px">Umpan balik</div><div id="fb"></div>
+    <div class="lbl" style="margin-top:10px">Langkah perbaikan</div><ol class="rec" id="rec"></ol>
+    <details><summary>Lihat contoh jawaban ideal</summary><div id="mdl" style="margin-top:8px"></div></details>
   </div>
+  <div class="card no-print"><div class="lbl">Navigasi soal</div><div class="row" id="dots"></div><div class="stat" id="st" style="margin-top:12px"></div>
+    <div class="row" style="margin-top:12px"><button id="bSummary"> Ringkasan sesi</button><button id="bReview"> Tinjau jawaban</button></div></div>
+  <div class="card" id="sumCard" style="display:none">
+    <div class="row" style="justify-content:space-between;align-items:center"><div class="lbl" style="margin:0">Ringkasan sesi</div><button class="ghost no-print" id="bPrint" style="font-size:13px"> Cetak</button></div>
+    <div class="sc" style="margin-top:6px"><div class="ring" id="sRing"><span id="sScn">0</span></div><div><div style="font-weight:800;font-size:18px;font-family:Poppins" id="sVerd"></div><div class="mut" id="sStat"></div></div></div>
+    <div class="lbl" style="margin-top:14px">Per materi</div><div id="sTopics"></div>
+    <div class="lbl" style="margin-top:14px">Yang paling sering terlewat</div><ul id="sWeak"></ul>
+    <div class="row no-print" style="margin-top:12px"><button class="p" id="bRetryWeak"> Ulangi soal &lt; 75</button><button id="bSaveHist"> Simpan ke riwayat</button></div>
+  </div>
+  <div class="card" id="revCard" style="display:none">
+    <div class="row" style="justify-content:space-between;align-items:center"><div class="lbl" style="margin:0">Tinjauan lengkap</div><button class="ghost no-print" id="bPrint2" style="font-size:13px"> Cetak</button></div>
+    <div id="revBody"></div>
+  </div>
+ </div>
 </div>
+<div id="toast"></div>
 
 <script>
-const TOPICS={all:"Semua materi",a:"Myopia & Controllability",b:"Governance, Board & Auditor",c:"Etika Pengendalian",d:"Not-for-Profit"};
+const TOPICS={all:"Semua materi",a:"Myopia & Controllability",b:"Governance & Auditor",c:"Etika Pengendalian",d:"Not-for-Profit",u:"Materi unggahan"};
 const DIFF={0:"Campur",1:"Mudah",2:"Sedang",3:"Sulit"};
+const ICON={all:"",a:"",b:"",c:"",d:"",u:""},DI={0:"",1:"",2:"",3:""};
 const CTX={
 a:"Remedi myopia: kurangi tekanan laba jangka pendek, review investasi, perpanjang horizon, ukur shareholder value, perbaiki ukuran akuntansi, ukur pemicu kinerja masa depan; clawback, deferred shares. Balanced Scorecard (finansial, pelanggan, proses internal, learning & growth; hasil vs driver; compass vs roadmap; trade-off). Controllability principle (pengaruh signifikan, force majeure, pasar, interdependensi), empat pilihan penyesuaian (tujuan, faktor, pemutus, metode), bias hindsight, three-gate test (sepenuhnya tak terkendali, tak ada respons manajerial, efek bisa dihitung objektif).",
 b:"Corporate governance vs management control; dewan direksi (fiduciary: care, loyalty, good faith, no waste; komite audit & kompensasi); Enron/WorldCom, Sarbanes-Oxley 404; CFO (tegangan management service vs fiduciary oversight), controller vs treasurer; controller terdesentralisasi vs tersentralisasi (involvement vs independence, safeguards); audit keuangan/kepatuhan/kinerja sebagai safety net; sektor publik (APIP, BPK).",
@@ -194,187 +255,213 @@ m:"Pengeluaran sesuai anggaran hanya menunjukkan efisiensi sumber daya dan aktiv
 c:[["Kontrol hasil: outcome + biaya dan kualitas",["hasil","outcome","kualitas","biaya"]],["Kontrol tindakan karena batasan hukum/donor",["tindakan","action","batasan","hukum","restriksi","prosedur","persetujuan"]],["Personel: seleksi, pelatihan, dukungan",["personel","seleksi","pelatihan","dukungan","kapabilitas"]],["Budaya: nilai bersama, etika, komitmen",["budaya","cultural","nilai","etika","komitmen"]],["Rantai dana: funding-allocation-delivery-reporting; risiko dana melenceng vs biaya pelaporan",["funding","alokasi","allocation","delivery","pelaporan","reporting","melenceng","tepat sasaran"]],["Insentif finansial terbatas / kurang kompetitif",["insentif","gaji","kompetitif","terbatas","non-finansial"]]],
 m:"Kontrol hasil: ukur outcome berpasangan dengan biaya/kualitas. Kontrol tindakan: prosedur & persetujuan untuk proses kritis dan batasan donor. Personel: seleksi dan pelatihan. Budaya: nilai bersama & etika. Lacak dana dari pendanaan→alokasi→penyaluran→pelaporan, seimbangkan risiko dana salah sasaran dengan biaya kontrol, dan sadari insentif finansial terbatas."}
 ];
-
 const T4=["a","b","c","d"],LV={1:"Mudah — tetap minta penerapan/alasan singkat, bukan sekadar definisi hafalan.",2:"Sedang — studi kasus singkat (analisis: mengapa/bagaimana) yang menuntut penerapan konsep pada situasi konkret.",3:"Sulit — studi kasus multi-aspek HOTS: menuntut analisis akar masalah, evaluasi trade-off dari beberapa sudut pandang, dan rekomendasi/keputusan yang dijustifikasi (level Bloom: menganalisis–mengevaluasi–mencipta)."};
-const LS_DRAFT="mcs_draft_v1", LS_HIST="mcs_hist_v1";
-let S={topic:"all",diff:0,qs:[],i:0,sample:true,busy:false,msg:"",startedAt:null,lastErr:""};
+const LS_DRAFT="mcs_draft_v1",LS_HIST="mcs_hist_v1",LS_PROF="mcs_prof_v2";
+let S={topic:"all",diff:0,qs:[],i:0,sample:true,busy:false,msg:"",startedAt:null,lastErr:""},FILE={name:"",segs:[],chars:0};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const col=s=>s>=75?"var(--ok)":s>=50?"var(--warn)":"var(--bad)";
 
-/* ---------- persistence ---------- */
-function saveDraft(){try{if(!S.qs.length)return;localStorage.setItem(LS_DRAFT,JSON.stringify({topic:S.topic,diff:S.diff,i:S.i,startedAt:S.startedAt,qs:S.qs.map(q=>({t:q.t,d:q.d,q:q.q,m:q.m,c:q.c,concepts:q.concepts,rubric:q.rubric,mistakes:q.mistakes,ai:q.ai,ans:q.ans,res:q.res}))}));}catch(e){}}
-function clearDraft(){try{localStorage.removeItem(LS_DRAFT);}catch(e){}}
-function loadDraft(){try{const raw=localStorage.getItem(LS_DRAFT);if(!raw)return null;const d=JSON.parse(raw);return d&&d.qs&&d.qs.length?d:null;}catch(e){return null;}}
-function loadHist(){try{return JSON.parse(localStorage.getItem(LS_HIST)||"[]");}catch(e){return [];}}
-function saveHistEntry(entry){try{const h=loadHist();h.unshift(entry);localStorage.setItem(LS_HIST,JSON.stringify(h.slice(0,30)));}catch(e){}}
+/* ---------- profil / gamifikasi ---------- */
+let P={xp:0,streak:0,last:"",badges:[],graded:0,mode:"kampus",theme:""};
+try{P={...P,...JSON.parse(localStorage.getItem(LS_PROF)||"{}")};}catch(e){}
+P.mode="kampus";const saveP=()=>{try{localStorage.setItem(LS_PROF,JSON.stringify(P));}catch(e){}};
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("s");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("s"),2600);}
+function confetti(){return;const c=["#8b5cf6","#c084fc","#f472b6","#facc15","#34d399","#60a5fa"];for(let i=0;i<44;i++){const s=document.createElement("span");s.className="cf";s.style.left=Math.random()*100+"vw";s.style.background=c[i%c.length];s.style.animationDelay=Math.random()*.6+"s";document.body.appendChild(s);setTimeout(()=>s.remove(),3200);}}
+function hud(){$("hLvl").textContent="Lv "+(Math.floor(P.xp/200)+1);$("hXp").style.width=(P.xp%200)/2+"%";$("hStreak").textContent="Streak "+P.streak;$("bMode").textContent=P.mode==="ceria"?" Ceria":" Kampus";document.body.classList.toggle("kid",P.mode==="ceria");
+ if(P.theme)document.documentElement.dataset.theme=P.theme;}
+const BADGES=[["first"," Langkah Pertama",()=>P.graded>=1],["ace"," Nilai 90+",s=>s>=90],["st3"," Streak 3 hari",()=>P.streak>=3],["ten"," 10 soal dinilai",()=>P.graded>=10]];
+function award(score,q){const today=new Date().toISOString().slice(0,10);
+ if(P.last!==today){const y=new Date(Date.now()-864e5).toISOString().slice(0,10);P.streak=P.last===y?P.streak+1:1;P.last=today;}
+ const gain=Math.round(score/2)+(q.hint?0:10);P.xp+=gain;P.graded++;
+ const nb=BADGES.filter(b=>!P.badges.includes(b[0])&&b[2](score));nb.forEach(b=>P.badges.push(b[0]));saveP();hud();
+ toast(`+${gain} XP`+(nb.length?" · Lencana baru: "+nb.map(b=>b[1]).join(", "):""));if(nb.length||score>=85)confetti();}
+const MSG={ceria:[[85,"Keren banget! Kamu jago! ",""],[70,"Bagus! Dikit lagi sempurna ",""],[50,"Lumayan! Yuk perbaiki bareng-bareng ",""],[0,"Tenang, belajar itu proses. Coba lagi ya! ",""]],kampus:[[85,"Analisis yang kuat. Pertahankan.",""],[70,"Baik, ada celah kecil untuk diperdalam.",""],[50,"Cukup; beberapa aspek perlu dielaborasi.",""],[0,"Perlu penguatan konsep; tinjau langkah perbaikan di bawah.",""]]};
+const mf=s=>MSG[P.mode].find(x=>s>=x[0]);
+
+/* ---------- persistence: set belajar ---------- */
+const LS_SETS="mcs_sets_v1";let SETS=[],CUR=null;
+try{SETS=JSON.parse(localStorage.getItem(LS_SETS)||"[]");}catch(e){SETS=[];}
+if(!SETS.some(x=>x.id==="builtin"))SETS.push({id:"builtin",name:"Materi MCS bawaan",type:"builtin",created:Date.now(),lastUsed:0,sessions:[],draft:null});
+const saveSets=()=>{try{localStorage.setItem(LS_SETS,JSON.stringify(SETS));}catch(e){toast("Penyimpanan perangkat penuh; hapus set lama");}};
+const cur=()=>SETS.find(x=>x.id===CUR);
+function saveDraft(){const c=cur();if(!c||!S.qs.length)return;c.draft={topic:S.topic,diff:S.diff,i:S.i,startedAt:S.startedAt,qs:S.qs.map(q=>({t:q.t,d:q.d,q:q.q,m:q.m,c:q.c,concepts:q.concepts,rubric:q.rubric,mistakes:q.mistakes,src:q.src,hint:q.hint,ai:q.ai,ans:q.ans,res:q.res}))};c.lastUsed=Date.now();saveSets();}
+function clearDraft(){const c=cur();if(c){c.draft=null;saveSets();}}
+const loadDraft=()=>{const c=cur();return c&&c.draft&&c.draft.qs&&c.draft.qs.length?c.draft:null;};
 
 /* ---------- setup UI ---------- */
-const chips=(el,obj,key)=>{el.innerHTML="";Object.entries(obj).forEach(([k,v])=>{const b=document.createElement("button");b.textContent=v;b.className=String(S[key])===String(k)?"on":"";b.onclick=()=>{S[key]=key==="diff"?+k:k;render();};el.appendChild(b);});};
-function render(){chips($("tp"),TOPICS,"topic");chips($("df"),DIFF,"diff");$("bAi").disabled=!S.sample||S.busy;$("bAi").innerHTML=S.busy?'<span class="spin"></span>'+esc(S.msg):"✨ Buat set soal (AI · HOTS)";$("bRnd").disabled=S.busy;
- $("aiNote").textContent=S.busy?"":(S.msg||(S.sample?"AI aktif: soal baru & HOTS (analisis/evaluasi/rekomendasi), dinilai secara semantik. Level 'Campur' = naik bertahap dari mudah ke sulit.":"Mode offline: soal dari bank & penilaian kata kunci konsep (dipakai jika AI gagal)."));}
+function cards(el,obj,key,ic){el.innerHTML="";Object.entries(obj).forEach(([k,v])=>{if(k==="u")return;const b=document.createElement("button");b.className="opt"+(String(S[key])===String(k)?" on":"");b.innerHTML=`<span>${esc(v)}</span>`;b.onclick=()=>{S[key]=key==="diff"?+k:k;render();};el.appendChild(b);});}
+function render(){const c=cur(),isF=!!c&&c.type==="file";cards($("tp"),TOPICS,"topic",ICON);cards($("df"),DIFF,"diff",DI);$("cntv").textContent=N();
+ $("topicBox").style.display=isF?"none":"block";$("bRnd").style.display=isF?"none":"";
+ if(c){$("setName").textContent=c.name;$("setMeta").textContent=isF?c.chars.toLocaleString("id-ID")+" karakter":"Bank soal bawaan";}
+ $("bAi").disabled=S.busy;$("bAi").innerHTML=S.busy?'<span class="spin"></span>'+esc(S.msg):"Buat soal dengan AI";$("bRnd").disabled=S.busy;
+ $("aiNote").textContent=S.busy?"":(S.msg||"AI membuat soal baru dan menilai jawabanmu secara semantik. 'Campur' = naik bertahap dari mudah ke sulit. Kalau AI gagal, alasan sebenarnya ditampilkan di sini.");}
 const N=()=>Math.max(1,Math.min(30,parseInt($("cnt").value)||10));
 const spec=(k,n)=>({tp:S.topic==="all"?T4[k%4]:S.topic,d:S.diff||Math.min(3,Math.floor(k*3/n)+1)});
 function bankPick(tp,d,used){let p=BANK.filter(q=>q.t===tp&&q.d===d&&!used.has(q.q));if(!p.length)p=BANK.filter(q=>q.t===tp&&!used.has(q.q));if(!p.length)p=BANK.filter(q=>q.t===tp);if(!p.length)return null;const q=p[Math.floor(Math.random()*p.length)];used.add(q.q);return{...q};}
-
-function start(qs,msg){S.qs=qs.map(q=>({...q,ans:"",res:null}));S.i=0;S.msg=msg||"";S.startedAt=Date.now();$("quiz").style.display="block";$("sumCard").style.display="none";$("revCard").style.display="none";view();render();saveDraft();$("quiz").scrollIntoView({behavior:"smooth",block:"start"});}
-
+function start(qs,msg){S.qs=qs.map(q=>({...q,ans:"",res:null}));S.i=0;S.msg=msg||"";S.startedAt=Date.now();$("setup").style.display="none";$("quiz").style.display="block";$("sumCard").style.display="none";$("revCard").style.display="none";view();render();saveDraft();window.scrollTo({top:0,behavior:"smooth"});}
 function bankStart(){if(S.busy)return;const n=N(),avail=BANK.filter(q=>S.topic==="all"||q.t===S.topic).length,m=Math.min(n,avail),used=new Set(),qs=[];
  for(let k=0;k<m;k++){const s=spec(k,m),q=bankPick(s.tp,s.d,used);if(q)qs.push(q);}
- start(qs,n>avail?`Bank soal offline hanya punya ${avail} soal unik untuk pilihan ini (beberapa mungkin terulang). Pakai "Buat set soal (AI)" untuk soal baru dalam jumlah lebih banyak.`:"");}
+ start(qs,n>avail?`Bank offline hanya punya ${avail} soal unik untuk pilihan ini. Pakai AI untuk soal baru dalam jumlah lebih banyak.`:"");}
+function goHome(){$("setup").style.display="none";$("quiz").style.display="none";$("home").style.display="block";renderLib();window.scrollTo({top:0});}
+function openSet(id){CUR=id;const c=cur();c.lastUsed=Date.now();saveSets();S.qs=[];S.i=0;S.busy=false;S.msg="";S.topic=c.type==="file"?"u":"all";S.diff=0;
+ $("home").style.display="none";$("quiz").style.display="none";$("setup").style.display="block";$("resumeBanner").style.display=loadDraft()?"flex":"none";render();renderHistory();window.scrollTo({top:0});}
+function renderLib(){const box=$("lib");box.innerHTML="";
+ [...SETS].sort((a,b)=>b.lastUsed-a.lastUsed).forEach(c=>{const last=c.sessions[0],isF=c.type==="file",d=document.createElement("div");d.className="li";
+  const meta=[isF?c.chars.toLocaleString("id-ID")+" karakter":"Bank soal bawaan",c.sessions.length+" sesi"+(last?" · nilai terakhir "+last.avg:""),c.draft?"sesi belum selesai":""].filter(Boolean).join(" · ");
+  d.innerHTML=`<div class="lm"><b>${esc(c.name)}</b><small>${esc(meta)}</small></div>`;
+  const r=document.createElement("div");r.className="row";
+  const o=document.createElement("button");o.className="p sm";o.textContent="Buka";o.onclick=()=>openSet(c.id);r.appendChild(o);
+  if(isF){const x=document.createElement("button");x.className="ghost sm";x.textContent="Hapus";x.onclick=()=>{if(confirm('Hapus set "'+c.name+'" beserta riwayatnya?')){SETS=SETS.filter(z=>z.id!==c.id);saveSets();renderLib();}};r.appendChild(x);}
+  d.appendChild(r);box.appendChild(d);});}
 
-/* ---------- API client (v2) ---------- */
+/* ---------- upload file ---------- */
+const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",PDFW="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js",MAMMOTH="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js";
+const loadScript=u=>new Promise((ok,no)=>{const s=document.createElement("script");s.src=u;s.onload=ok;s.onerror=()=>no(new Error("Gagal memuat pustaka pembaca file (cek internet)"));document.head.appendChild(s);});
+async function extract(f){const n=f.name.toLowerCase();
+ if(/\.(txt|md|csv)$/.test(n)||f.type.startsWith("text/"))return f.text();
+ if(n.endsWith(".docx")){if(!window.mammoth)await loadScript(MAMMOTH);return(await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value;}
+ if(n.endsWith(".pdf")){if(!window.pdfjsLib){await loadScript(PDFJS);pdfjsLib.GlobalWorkerOptions.workerSrc=PDFW;}
+  const pdf=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;let t="";
+  for(let p=1;p<=Math.min(pdf.numPages,60);p++){const c=await(await pdf.getPage(p)).getTextContent();t+=c.items.map(i=>i.str).join(" ")+"\n";}return t;}
+ throw new Error("Format belum didukung. Pakai PDF, DOCX, TXT, atau MD.");}
+async function setFile(f){if(!f)return;if(f.size>15e6){toast("File terlalu besar (maks 15 MB)");return;}
+ const c=$("fchip");c.style.display="flex";c.textContent="Membaca "+f.name+"...";
+ try{const t=(await extract(f)).replace(/\s+/g," ").trim();if(t.length<200)throw new Error("Teks tidak terbaca. PDF hasil scan (gambar) belum didukung.");
+  const segs=[];for(let i=0;i<t.length&&segs.length<30;i+=3200){const s=t.slice(i,i+3400);if(s.length>300||!segs.length)segs.push(s);}
+  const id="f"+Date.now().toString(36);SETS.unshift({id,name:f.name.replace(/\.[^.]+$/,""),type:"file",segs,chars:t.length,created:Date.now(),lastUsed:Date.now(),sessions:[],draft:null});
+  if(SETS.filter(x=>x.type==="file").length>12){SETS.splice(SETS.map(x=>x.type).lastIndexOf("file"),1);}
+  saveSets();c.style.display="none";toast("File siap dipakai");openSet(id);}
+ catch(e){c.style.display="none";toast("Gagal membaca file: "+e.message);}}
+
+/* ---------- API client ---------- */
 async function api(body,retries=2){
  for(let a=0;a<=retries;a++){
-  let r;try{r=await fetch("/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});}catch(e){if(a===retries)throw e;await new Promise(z=>setTimeout(z,1200*(a+1)));continue;}
+  let r;try{r=await fetch("/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});}catch(e){if(a===retries)throw new Error("tidak bisa menjangkau server ("+e.message+")");await new Promise(z=>setTimeout(z,1200*(a+1)));continue;}
   if(r.ok)return r.json();
   const e=await r.json().catch(()=>({}));
-  if(r.status===429||r.status===400||a===retries)throw new Error(e.error||("api "+r.status));
-  await new Promise(z=>setTimeout(z,1200*(a+1)));
- }}
+  if(r.status===404)throw new Error("/api/ai tidak ditemukan (api/ai.js belum ter-deploy atau halaman dibuka dari komputer, bukan dari alamat Vercel)");
+  if(r.status===400&&/prompt/.test(e.error||""))throw new Error("api/ai.js di Vercel masih versi lama — ganti dan deploy ulang");
+  if(r.status===429||r.status===400||a===retries)throw new Error(e.error||("api "+r.status)+(e.detail?": "+e.detail:""));
+  await new Promise(z=>setTimeout(z,1200*(a+1)));}}
+const hintFor=s=>({401:"API key salah/dicabut.",400:"Biasanya saldo kredit Anthropic habis atau permintaan tidak valid.",404:"Nama model salah — cek env ANTHROPIC_MODEL (hapus agar pakai default).",429:"Kena rate limit Anthropic."}[s]||"");
+async function testConn(){const b=$("diag");const say=(k,m)=>{b.className="diag "+k;b.style.display="block";b.textContent=m;};say("ok","Memeriksa…");
+ try{const r=await fetch("/api/ai?deep=1");
+  if(r.status===404)return say("bad","Endpoint /api/ai tidak ditemukan. Kemungkinan: (1) index.html dibuka langsung dari komputer — buka lewat alamat Vercel; (2) folder api/ai.js belum ter-deploy.");
+  if(r.status===405)return say("bad","api/ai.js di Vercel masih VERSI LAMA. Ganti isinya dengan api/ai.js terbaru, lalu deploy ulang.");
+  const j=await r.json().catch(()=>null);
+  if(!j)return say("bad","Respons tidak dikenali (status "+r.status+"). Cek Vercel → Logs.");
+  if(!j.hasKey)return say("bad","API key belum diset di Vercel (ANTHROPIC_API_KEY, atau AI_API_KEY bila memakai penyedia lain; Settings → Environment Variables). Setelah diisi, Redeploy.");
+  if(!j.ok)return say("bad","Kunci terbaca tapi Anthropic menolak (status "+j.upstream+"). "+hintFor(j.upstream)+" Detail: "+(j.detail||"-"));
+  say("ok","Koneksi AI sehat  (penyedia "+j.provider+", model "+j.model+").");
+ }catch(e){say("bad","Tidak bisa menjangkau server: "+e.message);}}
 
-/* ---------- AI question generation (1 soal/request, pool 3 worker) ---------- */
-async function genOne(s,avoid){
- const r=await api({task:"generate",topic:TOPICS[s.tp],ctx:CTX[s.tp],level:LV[s.d],avoid});
- return{t:s.tp,d:s.d,q:r.scenario+"\n\n"+r.question,ai:true,concepts:r.concepts||[],rubric:r.rubric||[],mistakes:r.common_mistakes||[],m:r.model_answer||""};
-}
+/* ---------- AI: buat soal ---------- */
+async function genOne(s,k,avoid){const c=cur(),u=s.tp==="u",ctx=u?c.segs[k%c.segs.length]:CTX[s.tp];
+ const r=await api({task:"generate",audience:P.mode,topic:u?"Materi dari file: "+c.name:TOPICS[s.tp],ctx,source:u?"file":"kuliah",level:LV[s.d],avoid});
+ return{t:s.tp,d:s.d,q:r.scenario+"\n\n"+r.question,ai:true,src:u?ctx:undefined,concepts:r.concepts||[],rubric:r.rubric||[],mistakes:r.common_mistakes||[],m:r.model_answer||""};}
 async function aiStart(){if(S.busy)return;const n=N();S.busy=true;S.lastErr="";
  const sp=[...Array(n)].map((_,k)=>spec(k,n)),out=Array(n).fill(null),avoid=[];let done=0,next=0;S.msg=`0/${n} soal…`;render();
  const worker=async()=>{while(next<n){const k=next++;
-  try{out[k]=await genOne(sp[k],avoid.slice(-8));avoid.push(out[k].q.slice(0,90));}
+  try{out[k]=await genOne(sp[k],k,avoid.slice(-8));avoid.push(out[k].q.slice(0,90));}
   catch(e){S.lastErr=e.message;if(/Terlalu banyak/.test(e.message))next=n;}
   done++;S.msg=`${done}/${n} soal…`;render();}};
  await Promise.all([worker(),worker(),worker()]);
  const used=new Set(),qs=out.map((q,k)=>q||bankPick(sp[k].tp,sp[k].d,used)).filter(Boolean);S.busy=false;
- const fromBank=qs.filter(q=>!q.ai).length;
- if(!qs.length){S.msg="AI gagal: "+(S.lastErr||"tidak diketahui")+". Coba lagi atau pakai 'Acak dari bank'.";render();return;}
- start(qs,fromBank?`${fromBank}/${qs.length} soal dari bank offline (alasan: ${S.lastErr||"AI gagal"}).`:"");}
+ const fb=qs.filter(q=>!q.ai).length;
+ if(!qs.length){S.msg=" AI gagal: "+(S.lastErr||"tidak diketahui")+" — tekan 'Tes koneksi AI' untuk diagnosis.";render();return;}
+ start(qs,fb?`${fb}/${qs.length} soal dari bank offline. Alasan AI gagal: ${S.lastErr||"tidak diketahui"}.`:"");}
 
-/* ---------- grading ---------- */
+/* ---------- penilaian ---------- */
 const norm=s=>s.toLowerCase().replace(/[^\p{L}\p{N}&%\s-]/gu," ");
 function gradeLocal(q,a){const n=norm(a);let concepts=q.c;
- if(!concepts){concepts=(q.concepts||[]).map(x=>[x,norm(x).split(/\s+/).filter(w=>w.length>4)]);}
+ if(!concepts)concepts=(q.concepts||[]).map(x=>[x,norm(x).split(/\s+/).filter(w=>w.length>4)]);
  const got=[],mis=[];let sc=0;concepts.forEach(([lab,kws])=>{const hits=kws.filter(k=>n.includes(norm(k).trim())).length;const need=q.c?1:Math.max(1,Math.ceil(kws.length/2));
   if(hits>=need){got.push(lab);sc++;}else if(hits>0){got.push(lab+" (sebagian)");sc+=.5;}else mis.push(lab);});
  const words=a.trim().split(/\s+/).filter(Boolean).length;let score=concepts.length?Math.round(sc/concepts.length*90):0;
- if(words<25)score=Math.min(score,Math.round(score*words/25));
- if(sc>0)score+=Math.min(10,Math.floor(words/20));
- score=Math.max(0,Math.min(100,score));
+ if(words<25)score=Math.min(score,Math.round(score*words/25));if(sc>0)score+=Math.min(10,Math.floor(words/20));score=Math.max(0,Math.min(100,score));
  const rec=mis.length?mis.slice(0,3).map(m=>`Tambahkan penjelasan tentang: ${m.replace(" (sebagian)","")}.`):["Perkuat jawaban dengan contoh konkret atau data pendukung."];
- return{score,covered:got,missed:mis,feedback:score>=75?"Cakupan konsep sudah baik. Perdalam lagi dengan contoh nyata dan analisis trade-off agar semakin kuat.":"Beberapa konsep kunci belum muncul secara eksplisit. Kaitkan jawaban dengan istilah pada daftar 'kurang' dan jelaskan alasannya, bukan hanya menyebutkannya.",rec,offline:true};}
-
+ return{score,covered:got,missed:mis,feedback:score>=75?"Cakupan konsep sudah baik. Perdalam dengan contoh nyata dan analisis trade-off.":"Beberapa konsep kunci belum muncul. Kaitkan jawaban dengan daftar 'perlu diperbaiki' dan jelaskan alasannya.",rec};}
 async function gradeAi(q,a){
- const r=await api({task:"grade",ctx:CTX[q.t],question:q.q,answer:a,concepts:q.c?q.c.map(x=>x[0]):q.concepts||[],rubric:q.rubric||[],mistakes:q.mistakes||[],model:q.m||""});
- return{score:Math.max(0,Math.min(100,Math.round(+r.score||0))),covered:r.covered||[],missed:[...(r.missed||[]),...(r.misconceptions||[]).map(x=>"Keliru: "+x)],feedback:r.feedback||"",rec:(r.recommendations&&r.recommendations.length)?r.recommendations:["Baca kembali contoh jawaban ideal dan bandingkan struktur penalarannya dengan jawabanmu."],verdict:r.verdict,criteria:r.criteria||[]};}
+ const r=await api({task:"grade",audience:P.mode,ctx:q.src||CTX[q.t]||"",question:q.q,answer:a,concepts:q.c?q.c.map(x=>x[0]):q.concepts||[],rubric:q.rubric||[],mistakes:q.mistakes||[],model:q.m||""});
+ return{score:Math.max(0,Math.min(100,Math.round(+r.score||0))),covered:r.covered||[],missed:[...(r.missed||[]),...(r.misconceptions||[]).map(x=>"Keliru: "+x)],feedback:r.feedback||"",rec:(r.recommendations&&r.recommendations.length)?r.recommendations:["Baca contoh jawaban ideal dan bandingkan struktur penalarannya."],verdict:r.verdict,criteria:r.criteria||[]};}
 
 const li=(ul,arr,c)=>{ul.innerHTML="";(arr.length?arr:["–"]).forEach(t=>{const l=document.createElement("li");l.className=c;l.textContent=t;ul.appendChild(l);});};
 const ol=(o,arr)=>{o.innerHTML="";arr.forEach(t=>{const l=document.createElement("li");l.textContent=t;o.appendChild(l);});};
-function showCrit(cr){const w=$("critWrap"),box=$("crit");box.innerHTML="";
- if(!cr||!cr.length){w.style.display="none";return;}
- cr.forEach(x=>{const d=document.createElement("div");d.className="crit";
-  d.innerHTML=`<div>${esc(x.name)}<small>${esc(x.evidence)}</small></div><b>${esc(x.score)}/${esc(x.max)}</b>`;box.appendChild(d);});
- w.style.display="block";}
-function showRes(r){const s=r.score,col=s>=75?"var(--ok)":s>=50?"var(--warn)":"var(--bad)";
- $("ring").style.setProperty("--p",s);$("ring").style.setProperty("--c",col);$("scn").textContent=s;
+function countTo(el,v){let n=0;const st=Math.max(1,Math.round(v/25));const t=setInterval(()=>{n=Math.min(v,n+st);el.textContent=n;if(n>=v)clearInterval(t);},20);}
+function showCrit(cr){const w=$("critWrap"),b=$("crit");b.innerHTML="";if(!cr||!cr.length){w.style.display="none";return;}
+ cr.forEach(x=>{const d=document.createElement("div");d.className="crit";d.innerHTML=`<div>${esc(x.name)}<small>${esc(x.evidence)}</small></div><b>${esc(x.score)}/${esc(x.max)}</b>`;b.appendChild(d);});w.style.display="block";}
+function showRes(r,fresh){const s=r.score,m=mf(s);
+ $("ring").style.setProperty("--p",s);$("ring").style.setProperty("--c",col(s));fresh?countTo($("scn"),s):$("scn").textContent=s;
  $("verd").textContent=r.verdict||(s>=85?"Sangat baik":s>=70?"Baik":s>=50?"Cukup":"Perlu diperdalam");
- $("mode").textContent=r.ai?"Dinilai AI (semantik, tidak kaku pada kata)":"Dinilai offline (kata kunci konsep — fallback)";
- showCrit(r.criteria);
+ $("mode").textContent=r.ai?"Dinilai AI (semantik, tidak kaku pada kata)":"Dinilai offline (kata kunci) — alasan: "+(r.why||"AI tidak tersedia")+". Tes koneksi di menu utama.";
+ $("mEmo").textContent=m[2];$("mTxt").textContent=m[1];showCrit(r.criteria);
  li($("got"),r.covered,"g");li($("mis"),r.missed,"m");$("fb").textContent=r.feedback;ol($("rec"),r.rec||[]);$("mdl").textContent=S.qs[S.i].m||"–";$("res").classList.add("s");}
 function dots(){const d=$("dots");d.innerHTML="";S.qs.forEach((c,k)=>{const b=document.createElement("button");b.className="dot"+(k===S.i?" on":"");b.textContent=k+1;
-  if(c.res)b.style.borderColor=c.res.score>=75?"var(--ok)":c.res.score>=50?"var(--warn)":"var(--bad)";else if(c.ans.trim())b.style.borderStyle="dashed";
-  b.onclick=()=>go(k);d.appendChild(b);});
+  if(c.res)b.style.borderColor=col(c.res.score);else if(c.ans.trim())b.style.borderStyle="dashed";b.onclick=()=>go(k);d.appendChild(b);});
  const g=S.qs.filter(c=>c.res),a=S.qs.filter(c=>c.ans.trim()).length,avg=g.length?Math.round(g.reduce((x,c)=>x+c.res.score,0)/g.length):"–";
  $("st").innerHTML=`<span>Terjawab: <b>${a}/${S.qs.length}</b></span><span>Dinilai: <b>${g.length}</b></span><span>Rata-rata: <b>${avg}</b></span>`;
- if($("sumCard").style.display!=="none")buildSummary();
- if($("revCard").style.display!=="none")buildReview();
-}
+ if($("sumCard").style.display!=="none")buildSummary();if($("revCard").style.display!=="none")buildReview();}
 function view(){const c=S.qs[S.i],n=S.qs.length;if(!c)return;$("qm").innerHTML="";
- [TOPICS[c.t],DIFF[c.d]+(c.ai?" · AI":"")].forEach(x=>{const s=document.createElement("span");s.className="tag";s.textContent=x;$("qm").appendChild(s);});
+ [ICON[c.t]+" "+TOPICS[c.t],DI[c.d]+" "+DIFF[c.d]+(c.ai?" · AI":"")].forEach(x=>{const s=document.createElement("span");s.className="tag";s.textContent=x;$("qm").appendChild(s);});
  $("pos").textContent=`Soal ${S.i+1} / ${n}`;$("barf").style.width=((S.i+1)/n*100)+"%";$("qt").textContent=c.q;$("ans").value=c.ans;
+ const h=$("hint");if(c.hint){const hs=c.c?c.c.map(x=>x[0]):c.concepts||[];h.style.display="block";h.innerHTML=" Sentuh hal-hal ini: "+hs.map(x=>`<span class="tag">${esc(x.length>60?x.slice(0,58)+"…":x)}</span>`).join("");}else h.style.display="none";
  $("bPrev").disabled=S.i===0;$("bNext").disabled=S.i===n-1;$("bGrade").disabled=!!c.busy;$("bGrade").innerHTML=c.busy?'<span class="spin"></span>Menilai…':(c.res?"Nilai ulang":"Nilai jawaban");
- if(c.res)showRes(c.res);else $("res").classList.remove("s");dots();}
+ if(c.res)showRes(c.res,false);else $("res").classList.remove("s");dots();}
 function go(i){if(i<0||i>=S.qs.length||i===S.i)return;S.qs[S.i].ans=$("ans").value;const dir=i>S.i?"inR":"inL";S.i=i;view();const q=$("qc");q.classList.remove("inR","inL");void q.offsetWidth;q.classList.add(dir);}
-async function grade(){const c=S.qs[S.i];if(!c||c.busy)return;const a=$("ans").value.trim();c.ans=a;if(a.length<5){alert("Tulis jawabanmu dulu ya.");return;}
- c.busy=true;view();let r,ai=false;
- if(S.sample){for(let attempt=0;attempt<2&&!r;attempt++){try{r=await gradeAi(c,a);ai=true;}catch(e){}}}
- if(!r)r=gradeLocal(c,a);r.ai=ai;c.res=r;c.busy=false;if(S.qs[S.i]===c){view();$("res").scrollIntoView({behavior:"smooth",block:"nearest"});}else dots();saveDraft();}
+async function grade(){const c=S.qs[S.i];if(!c||c.busy)return;const a=$("ans").value.trim();c.ans=a;if(a.length<5){toast("Tulis jawabanmu dulu ya ");return;}
+ c.busy=true;view();let r,why="";
+ for(let at=0;at<2&&!r;at++){try{r=await gradeAi(c,a);r.ai=true;}catch(e){why=e.message;if(/Terlalu banyak|versi lama|tidak ditemukan/.test(why))break;}}
+ if(!r){r=gradeLocal(c,a);r.ai=false;r.why=why;}
+ c.res=r;c.busy=false;if(S.qs[S.i]===c){view();showRes(r,true);award(r.score,c);$("res").scrollIntoView({behavior:"smooth",block:"nearest"});}else dots();saveDraft();}
 
-/* ---------- session summary ---------- */
-function buildSummary(){
- const graded=S.qs.filter(q=>q.res);
- const avg=graded.length?Math.round(graded.reduce((x,q)=>x+q.res.score,0)/graded.length):0;
- const col=avg>=75?"var(--ok)":avg>=50?"var(--warn)":"var(--bad)";
- $("sRing").style.setProperty("--p",avg);$("sRing").style.setProperty("--c",col);$("sScn").textContent=graded.length?avg:"–";
- $("sVerd").textContent=!graded.length?"Belum ada soal dinilai":avg>=85?"Pemahaman sangat baik":avg>=70?"Pemahaman baik":avg>=50?"Pemahaman cukup, masih ada celah":"Perlu banyak diperdalam lagi";
- const mins=S.startedAt?Math.max(1,Math.round((Date.now()-S.startedAt)/60000)):0;
- $("sStat").textContent=`${graded.length}/${S.qs.length} soal dinilai · ±${mins} menit`;
- const topicsEl=$("sTopics");topicsEl.innerHTML="";
- T4.filter(t=>S.qs.some(q=>q.t===t)).forEach(t=>{
-   const g=S.qs.filter(q=>q.t===t&&q.res);const av=g.length?Math.round(g.reduce((x,q)=>x+q.res.score,0)/g.length):null;
-   const row=document.createElement("div");row.className="topicbar";
-   row.innerHTML=`<div class="tlab">${TOPICS[t]}</div><div class="tb"><i style="width:${av||0}%;background:${av===null?"var(--line)":av>=75?"var(--ok)":av>=50?"var(--warn)":"var(--bad)"}"></i></div><div class="tn">${av===null?"–":av}</div>`;
-   topicsEl.appendChild(row);
- });
- const missCount={};graded.forEach(q=>(q.res.missed||[]).forEach(m=>{const k=m.replace(" (sebagian)","");missCount[k]=(missCount[k]||0)+1;}));
- const weak=Object.entries(missCount).sort((a,b)=>b[1]-a[1]).slice(0,6);
- li($("sWeak"),weak.map(([k,c])=>`${k} — terlewat di ${c} soal`),"m");
- $("bRetryWeak").disabled=!graded.some(q=>q.res.score<75);
-}
-function toggleSummary(){const show=$("sumCard").style.display==="none";$("sumCard").style.display=show?"block":"none";$("revCard").style.display="none";if(show){buildSummary();$("sumCard").scrollIntoView({behavior:"smooth",block:"start"});}}
-function retryWeak(){const weak=S.qs.filter(q=>q.res&&q.res.score<75);if(!weak.length)return;
- S.qs=weak.map(q=>({...q,ans:"",res:null}));S.i=0;S.startedAt=Date.now();$("sumCard").style.display="none";$("revCard").style.display="none";view();dots();saveDraft();$("quiz").scrollIntoView({behavior:"smooth",block:"start"});}
-function saveToHistory(){const graded=S.qs.filter(q=>q.res);if(!graded.length){alert("Belum ada soal yang dinilai.");return;}
- const avg=Math.round(graded.reduce((x,q)=>x+q.res.score,0)/graded.length);
- saveHistEntry({date:Date.now(),topic:S.topic,diff:S.diff,count:S.qs.length,graded:graded.length,avg});
- renderHistory();alert("Ringkasan sesi disimpan ke riwayat (tersimpan di perangkat ini saja).");}
-
-/* ---------- review ---------- */
-function buildReview(){const body=$("revBody");body.innerHTML="";
- S.qs.forEach((q,idx)=>{
-   const div=document.createElement("div");div.className="review-item";
-   const scoreTag=q.res?`<span class="tag" style="background:${q.res.score>=75?"var(--oks)":q.res.score>=50?"var(--warns)":"var(--bads)"};color:${q.res.score>=75?"var(--ok)":q.res.score>=50?"var(--warn)":"var(--bad)"}">Skor ${q.res.score}</span>`:'<span class="tag w">Belum dinilai</span>';
-   div.innerHTML=`<div class="row" style="justify-content:space-between;align-items:center"><b>Soal ${idx+1}</b> ${scoreTag}</div>
-     <p class="q" style="font-size:15px">${esc(q.q)}</p>
-     <div class="review-a"><b>Jawabanmu:</b><br>${esc(q.ans||"(kosong)")}</div>
-     ${q.res?`<div class="mut" style="font-size:13px"><b>Feedback:</b> ${esc(q.res.feedback)}</div>`:""}
-     ${q.res&&q.res.rec&&q.res.rec.length?`<div class="mut" style="font-size:13px;margin-top:4px"><b>Rekomendasi:</b> ${esc(q.res.rec.join(" "))}</div>`:""}`;
-   body.appendChild(div);
- });
-}
-function toggleReview(){const show=$("revCard").style.display==="none";$("revCard").style.display=show?"block":"none";$("sumCard").style.display="none";if(show){buildReview();$("revCard").scrollIntoView({behavior:"smooth",block:"start"});}}
-
-/* ---------- history UI ---------- */
-function scorePillCol(s){return s>=75?["var(--oks)","var(--ok)"]:s>=50?["var(--warns)","var(--warn)"]:["var(--bads)","var(--bad)"];}
-function renderHistory(){const h=loadHist();$("histCard").style.display=h.length?"block":"none";if(!h.length)return;
- const body=$("histBody");body.innerHTML="";
- h.forEach(e=>{const[bg,fg]=scorePillCol(e.avg);const d=new Date(e.date);
-  const row=document.createElement("div");row.className="hist-row";
-  row.innerHTML=`<span>${d.toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric"})} · ${TOPICS[e.topic]||"Semua"} · ${DIFF[e.diff]}</span><span class="sc-pill" style="background:${bg};color:${fg}">${e.avg} (${e.graded}/${e.count})</span>`;
-  body.appendChild(row);});
-}
-
-/* ---------- resume banner ---------- */
-function initResume(){const d=loadDraft();if(!d)return;
- $("resumeBanner").style.display="flex";
- $("bResume").onclick=()=>{S.topic=d.topic;S.diff=d.diff;S.startedAt=d.startedAt||Date.now();S.qs=d.qs.map(q=>({...q}));S.i=Math.min(d.i||0,S.qs.length-1);
-  $("resumeBanner").style.display="none";$("quiz").style.display="block";render();view();dots();$("quiz").scrollIntoView({behavior:"smooth"});};
- $("bDiscard").onclick=()=>{clearDraft();$("resumeBanner").style.display="none";};
-}
+/* ---------- ringkasan ---------- */
+function buildSummary(){const graded=S.qs.filter(q=>q.res),avg=graded.length?Math.round(graded.reduce((x,q)=>x+q.res.score,0)/graded.length):0;
+ $("sRing").style.setProperty("--p",avg);$("sRing").style.setProperty("--c",col(avg));$("sScn").textContent=graded.length?avg:"–";
+ $("sVerd").textContent=!graded.length?"Belum ada soal dinilai":avg>=85?"Pemahaman sangat baik":avg>=70?"Pemahaman baik":avg>=50?"Cukup, masih ada celah":"Perlu banyak diperdalam";
+ const mins=S.startedAt?Math.max(1,Math.round((Date.now()-S.startedAt)/60000)):0;$("sStat").textContent=`${graded.length}/${S.qs.length} soal dinilai · ±${mins} menit`;
+ const te=$("sTopics");te.innerHTML="";[...T4,"u"].filter(t=>S.qs.some(q=>q.t===t)).forEach(t=>{const g=S.qs.filter(q=>q.t===t&&q.res),av=g.length?Math.round(g.reduce((x,q)=>x+q.res.score,0)/g.length):null;
+  const r=document.createElement("div");r.className="topicbar";r.innerHTML=`<div class="tlab">${TOPICS[t]}</div><div class="tb"><i style="width:${av||0}%;background:${av===null?"var(--line)":col(av)}"></i></div><div class="tn">${av===null?"–":av}</div>`;te.appendChild(r);});
+ const mc={};graded.forEach(q=>(q.res.missed||[]).forEach(m=>{const k=m.replace(" (sebagian)","");mc[k]=(mc[k]||0)+1;}));
+ li($("sWeak"),Object.entries(mc).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([k,c])=>`${k} — terlewat di ${c} soal`),"m");$("bRetryWeak").disabled=!graded.some(q=>q.res.score<75);}
+function toggleSummary(){const s=$("sumCard").style.display==="none";$("sumCard").style.display=s?"block":"none";$("revCard").style.display="none";if(s){buildSummary();$("sumCard").scrollIntoView({behavior:"smooth",block:"start"});if(S.qs.filter(q=>q.res).length&&Math.round(S.qs.filter(q=>q.res).reduce((x,q)=>x+q.res.score,0)/S.qs.filter(q=>q.res).length)>=75)confetti();}}
+function retryWeak(){const w=S.qs.filter(q=>q.res&&q.res.score<75);if(!w.length)return;S.qs=w.map(q=>({...q,ans:"",res:null,hint:false}));S.i=0;S.startedAt=Date.now();$("sumCard").style.display="none";$("revCard").style.display="none";view();saveDraft();window.scrollTo({top:0,behavior:"smooth"});}
+function saveToHistory(){const g=S.qs.filter(q=>q.res);if(!g.length){toast("Belum ada soal yang dinilai");return;}const c=cur();
+ c.sessions.unshift({date:Date.now(),topic:S.topic,diff:S.diff,count:S.qs.length,graded:g.length,avg:Math.round(g.reduce((x,q)=>x+q.res.score,0)/g.length)});c.sessions=c.sessions.slice(0,30);saveSets();renderHistory();toast("Sesi tersimpan pada set ini");}
+function buildReview(){const body=$("revBody");body.innerHTML="";S.qs.forEach((q,i)=>{const d=document.createElement("div");d.className="review-item";
+ const tg=q.res?`<span class="tag" style="color:${col(q.res.score)}">Skor ${q.res.score}</span>`:'<span class="tag w">Belum dinilai</span>';
+ d.innerHTML=`<div class="row" style="justify-content:space-between;align-items:center"><b>Soal ${i+1}</b> ${tg}</div><p class="q" style="font-size:15px">${esc(q.q)}</p><div class="review-a"><b>Jawabanmu:</b><br>${esc(q.ans||"(kosong)")}</div>${q.res?`<div class="mut"><b>Feedback:</b> ${esc(q.res.feedback)}</div>`:""}${q.res&&q.res.rec&&q.res.rec.length?`<div class="mut" style="margin-top:4px"><b>Langkah perbaikan:</b> ${esc(q.res.rec.join(" "))}</div>`:""}`;body.appendChild(d);});}
+function toggleReview(){const s=$("revCard").style.display==="none";$("revCard").style.display=s?"block":"none";$("sumCard").style.display="none";if(s){buildReview();$("revCard").scrollIntoView({behavior:"smooth",block:"start"});}}
+function renderHistory(){const c=cur(),hh=c?c.sessions:[];$("histCard").style.display=hh.length?"block":"none";if(!hh.length)return;const b=$("histBody");b.innerHTML="";
+ hh.forEach(e=>{const d=new Date(e.date),r=document.createElement("div");r.className="hist-row";r.innerHTML=`<span>${d.toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric"})} · ${TOPICS[e.topic]||"Semua"} · ${DIFF[e.diff]}</span><span class="sc-pill" style="background:var(--acs);color:${col(e.avg)}">${e.avg} (${e.graded}/${e.count})</span>`;b.appendChild(r);});}
+function initResume(){$("bResume").onclick=()=>{const d=loadDraft();if(!d)return;S.topic=d.topic;S.diff=d.diff;S.startedAt=d.startedAt||Date.now();S.qs=d.qs.map(q=>({...q}));S.i=Math.min(d.i||0,S.qs.length-1);$("resumeBanner").style.display="none";$("setup").style.display="none";$("quiz").style.display="block";render();view();window.scrollTo({top:0});};
+ $("bDiscard").onclick=()=>{clearDraft();$("resumeBanner").style.display="none";};}
+function splash(){const s=$("splash");try{if(sessionStorage.getItem("mcs_splash")||matchMedia("(prefers-reduced-motion:reduce)").matches){s.remove();return;}}catch(e){}
+ const end=()=>{s.classList.add("out");setTimeout(()=>s.remove(),700);try{sessionStorage.setItem("mcs_splash","1");}catch(e){}};setTimeout(end,2600);s.onclick=end;}
 
 /* ---------- events ---------- */
 $("bAi").onclick=aiStart;$("bRnd").onclick=bankStart;$("bGrade").onclick=grade;$("bPrev").onclick=()=>go(S.i-1);$("bNext").onclick=()=>go(S.i+1);
-$("bSummary").onclick=toggleSummary;$("bReview").onclick=toggleReview;$("bRetryWeak").onclick=retryWeak;$("bSaveHist").onclick=saveToHistory;
+$("bSummary").onclick=toggleSummary;$("bReview").onclick=toggleReview;$("bRetryWeak").onclick=retryWeak;$("bSaveHist").onclick=saveToHistory;$("bTest").onclick=testConn;
 $("bPrint").onclick=()=>{buildReview();window.print();};$("bPrint2").onclick=()=>window.print();
+$("bBack").onclick=()=>{S.qs[S.i].ans=$("ans").value;saveDraft();$("quiz").style.display="none";$("setup").style.display="block";window.scrollTo({top:0});};
+$("bHint").onclick=()=>{S.qs[S.i].hint=true;view();saveDraft();};
+$("cnt").oninput=()=>{$("cntv").textContent=N();};
+$("bMode").onclick=()=>{P.mode=P.mode==="ceria"?"kampus":"ceria";saveP();hud();toast(P.mode==="ceria"?"Mode Ceria  (bahasa santai)":"Mode Kampus  (bahasa akademik)");};
+$("bTheme").onclick=()=>{const cur=document.documentElement.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");P.theme=cur==="dark"?"light":"dark";saveP();hud();};
 $("bHistToggle").onclick=()=>{const s=$("histBody").style.display==="none";$("histBody").style.display=s?"block":"none";$("bHistToggle").textContent=s?"Sembunyikan ▴":"Tampilkan ▾";};
-let saveTimer=null;
-$("ans").oninput=()=>{S.qs[S.i].ans=$("ans").value;clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,600);};
-$("ans").onblur=()=>{dots();saveDraft();};
+$("file").onchange=e=>{setFile(e.target.files[0]);e.target.value="";};
+const dz=$("dz");["dragenter","dragover"].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.add("over");}));
+["dragleave","drop"].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.remove("over");}));dz.addEventListener("drop",e=>setFile(e.dataTransfer.files[0]));
+$("afile").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{const t=(await extract(f)).trim().slice(0,6000);$("ans").value=t;S.qs[S.i].ans=t;dots();saveDraft();toast("Jawaban dimuat dari "+f.name);}catch(x){toast(" "+x.message);}};
+let saveTimer=null;$("ans").oninput=()=>{S.qs[S.i].ans=$("ans").value;clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,600);};$("ans").onblur=()=>{dots();saveDraft();};
 let tx=0,ty=0;const QZ=$("quiz");
 QZ.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
 QZ.addEventListener("touchend",e=>{if(e.target.tagName==="TEXTAREA")return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(S.i+(dx<0?1:-1));});
 document.addEventListener("keydown",e=>{if(/TEXTAREA|INPUT/.test(document.activeElement.tagName))return;if(e.key==="ArrowRight")go(S.i+1);if(e.key==="ArrowLeft")go(S.i-1);});
+setInterval(()=>{if(S.startedAt&&$("quiz").style.display!=="none"){const s=Math.floor((Date.now()-S.startedAt)/1000);$("tmr").textContent="Waktu "+String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}},1000);
 
-render();renderHistory();initResume();
-if(!loadDraft())bankStart();else{$("quiz").style.display="none";}
+$("bHome").onclick=()=>{if(S.busy){toast("Tunggu pembuatan soal selesai");return;}goHome();};
+initResume();hud();splash();goHome();
 </script>
 </body>
 </html>
